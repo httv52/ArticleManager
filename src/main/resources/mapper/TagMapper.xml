@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hutaotao.article.dao.TagMapper" >
+  <resultMap id="BaseResultMap" type="cn.hutaotao.article.model.Tag" >
+    <id column="tagId" property="tagid" jdbcType="VARCHAR" />
+    <result column="tagName" property="tagname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tagId, tagName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tag
+    where tagId = #{tagid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tag
+    where tagId = #{tagid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.hutaotao.article.model.Tag" >
+    insert into tag (tagId, tagName)
+    values (#{tagid,jdbcType=VARCHAR}, #{tagname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.hutaotao.article.model.Tag" >
+    insert into tag
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tagid != null" >
+        tagId,
+      </if>
+      <if test="tagname != null" >
+        tagName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tagid != null" >
+        #{tagid,jdbcType=VARCHAR},
+      </if>
+      <if test="tagname != null" >
+        #{tagname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.hutaotao.article.model.Tag" >
+    update tag
+    <set >
+      <if test="tagname != null" >
+        tagName = #{tagname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tagId = #{tagid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.hutaotao.article.model.Tag" >
+    update tag
+    set tagName = #{tagname,jdbcType=VARCHAR}
+    where tagId = #{tagid,jdbcType=VARCHAR}
+  </update>
+</mapper>
