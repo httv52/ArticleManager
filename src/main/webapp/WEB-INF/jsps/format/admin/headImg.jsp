@@ -3,6 +3,8 @@
 
 <script type="text/javascript">
     $(function () {
+        $(".myFullscreen").click();
+
         var hash = '${sessionScope.loginUser.uid}';
         var options = {
             /*foreground: [0, 0, 0, 255],               // 后景色 RGBA黑色

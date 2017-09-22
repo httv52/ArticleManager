@@ -16,10 +16,6 @@ public class PageController extends BaseController {
         return "admin/index";
     }
 
-    @RequestMapping("indexPage")
-    public String indexPage() {
-        return "admin/indexPage";
-    }
 
     @RequestMapping("articleManege")
     public String articleManege() {

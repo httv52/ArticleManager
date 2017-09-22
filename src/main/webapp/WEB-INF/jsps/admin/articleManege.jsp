@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%--导入顶部信息--%>
-<%@include file="/WEB-INF/jsps/format/admin/head-top.jsp" %>
+<%@include file="/WEB-INF/jsps/format/admin/head.jsp" %>
 
 <!-- 中间内容 -->
 <section id="content">
@@ -28,5 +28,9 @@
 </section>
 </section>
 <!-- /中间内容 -->
+
+<%--导入底部文件--%>
+<%@include file="/WEB-INF/jsps/format/admin/foot.jsp" %>
+
 
 

@@ -1,6 +1,11 @@
 <%--底部内容--%>
 
+</section>
+</section>
+</section>
 
+<%--导入头像文件--%>
+<%@include file="/WEB-INF/jsps/format/admin/headImg.jsp" %>
 
 <%--导入切换页面功能--%>
 <%@include file="/WEB-INF/jsps/format/tools/pageAjax.jsp" %>
