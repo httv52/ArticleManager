@@ -245,9 +245,9 @@
                             <!-- nav -->
                             <nav class="nav-primary hidden-xs">
 
-                                <ul class="nav">
+                                <ul class="nav" id="navList">
                                     <!-- 1 工作集-->
-                                    <li class="active">
+                                    <li class="active first">
 
                                         <a href="<c:url value="/admin/index"/> " class="active">
 
@@ -257,36 +257,36 @@
                                     </li>
 
                                     <!-- 2 文章管理-->
-                                    <li>
+                                    <li class="first">
                                         <a href=""> <i class="fa fa-edit icon"> <b class="bg-warning"></b> </i> <span
-                                                class="pull-right"> <i class="fa fa-angle-down text"></i> <i
+                                                class="pull-right faState"> <i class="fa fa-angle-down text"></i> <i
                                                 class="fa fa-angle-up text-active"></i> </span> <span>文章管理</span> </a>
                                         <ul class="nav lt">
-                                            <li>
+                                            <li class="second" id="1">
                                                 <a href="<c:url value="/admin/articleManege"/> ">
                                                     <i class="fa fa-angle-right"></i> <span>文管管理</span> </a>
                                             </li>
-                                            <li>
+                                            <li class="second" id="2">
                                                 <a href=""> <i class="fa fa-angle-right"></i> <span>评论管理</span> </a>
                                             </li>
-                                            <li>
+                                            <li class="second">
                                                 <a href=""> <i class="fa fa-angle-right"></i> <span>分类/标签管理</span> </a>
                                             </li>
                                         </ul>
                                     </li>
 
                                     <!-- 3  后台管理-->
-                                    <li>
+                                    <li class="first">
                                         <a href=""> <i class="fa fa-flask icon"> <b class="bg-success"></b> </i> <span
-                                                class="pull-right"> <i class="fa fa-angle-down text"></i> <i
+                                                class="pull-right faState"> <i class="fa fa-angle-down text"></i> <i
                                                 class="fa fa-angle-up text-active"></i> </span> <span>后台管理</span> </a>
                                         <ul class="nav lt">
-                                            <li>
+                                            <li class="second">
                                                 <a href="#">
                                                     <i class="fa fa-angle-right"></i> <span>文件管理</span>
                                                 </a>
                                             </li>
-                                            <li>
+                                            <li class="second">
                                                 <a href="#">
                                                     <i class="fa fa-angle-right"></i> <span>链接管理</span>
                                                 </a>
@@ -295,19 +295,19 @@
                                     </li>
 
                                     <!-- 4 系统设置-->
-                                    <li>
+                                    <li class="first">
                                         <a href="#uikit"> <i class="fa fa-gear icon"> <b class="bg-primary"></b> </i>
-                                            <span class="pull-right"> <i class="fa fa-angle-down text"></i> <i
+                                            <span class="pull-right faState"> <i class="fa fa-angle-down text"></i> <i
                                                     class="fa fa-angle-up text-active"></i> </span> <span>系统设置</span>
                                         </a>
                                         <ul class="nav lt">
-                                            <li>
+                                            <li class="second">
                                                 <a href=""> <i class="fa fa-angle-right"></i> <span>站点设置</span> </a>
                                             </li>
-                                            <li>
+                                            <li class="second">
                                                 <a href=""> <i class="fa fa-angle-right"></i> <span>主题设置</span> </a>
                                             </li>
-                                            <li>
+                                            <li class="second">
                                                 <a href="#">
                                                     <i class="fa fa-angle-right"></i> <span>关于页设置</span>
                                                 </a>
@@ -316,7 +316,7 @@
                                     </li>
 
                                     <!-- 5 消息-->
-                                    <li>
+                                    <li class="first">
                                         <a href="<c:url value='/admin/index.do'/>">
                                             <b class="badge bg-danger pull-right">3</b>
 
@@ -326,7 +326,7 @@
                                     </li>
 
                                     <!-- 6 发布文章-->
-                                    <li>
+                                    <li class="first">
                                         <a href="<c:url value='/admin/index.do'/> " class="active">
 
                                             <i class="fa fa-pencil icon"> <b class="bg-info"></b> </i>
