@@ -271,7 +271,7 @@
         </c:when>
 
         <c:when test="${operateCode==121}">
-        layer.msg('退出成功，请重新登录', {icon: 6, time: $msgTime});
+        layer.msg('退出成功，请重新登录', {icon: 6, time: 800});
         </c:when>
 
 

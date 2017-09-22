@@ -33,29 +33,6 @@ public class FormatUtil {
         return  df.format(new Date(time));
     }
 
-    /**
-     * HH:mm:ss --->12小时制
-     *
-     * @param time
-     * @return
-     */
-    public static final String formatTime12(Long time){
-        if(time  == null ) return "";
-        DateFormat df = new SimpleDateFormat("HH:mm:ss");
-        return  df.format(new Date(time));
-    }
-
-    /**
-     * yyyy-MM-dd HH:mm:ss --->12小时制
-     *
-     * @param time
-     * @return
-     */
-    public static final String formatDateTime12(Long time){
-        if(time  == null ) return "";
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return  df.format(new Date(time));
-    }
 
     /**
      * yyyy-MM-dd HH:mm:ss --->24小时制
@@ -65,7 +42,7 @@ public class FormatUtil {
      */
     public static final String formatDateTime(Long time){
         if(time  == null ) return "";
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:24:mm:ss");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return  df.format(new Date(time));
     }
 

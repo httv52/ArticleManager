@@ -11,13 +11,13 @@
             <!--路径-->
             <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
                 <li>
-                    <a href="<c:url value="/admin/index.html"/> "><i class="fa fa-home"></i> 主页</a>
+                    <a href="<c:url value="/admin/index"/> "><i class="fa fa-home"></i> 主页</a>
                 </li>
                 <li>
-                    <a href="<c:url value="/admin/index.html"/> "><i class="fa fa-home"></i> 文章管理</a>
+                    <a href="<c:url value="/admin/articleManege"/> "><i class="fa fa-edit"></i> 文章管理</a>
                 </li>
-                <li>
-                    <i class="fa fa-dashboard "> 文章管理</i>
+                <li class="active">
+                    <i class="fa"> 文章管理</i>
                 </li>
             </ul>
 

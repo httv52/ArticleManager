@@ -230,7 +230,7 @@
                                 <button type="button" class="btn btn-sm btn-primary dropdown-toggle"
                                         data-toggle="dropdown"> 编辑文章 <span class="caret"></span></button>
                                 <ul class="dropdown-menu text-left">
-                                    <li><a href="#">发布新文章</a></li>
+                                    <li><a href="<c:url value="/admin/publish"/> ">发布新文章</a></li>
                                     <li><a href="#">修改文章</a></li>
                                 </ul>
                             </div>
@@ -317,7 +317,7 @@
 
                                     <!-- 5 消息-->
                                     <li class="first">
-                                        <a href="<c:url value='/admin/index.do'/>">
+                                        <a href="<c:url value='/admin/index'/>">
                                             <b class="badge bg-danger pull-right">3</b>
 
                                             <i class="fa fa-envelope-o icon"> <b class="bg-primary dker"></b> </i>
@@ -327,7 +327,7 @@
 
                                     <!-- 6 发布文章-->
                                     <li class="first">
-                                        <a href="<c:url value='/admin/index.do'/> " class="active">
+                                        <a href="<c:url value='/admin/publish'/> " class="active">
 
                                             <i class="fa fa-pencil icon"> <b class="bg-info"></b> </i>
                                             <span>发布文章</span>

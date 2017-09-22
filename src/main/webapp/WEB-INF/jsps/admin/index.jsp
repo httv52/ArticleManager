@@ -15,8 +15,8 @@
                 <li>
                     <a href="<c:url value="/admin/index.html"/> "><i class="fa fa-home"></i> 主页</a>
                 </li>
-                <li>
-                    <i class="fa fa-dashboard "> 工作集</i>
+                <li class="active">
+                    <i class="fa fa-dashboard"> 工作集</i>
                 </li>
             </ul>
 
@@ -133,7 +133,7 @@
                                         <span class="h3">暂无文章</span><br>
 
                                         <div style="padding: 20px">
-                                            <a href="#" class="block h4 text-success">点击前往发布文章</a>
+                                            <a href="<c:url value="/admin/publish"/> " class="block h4 text-success">点击前往发布文章</a>
                                         </div>
                                     </div>
                                 </article>

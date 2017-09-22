@@ -31,7 +31,7 @@ public class UUIDUtilTest {
 
 
     @Test
-    public void test() {
-        System.out.println(System.currentTimeMillis());
+    public void getUUID_12Test() {
+        System.out.println(UUIDUtil.getUUID_12());
     }
 } 

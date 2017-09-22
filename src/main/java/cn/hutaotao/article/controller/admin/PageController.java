@@ -12,18 +12,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/admin")
 public class PageController extends BaseController {
-    @RequestMapping("index")
+    @RequestMapping("/index")
     public String index(Model model) {
         setNavNumber(model, 1, -1);
         return "admin/index";
     }
 
 
-    @RequestMapping("articleManege")
+    @RequestMapping("/articleManege")
     public String articleManege(Model model) {
         setNavNumber(model, 2, 1);
         return "admin/articleManege";
     }
+
+    @RequestMapping("/publish")
+    public String publishing(Model model) {
+        setNavNumber(model, 6, -1);
+        return "admin/publish";
+    }
+
+
 
     /*设置侧边常量*/
     private void setNavNumber(Model model, int firstCode, int secondCode) {
