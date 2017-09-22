@@ -11,6 +11,7 @@
                 dataType: "html",   //返回值类型       使用json的话也可以，但是需要在JS中编写迭代的html代码，如果格式样式
                 cache: false,
                 success: function (data) {
+                    $(document).attr('title','工作集 | 文章管理系统');
                     //var json = eval('('+msg+')');//拼接的json串
                     $('#content').html(data);
                 },
