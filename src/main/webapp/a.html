@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>itcast.cn的JQuery实例1：浮动窗口</title>
+    <!--链接外部的js文件-->
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <!--链接外部的css文件-->
+
+</head>
+<body>
+<div class="article">
+    <button class="reply-btn">回复</button>
+    <div class="comment-wrap">
+        <input class="comment-input">
+        <button class="comment-btn">提交评价</button>
+    </div>
+</div>
+<div class="article">
+    <button class="reply-btn">回复</button>
+    <div class="comment-wrap">
+        <input class="comment-input">
+        <button class="comment-btn">提交评价</button>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.reply-btn').click(function(){
+            var $commentWrap = $(this).siblings('.comment-wrap');
+            // 3. 点击其他回复按钮时，原先的回复框隐藏
+            $(this).parent('.article').siblings().find('show.comment-wrap').hide();
+
+            // 判断点击一次回复，显示回复框，再点击一次就隐藏
+            if($commentWrap.hasClass('show')){
+                // 隐藏
+                $commentWrap.removeClass('show').hide();
+            }else{
+                // 显示
+                $commentWrap.addClass('show').show();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd ">
+
+    <!--加载配置文件-->
+    <context:property-placeholder location="classpath:jdbcinfo.properties"/>
+
+    <!--扫描注解-->
+    <context:component-scan base-package="cn.hutaotao.article"/>
+
+    <!--数据源-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
+          p:driverClassName="${jdbc.driverClass}"
+          p:url="${jdbc.jdbcUrl}"
+          p:username="${jdbc.user}"
+          p:password="${jdbc.password}"
+          p:initialSize="${db.initialSize}"
+          p:maxActive="${db.maxActive}"
+          p:maxIdle="${db.maxIdle}"
+          p:minIdle="${db.minIdle}"
+          p:maxWait="${db.maxWait}"/>
+
+    <!-- sqlSessionFactory-->
+    <!-- mapperLocations扫描sql配置文件代替configLocation:mybatis的Mapper配置文件-->
+    <!-- typeAliasesPackage：别名-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:mapperLocations="classpath:mapper/*.xml"
+          p:typeAliasesPackage="cn.hutaotao.article.model"/>
+
+    <!-- 使用MapperScannerConfigurer（扫描mapper接口）-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+          p:sqlSessionFactoryBeanName="sqlSessionFactory"
+          p:basePackage="cn.hutaotao.article.dao"/>
+
+    <!--事务管理-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          p:dataSource-ref="dataSource"/>
+
+    <!--事务通知-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="*" propagation="NEVER" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- aop -->
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="execution(* cn.hutaotao.article.service.impl.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut"/>
+    </aop:config>
+</beans>
+	

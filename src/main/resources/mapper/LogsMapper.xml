@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hutaotao.article.dao.LogsMapper" >
+  <resultMap id="BaseResultMap" type="cn.hutaotao.article.model.Logs" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="action" property="action" jdbcType="VARCHAR" />
+    <result column="data" property="data" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="creatrd" property="creatrd" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, action, data, uid, ip, creatrd
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from logs
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from logs
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hutaotao.article.model.Logs" >
+    insert into logs (id, action, data, 
+      uid, ip, creatrd)
+    values (#{id,jdbcType=INTEGER}, #{action,jdbcType=VARCHAR}, #{data,jdbcType=VARCHAR}, 
+      #{uid,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{creatrd,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.hutaotao.article.model.Logs" >
+    insert into logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="action != null" >
+        action,
+      </if>
+      <if test="data != null" >
+        data,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="creatrd != null" >
+        creatrd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null" >
+        #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="creatrd != null" >
+        #{creatrd,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.hutaotao.article.model.Logs" >
+    update logs
+    <set >
+      <if test="action != null" >
+        action = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null" >
+        data = #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="creatrd != null" >
+        creatrd = #{creatrd,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.hutaotao.article.model.Logs" >
+    update logs
+    set action = #{action,jdbcType=VARCHAR},
+      data = #{data,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      creatrd = #{creatrd,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

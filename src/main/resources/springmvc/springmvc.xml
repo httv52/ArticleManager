@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd ">
+
+    <!--注解扫描器-->
+    <context:component-scan base-package="cn.hutaotao.article.controller"/>
+
+    <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
+    <bean id="mappingJacksonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 以下注解代替 RequestMappingHandlerMapping和RequestMappingHandlerAdapter-->
+    <mvc:annotation-driven validator="validator"/>
+
+    <!--数据校验-->
+    <!-- 配置校验器 -->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <!-- 校验器，使用hibernate校验器 -->
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+        <!-- 指定校验使用的资源文件，在文件中配置校验错误信息，如果不指定则默认使用classpath下面的ValidationMessages.properties文件 -->
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+    <!-- 校验错误信息配置文件 -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <!-- 资源文件名 -->
+        <property name="basenames">
+            <list>
+                <value>classpath:message</value>
+            </list>
+        </property>
+        <!-- 资源文件编码格式 -->
+        <property name="fileEncodings" value="utf-8"/>
+        <!-- 对资源文件内容缓存时间，单位秒 -->
+        <property name="cacheSeconds" value="120"/>
+    </bean>
+
+    <!--时间类型转换-->
+    <!--<bean id="customConversionService"-->
+          <!--class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
+        <!--<property name="converters">-->
+            <!--<set>-->
+                <!--<bean class="cn.hutaotao.utils.DateConverter"/>-->
+            <!--</set>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--配置视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsps/"
+          p:suffix=".jsp"/>
+
+    <!--配置文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="utf-8"
+          p:maxUploadSize="10240000"/>
+
+    <!-- 配置拦截器 -->
+
+</beans>
