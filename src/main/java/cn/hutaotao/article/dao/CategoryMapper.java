@@ -1,3 +1,4 @@
+/*
 package cn.hutaotao.article.dao;
 
 import cn.hutaotao.article.model.Category;
@@ -14,4 +15,4 @@ public interface CategoryMapper {
     int updateByPrimaryKeySelective(Category record);
 
     int updateByPrimaryKey(Category record);
-}
+}*/

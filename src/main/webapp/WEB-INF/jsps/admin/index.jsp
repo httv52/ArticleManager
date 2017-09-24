@@ -338,7 +338,6 @@
 
         </section>
     </section>
-    </div>
 
 </section>
 <!-- /中间内容 -->

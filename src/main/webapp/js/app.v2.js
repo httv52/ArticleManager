@@ -4524,6 +4524,30 @@ Date.now = Date.now || function () {
             $modal.modal();
             $modal.load($remote);
         });
+
+        /*我的*/
+        var addMyPill = function ($input, $pillText) {
+            var $text = $pillText, $pills = $input.closest('.pillbox'), $repeat = false, $repeatPill;
+            if ($text == "")
+                return;
+            $("li", $pills).text(function (i, v) {
+                if (v == $text) {
+                    $repeatPill = $(this);
+                    $repeat = true;
+                }
+            });
+            if ($repeat) {
+                $repeatPill.fadeOut().fadeIn();
+                return;
+            }
+            ;
+            $item = $('<li class="label bg-success inputSeletePill">' + $text + '</li> ');
+            $item.insertBefore($input);
+            $input.val('');
+            $pills.trigger('change', $item);
+        };
+        /*  //我的*/
+
         $.fn.dropdown.Constructor.prototype.change = function (e) {
             e.preventDefault();
             var $item = $(e.target), $select, $checked = false, $menu, $label;
@@ -4548,8 +4572,12 @@ Date.now = Date.now || function () {
                 $items.each(function () {
                     var $str = $(this).parent().text();
                     $str && $text.push($.trim($str));
+                    $(".inputSeletePill").remove()
+                    for (var i = 0; i < $text.length; i++) {
+                        addMyPill($("#pillboxInput"), $text[i]);
+                    }
                 });
-                $text = $text.length < 4 ? $text.join(', ') : $text.length + ' selected';
+                $text = $text.length < 5 ? $text.join(', ') : $text.length + ' 个标签';
                 $label.html($text);
             } else {
                 $label.html($label.data('placeholder'));

@@ -1,45 +1,76 @@
+<!DOCTYPE html>
 <html>
+
 <head>
-    <title>itcast.cn的JQuery实例1：浮动窗口</title>
-    <!--链接外部的js文件-->
-    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
-    <!--链接外部的css文件-->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 富文本编辑器</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+
+
+    <link rel="stylesheet" href="css/app.v2.css" type="text/css"/>
+
+    <link href="http://cdn.bootcss.com/dropzone/4.3.0/min/dropzone.min.css" rel="stylesheet">
 
 </head>
-<body>
-<div class="article">
-    <button class="reply-btn">回复</button>
-    <div class="comment-wrap">
-        <input class="comment-input">
-        <button class="comment-btn">提交评价</button>
+<body class="gray-bg">
+
+<div id="dropzone-container" class="form-group col-md-12 hide">
+    <div class="dropzone dropzone-previews" id="dropzone">
+        <div class="dz-message">
+            <p>٩(๑❛ᴗ❛๑)۶ 为文章添加一张缩略图 ٩(๑❛ᴗ❛๑)۶</p>
+        </div>
     </div>
-</div>
-<div class="article">
-    <button class="reply-btn">回复</button>
-    <div class="comment-wrap">
-        <input class="comment-input">
-        <button class="comment-btn">提交评价</button>
-    </div>
+    <input type="hidden" name="previewImg" id="previewImg"/>
 </div>
 
+<script src="http://cdn.bootcss.com/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script>
-    $(function () {
-        $('.reply-btn').click(function(){
-            var $commentWrap = $(this).siblings('.comment-wrap');
-            // 3. 点击其他回复按钮时，原先的回复框隐藏
-            $(this).parent('.article').siblings().find('show.comment-wrap').hide();
+    Dropzone.autoDiscover = false;
+    Dropzone.clickable = true;
 
-            // 判断点击一次回复，显示回复框，再点击一次就隐藏
-            if($commentWrap.hasClass('show')){
-                // 隐藏
-                $commentWrap.removeClass('show').hide();
-            }else{
-                // 显示
-                $commentWrap.addClass('show').show();
-            }
-        });
+    var thumbdropzone = $('.dropzone');
+
+    // 缩略图上传
+    $("#dropzone").dropzone({
+        url: "/admin/attach/upload",
+        filesizeBase: 1024,//定义字节算法 默认1000
+        maxFilesize: '10', //MB
+        fallback: function () {
+            // tale.alertError('暂不支持您的浏览器上传!');
+        },
+        acceptedFiles: 'image/*',
+        dictFileTooBig: '您的文件超过10MB!',
+        dictInvalidInputType: '不支持您上传的类型',
+        init: function () {
+            this.on('success', function (files, result) {
+                console.log("upload success..");
+                console.log(" result => " + result);
+                if (result && result.success) {
+                    var url = attach_url + result.payload[0].fkey;
+                    console.log('url => ' + url);
+                    thumbdropzone.css('background-image', 'url(' + url + ')');
+                    thumbdropzone.css('background-size', 'cover');
+                    $('.dz-image').hide();
+                    $('#thumb_img').val(url);
+                }
+            });
+            this.on('error', function (a, errorMessage, result) {
+                if (!result.success && result.msg) {
+                    tale.alertError(result.msg || '缩略图上传失败');
+                }
+            });
+        }
     });
+
 </script>
 
 </body>
+
 </html>

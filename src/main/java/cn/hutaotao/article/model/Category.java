@@ -5,6 +5,8 @@ public class Category {
 
     private String categoryname;
 
+    private String uid;
+
     public String getCategoryid() {
         return categoryid;
     }
@@ -19,5 +21,13 @@ public class Category {
 
     public void setCategoryname(String categoryname) {
         this.categoryname = categoryname == null ? null : categoryname.trim();
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid == null ? null : uid.trim();
     }
 }

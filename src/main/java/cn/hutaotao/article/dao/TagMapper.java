@@ -1,3 +1,4 @@
+/*
 package cn.hutaotao.article.dao;
 
 import cn.hutaotao.article.model.Tag;
@@ -14,4 +15,4 @@ public interface TagMapper {
     int updateByPrimaryKeySelective(Tag record);
 
     int updateByPrimaryKey(Tag record);
-}
+}*/

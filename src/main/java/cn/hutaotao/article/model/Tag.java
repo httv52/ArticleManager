@@ -5,6 +5,8 @@ public class Tag {
 
     private String tagname;
 
+    private String uid;
+
     public String getTagid() {
         return tagid;
     }
@@ -19,5 +21,13 @@ public class Tag {
 
     public void setTagname(String tagname) {
         this.tagname = tagname == null ? null : tagname.trim();
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid == null ? null : uid.trim();
     }
 }

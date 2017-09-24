@@ -57,6 +57,10 @@ public class Article {
 
     private String aid;  //文章id
 
+    private String title;
+
+    private String pageTitle;
+
     private String url; //自定义url
 
     private String previewimg;  //预览图
@@ -77,8 +81,6 @@ public class Article {
 
     private Integer allowsub;  //允许订阅 1-允许 0-不允许
 
-    private String categoryid;  //分类
-
     private String content;  //文章内容
 
 
@@ -87,6 +89,8 @@ public class Article {
     /*关系映射*/
 
     private User user;  //文章所属者
+    private Category category;  //文章分类
+
 
 
     /*视图值*/
@@ -121,6 +125,22 @@ public class Article {
 
     /*关联映射Get Set*/
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     /*一般Get Set*/
     public String getAid() {
         return aid;
@@ -128,6 +148,22 @@ public class Article {
 
     public void setAid(String aid) {
         this.aid = aid == null ? null : aid.trim();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPageTitle() {
+        return pageTitle;
+    }
+
+    public void setPageTitle(String pageTitle) {
+        this.pageTitle = pageTitle;
     }
 
     public void setUrl(String url) {
@@ -213,14 +249,6 @@ public class Article {
 
     public void setAllowsub(Integer allowsub) {
         this.allowsub = allowsub;
-    }
-
-    public String getCategoryid() {
-        return categoryid;
-    }
-
-    public void setCategoryid(String categoryid) {
-        this.categoryid = categoryid == null ? null : categoryid.trim();
     }
 
     public String getContent() {

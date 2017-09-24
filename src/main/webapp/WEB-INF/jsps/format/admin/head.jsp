@@ -9,14 +9,25 @@
     <title>欢迎页 | 文章管理系统</title>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <link rel="stylesheet" href="<c:url value='/css/h+/style.css'/>" type="text/css"/>
+
+    <link rel="stylesheet" href="<c:url value='/css/animate.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="<c:url value='/js/mditor/css/mditor.min.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="<c:url value='/css/plugins/webuploader/webuploader.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="<c:url value='/css/demo/webuploader-demo.css'/>" type="text/css"/>
+
     <link rel="stylesheet" href="<c:url value='/js/layui/css/layui.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/js/layer-v3.1.0/layer/theme/default/dist.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/js/layer-v3.1.0/layer/theme/default/layer.css'/>" type="text/css"/>
+
+    <link rel="stylesheet" href="<c:url value='/css/style.css'/>" type="text/css"/>
+
+
     <link rel="stylesheet" href="<c:url value='/css/app.v2.css'/>" type="text/css"/>
-    <link rel="stylesheet" href="<c:url value='/css/animate.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="<c:url value='/js/fuelux/fuelux.css'/>" type="text/css"/>
+
 
     <script src="<c:url value='/js/jquery-3.2.1.min.js'/>"></script>
+
     <script src="<c:url value='/js/iden/identicon.js'/>"></script>
     <script src="<c:url value='/js/iden/pnglib.js'/>"></script>
 
@@ -31,6 +42,12 @@
     <style>
         * {
             font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+        }
+
+        .btn-shadow:hover {
+            box-shadow: 2px 2px 3px #363636; /* for opera or ie9 */
+            -moz-box-shadow: 2px 2px 3px #363636; /* for firefox */
+            -webkit-box-shadow: 2px 2px 3px #363636; /* for safari or chrome */
         }
 
         .navbar-brand img {
@@ -66,6 +83,71 @@
 
         .footer {
             margin: 0px;
+        }
+
+        #mypillbox {
+            background: #fff;
+        }
+
+        .btn-purple, .btn-purple:hover, .btn-purple:focus, .btn-purple:active {
+            background-color: #7e57c2 !important;
+            border: 1px solid #7e57c2 !important;
+            color: #fff;
+        }
+
+        .note-toolbar {
+            text-align: center;
+        }
+
+        .note-editor.note-frame {
+            border: none;
+        }
+
+        .note-editor .note-toolbar {
+            background-color: #f5f5f5;
+            padding-bottom: 10px;
+        }
+
+        .note-toolbar .note-btn-group {
+            margin: 0;
+        }
+
+        .note-toolbar .note-btn {
+            border: none;
+        }
+
+        #articleForm #dropzone {
+            min-height: 200px;
+            background-color: #dbdde0;
+            line-height: 200px;
+            margin-bottom: 10px;
+        }
+
+        #articleForm .dropzone {
+            border: 1px dashed #8662c6;
+            border-radius: 5px;
+            background: white;
+        }
+
+        #articleForm .dropzone .dz-message {
+            font-weight: 400;
+        }
+
+        #articleForm .dropzone .dz-message .note {
+            font-size: 0.8em;
+            font-weight: 200;
+            display: block;
+            margin-top: 1.4rem;
+        }
+        .navbar-brand {
+            height: auto;
+        }
+        .navbar-brand>img {
+            display: inherit;
+        }
+
+        #articleImgText {
+            font-size: 30px;
         }
 
     </style>
@@ -153,7 +235,7 @@
                                 class="fa fa-envelope-o fa-2x text-success"></i></span><span
                                 class="media-body block m-b-none">Sophi sent you a email<br><small class="text-muted">1 minutes ago</small></span></a>
                             <a href="#" class="media list-group-item"> <span class="pull-left thumb-sm"> <img
-                                    src="images/avatar.jpg" alt="John said" class="img-circle"> </span> <span
+                                    img src="<c:url value='/images/avatar_default.jpg'/>" class="img-circle headImg"> </span> <span
                                     class="media-body block m-b-none"> Use awesome animate.css<br>
               <small class="text-muted">10 minutes ago</small> </span> </a> <a href="#"
                                                                                class="media list-group-item"> <span
@@ -247,7 +329,7 @@
 
                                 <ul class="nav" id="navList">
                                     <!-- 1 工作集-->
-                                    <li class="active first">
+                                    <li class="first">
 
                                         <a href="<c:url value="/admin/index"/> " class="active">
 
@@ -344,7 +426,7 @@
                     <footer class="footer lt hidden-xs b-t b-dark">
 								<span class="pull-left hidden-nav-xs text-center" style="padding-top: 8px;">
 									<small>文章管理系统<br>
-					                &copy; 2017
+					                &copy; 2017 | By HuTao
 					            </small>
 								</span>
                         <div class="btn-group pull-right">

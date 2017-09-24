@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-09-23 02:50:48
+Date: 2017-09-23 03:24:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,6 +37,21 @@ CREATE TABLE `article` (
   PRIMARY KEY (`aid`),
   KEY `article-user` (`uid`),
   CONSTRAINT `article-user` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for article_tag_tbl
+-- ----------------------------
+DROP TABLE IF EXISTS `article_tag_tbl`;
+CREATE TABLE `article_tag_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `aid` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
+  `tagId` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `article_FK` (`aid`),
+  KEY `tag_FK` (`tagId`),
+  CONSTRAINT `article_FK` FOREIGN KEY (`aid`) REFERENCES `article` (`aid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `tag_FK` FOREIGN KEY (`tagId`) REFERENCES `tag` (`tagId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
@@ -96,15 +111,5 @@ CREATE TABLE `user` (
   `activateCode` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `state` int(1) NOT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
--- Table structure for user_tag_tbl
--- ----------------------------
-DROP TABLE IF EXISTS `user_tag_tbl`;
-CREATE TABLE `user_tag_tbl` (
-  `aid` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
-  `tagId` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`aid`,`tagId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET FOREIGN_KEY_CHECKS=1;

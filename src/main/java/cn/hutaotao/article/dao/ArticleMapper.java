@@ -1,3 +1,4 @@
+/*
 package cn.hutaotao.article.dao;
 
 import cn.hutaotao.article.model.Article;
@@ -16,4 +17,4 @@ public interface ArticleMapper {
     int updateByPrimaryKeyWithBLOBs(Article record);
 
     int updateByPrimaryKey(Article record);
-}
+}*/

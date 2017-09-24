@@ -13,5 +13,5 @@ target/
 # logs file #
 logs/
 
-src/main/webapp/js
+#src/main/webapp/js
 src/test

@@ -32,6 +32,14 @@ public class PageController extends BaseController {
     }
 
 
+    @RequestMapping("/summer")
+    public String summer(Model model) {
+        return "admin/summernote";
+    }
+
+
+
+
 
     /*设置侧边常量*/
     private void setNavNumber(Model model, int firstCode, int secondCode) {
