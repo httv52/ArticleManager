@@ -1,11 +1,13 @@
 package cn.hutaotao.article.model;
 
-public class Tag {
+import java.io.Serializable;
+
+public class Tag implements Serializable {
     private String tagid;
 
     private String tagname;
 
-    private String uid;
+    private User user;
 
     public String getTagid() {
         return tagid;
@@ -23,11 +25,11 @@ public class Tag {
         this.tagname = tagname == null ? null : tagname.trim();
     }
 
-    public String getUid() {
-        return uid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid == null ? null : uid.trim();
+    public void setUser(User user) {
+        this.user = user;
     }
 }

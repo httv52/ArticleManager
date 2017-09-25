@@ -70,7 +70,12 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表 -->
-        <table tableName="article"
+        <table tableName="file"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"/>
+       <!-- <table tableName="article"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
@@ -84,7 +89,7 @@
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
-               enableUpdateByExample="false"/>
+               enableUpdateByExample="false"/>-->
 
         <!--<table tableName="user"
                enableCountByExample="false"

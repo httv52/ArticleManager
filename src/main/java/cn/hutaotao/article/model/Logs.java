@@ -1,6 +1,8 @@
 package cn.hutaotao.article.model;
 
-public class Logs {
+import java.io.Serializable;
+
+public class Logs implements Serializable {
     /*常量*/
     public static final String INIT_LOG = "初始化博客";
     public static final String LOGIN_LOG = "登录后台";

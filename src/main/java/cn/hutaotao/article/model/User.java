@@ -6,10 +6,11 @@ import cn.hutaotao.article.utils.validati.ValidGroupRegister;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Serializable {
     /*常量*/
     public static final String SESSION_USER_NAME = "loginUser"; //用户在session中的key
 

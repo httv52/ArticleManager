@@ -4541,7 +4541,7 @@ Date.now = Date.now || function () {
                 return;
             }
             ;
-            $item = $('<li class="label bg-success inputSeletePill">' + $text + '</li> ');
+            $item = $('<li class="label bg-success inputSeletePill"><input type="hidden" name="myOldTag" value="' + $text + '" />' + $text + '</li> ');
             $item.insertBefore($input);
             $input.val('');
             $pills.trigger('change', $item);
@@ -4748,7 +4748,7 @@ Date.now = Date.now || function () {
                 return;
             }
             ;
-            $item = $('<li class="label bg-dark">' + $text + '</li> ');
+            $item = $('<li class="label bg-dark"><input type="hidden" name="myNewTag" value="' + $text + '" />' + $text + '</li> ');
             $item.insertBefore($input);
             $input.val('');
             $pills.trigger('change', $item);

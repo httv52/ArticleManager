@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hutaotao.article.dao.TagMapper">
+    <resultMap id="BaseResultMap" type="cn.hutaotao.article.model.Tag">
+        <id column="tagId" property="tagid" jdbcType="VARCHAR"/>
+        <result column="tagName" property="tagname" jdbcType="VARCHAR"/>
+        <association property="user" javaType="User">
+            <id column="uid" property="uid"/>
+            <result column="userName" property="username"/>
+            <result column="screenName" property="screenName"/>
+        </association>
+    </resultMap>
+
+</mapper>

@@ -10,10 +10,8 @@ import org.junit.Test;
 public class TestDemo {
     @Test
     public void test() {
-        UserCustom userCustom = new UserCustom();
-        userCustom.setRemeberPwd("on");
-        userCustom.setUsername("胡涛");
-
-        System.out.println(LogDataUtil.userLogData(userCustom));;
+        String a = "11,22,33";
+        String[] b = a.split(",");
+        System.out.println(b);
     }
 }

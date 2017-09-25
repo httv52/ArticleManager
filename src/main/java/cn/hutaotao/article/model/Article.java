@@ -2,10 +2,13 @@ package cn.hutaotao.article.model;
 
 import cn.hutaotao.article.utils.format.FormatUtil;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Article {
+public class Article implements Serializable {
 
     /*文章常量*/
     /*文章常量*/
@@ -14,31 +17,31 @@ public class Article {
     /**
      * 文章类型 0-Markdown
      */
-    public static final int ARTICLE_TYPE_MARKDOWN = 0;
+    public static final Integer ARTICLE_TYPE_MARKDOWN = 0;
     /**
      * 文章类型 1-富文本
      */
-    public static final int ARTICLE_TYPE_TEXT = 0;
+    public static final Integer ARTICLE_TYPE_TEXT = 0;
 
     /**
      * 文章状态 0-未发布
      */
-    public static final int ARTICLE_STATE_SAVE = 0;
+    public static final Integer ARTICLE_STATE_SAVE = 0;
     public static final String ARTICLE_STATE_SAVE_VIEW = "未发布";
     /**
      * 文章状态 1-已发布
      */
-    public static final int ARTICLE_STATE_PUBLISH = 1;
+    public static final Integer ARTICLE_STATE_PUBLISH = 1;
     public static final String ARTICLE_STATE_PUBLISH_VIEW = "已发布";
     /**
      * 文章状态 2-已关闭
      */
-    public static final int ARTICLE_STATE_DALETE = 2;
+    public static final Integer ARTICLE_STATE_DALETE = 2;
     public static final String ARTICLE_STATE_DALETE_VIEW = "已关闭";
     /**
      * 文章状态 3-超级管理员关闭
      */
-    public static final int ARTICLE_STATE_DALETE_SYSTEM = 3;
+    public static final Integer ARTICLE_STATE_DALETE_SYSTEM = 3;
     public static final String ARTICLE_STATE_DALETE_SYSTEMVIEW = "超级管理员关闭";
 
     private static final Map<Integer, String> ARTICLE_STATE_MAP = new HashMap();
@@ -69,7 +72,7 @@ public class Article {
 
     private Long modified;  //最后修改时间
 
-    private Integer type;  //文章类型 0-Markdown  1-富文本
+    private Integer type;  //文章类型 0-Markdown  1-富文本编辑器
 
     private Integer state;  //文章状态 文章状态 0-未发布 1-已发布 2-已关闭 3-超级管理员关闭
 
@@ -83,14 +86,15 @@ public class Article {
 
     private String content;  //文章内容
 
-
     /*关系映射*/
     /*关系映射*/
     /*关系映射*/
-
+    //多对一
     private User user;  //文章所属者
+    //多对一
     private Category category;  //文章分类
-
+    //多对多
+    private List<Tag> tagList = new ArrayList<>();
 
 
     /*视图值*/
@@ -139,6 +143,14 @@ public class Article {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
     }
 
     /*一般Get Set*/

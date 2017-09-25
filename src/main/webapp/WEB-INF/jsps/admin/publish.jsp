@@ -12,7 +12,7 @@
             <!--路径-->
             <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
                 <li>
-                    <a href="<c:url value="/admin/index"/> "><i class="fa fa-home"></i> 主页</a>
+                    <a href="<c:url value="/admin/index"/>"><i class="fa fa-home"></i> 主页</a>
                 </li>
                 <li class="active">
                     <i class="fa fa-pencil"> 发布文章</i>
@@ -35,23 +35,26 @@
 
                 <form id="articleForm" role="form" novalidate="novalidate" class="form-horizontal">
 
-                    <input type="hidden" name="type" value="markdown" class="myArticleType">
-                    <input type="hidden" id="attach_url" value="1233"/>
+                    <input type="hidden" name="type" value="0" class="myArticleType">
+                    <input type="hidden" name="cid" value="" id="aid"/>
+                    <input type="hidden" name="previewimg" value="" id="previewImg"/>
+                    <input type="hidden" id="ajax_url" value="<c:url value="/article/publish"/> "/>
+                    <input name="categoryId" id="categoryId" type="hidden" value="0">
+                    <input type="hidden" name="content" id="content-editor"/>
 
                     <%--文章标题与网页标题--%>
                     <div class="form-group">
                         <div class="col-md-6">
                             <label>文章标题</label>
                             <input type="text" class="form-control" placeholder="请输入文章标题（*必须）" name="title"
-                                   required=""
-                                   aria-required="true" value="">
+                                   id="title" value="">
                         </div>
 
                         <div class="col-md-6">
                             <label>网页标题</label>
                             <input type="text" class="form-control"
                                    placeholder="自定义浏览器标题，如：欢迎页 | 文章管理系统  默认为文章标题 - 博客名"
-                                   name="slug" value="">
+                                   name="pageTitle" id="pageTitle" value="">
                         </div>
                     </div>
                     <%--文章标题与网页标题--%>
@@ -63,8 +66,12 @@
                             <label>文章标签</label>
                             <div id="MyPillbox" class="pillbox clearfix" style="background: #fff;">
                                 <ul>
-                                    <li class="label bg-info">测试标签1</li>
-                                    <li class="label bg-success">测试标签2</li>
+                                    <li class="label bg-info">
+                                        <input type="hidden" name="myOldTag" value="测试标签1"/>测试标签1
+                                    </li>
+                                    <li class="label bg-success">
+                                        <input type="hidden" name="myOldTag" value="测试标签2"/>测试标签2
+                                    </li>
                                     <li class="label bg-warning">测试标签3</li>
                                     <li class="label bg-danger">测试标签4</li>
                                     <input id="pillboxInput" type="text" placeholder="添加文章标签">
@@ -78,27 +85,27 @@
                                 <ul class="dropdown-menu dropdown-select" id="pillboxSelect">
                                     <li>
                                         <a href="#">
-                                            <input type="checkbox" name="d-s-c-1"> 选项1
+                                            <input type="checkbox"> 选项1
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <input type="checkbox" name="d-s-c-2"> 选项2
+                                            <input type="checkbox"> 选项2
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <input type="checkbox" name="d-s-c-3"> 选项3
+                                            <input type="checkbox"> 选项3
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <input type="checkbox" name="d-s-c-4"> 选项4
+                                            <input type="checkbox"> 选项4
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <input type="checkbox" name="d-s-c-5"> 选项5
+                                            <input type="checkbox"> 选项5
                                         </a>
                                     </li>
                                 </ul>
@@ -108,16 +115,17 @@
                         <div class="col-md-6">
                             <label>文章分类</label>
                             <div id="myCombobox" class="input-group dropdown combobox">
-                                <input class="form-control" name="combobox" type="text" value="默认分类">
+                                <input class="form-control" type="text" value="默认分类">
+
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-default dropdown-toggle"
                                             data-toggle="dropdown">
                                         <i class="caret"></i>
                                     </button>
                                     <ul class="dropdown-menu pull-right">
-                                        <li data-value="0"><a href="#">默认分类</a></li>
+                                        <li data-value="0"><a href="#" onclick="changeCategoryId('123')">默认分类</a></li>
                                         <li class="divider"></li>
-                                        <li data-value="1"><a href="#">测试分类1</a></li>
+                                        <li data-value="1"><a href="#" onclick="changeCategoryId('456')">测试分类1</a></li>
                                         <li data-value="2"><a href="#">测试分类2</a></li>
                                         <li data-value="3"><a href="#">测试分类3</a></li>
                                     </ul>
@@ -138,7 +146,7 @@
                     </div>
 
                     <div id="md-container" class="form-group col-md-12">
-                        <textarea name="" id="editor"></textarea>
+                        <textarea name="content" id="editor"></textarea>
                     </div>
 
                     <div id="html-container" class="form-group col-md-12" style="padding: 0px;">
@@ -153,21 +161,23 @@
                     </div>
 
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12" style="margin-bottom: 0px;">
                         <div class="form-group col-md-3">
                             <label class="col-md-6 control-label">允许评论</label>
+                            <input type="hidden" name="allowcommon" id="allowCommon" value="0">
                             <div class="col-sm-6">
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input id="hasAllowCommon" type="checkbox">
                                     <span></span>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="col-md-6 control-label">允许订阅</label>
+                            <input type="hidden" name="allowsub" id="allowSub" value="0">
                             <div class="col-sm-6">
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input id="hasAllowSub" type="checkbox">
                                     <span></span>
                                 </label>
                             </div>
@@ -182,12 +192,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="page-container form-group col-md-12" id="webuploader-container">
-                        <div id="uploader" class="wu-example">
+
+                    <div class="page-container form-group col-md-12 myHidden" id="webuploader-container">
+                        <div id="uploader">
                             <div class="queueList">
                                 <div id="dndArea" class="placeholder">
                                     <div id="filePicker"></div>
                                     <p id="articleImgText">٩(๑❛ᴗ❛๑)۶ 为文章添加一张缩略图 ٩(๑❛ᴗ❛๑)۶</p>
+                                    <p style="color: #747474;font-size: 16px">提示：可以直接拖拽文件或粘贴截图</p>
                                 </div>
                             </div>
                             <div class="statusBar" style="display:none;">
@@ -198,7 +210,7 @@
                                 <div class="info"></div>
                                 <div class="btns">
                                     <div id="filePicker2"></div>
-                                    <div class="uploadBtn">开始上传</div>
+                                    <div class="btn-shadow uploadBtn state-ready">开始上传</div>
                                 </div>
                             </div>
                         </div>
@@ -209,17 +221,16 @@
 
                     <div class="text-right" style="padding-bottom: 20px">
                         <a class="btn btn-default waves-effect waves-light" href="/admin/article">返回列表</a>
-                        <button type="button" class="btn btn-primary btn-shadow"
-                                onclick="subArticle('publish');">
+                        <button type="button" class="btn btn-primary btn-shadow" style="text-align: center"
+                                onclick="submitArticle('publish');">
                             保存文章
                         </button>
-                        <button type="button" class="btn btn-warning btn-shadow"
-                                onclick="subArticle('draft');">
+                        <button type="button" class="btn btn-warning btn-shadow" style=""
+                                onclick="submitArticle('draft');">
                             存为草稿
                         </button>
                     </div>
                 </form>
-            </div>
             </div>
 
 
@@ -235,6 +246,7 @@
 <script type="text/javascript">
     // 添加全局站点信息
     var BASE_URL = 'js/plugins/webuploader';
+    var img_URL = '<c:url value="/upload/uploadPic"/>';
 </script>
 <script src="<c:url value='/js/plugins/webuploader/webuploader.js'/>" cache="false"></script>
 <script src="<c:url value='/js/demo/webuploader-demo.js'/>" cache="false"></script>
@@ -243,7 +255,7 @@
 <script src="<c:url value='/js/tale/article.js'/>" cache="false"></script>
 
 
-<script src="<c:url value='/js/tale/base.js'/>" cache="false"></script>
+<%--<script src="<c:url value='/js/tale/base.js'/>" cache="false"></script>--%>
 
 <%--导入底部文件--%>
 <%@include file="/WEB-INF/jsps/format/admin/foot.jsp" %>

@@ -80,8 +80,14 @@ public class BaseController {
         return (User) session.getAttribute(User.SESSION_USER_NAME);
     }
 
-    public String getSessionUid(HttpSession session) {
-        return this.getLoginUser(session).getUid();
+    /**
+     * 获取 session中的用户 ID
+     *
+     * @param session
+     * @return
+     */
+    public String getLoginUserId(HttpSession session) {
+        return getLoginUser(session).getUid();
     }
 
     public String show_404() {
@@ -95,6 +101,7 @@ public class BaseController {
 
     /**
      * 校验数据
+     *
      * @param bindingResult
      * @param model
      * @param user

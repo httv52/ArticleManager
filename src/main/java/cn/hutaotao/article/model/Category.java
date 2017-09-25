@@ -1,11 +1,15 @@
 package cn.hutaotao.article.model;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable {
     private String categoryid;
 
     private String categoryname;
 
-    private String uid;
+    /*关联关系*/
+    //多对一
+    private User user;
 
     public String getCategoryid() {
         return categoryid;
@@ -23,11 +27,11 @@ public class Category {
         this.categoryname = categoryname == null ? null : categoryname.trim();
     }
 
-    public String getUid() {
-        return uid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid == null ? null : uid.trim();
+    public void setUser(User user) {
+        this.user = user;
     }
 }

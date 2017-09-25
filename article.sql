@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-09-23 03:24:01
+Date: 2017-09-26 07:41:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,6 +21,8 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `aid` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `pageTitle` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `content` mediumtext COLLATE utf8_unicode_ci,
   `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `previewImg` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -68,6 +70,22 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
+-- Table structure for file
+-- ----------------------------
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file` (
+  `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `real_name` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
+  `file_type` int(1) NOT NULL,
+  `uid` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `created` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `file_user_FK` (`uid`),
+  CONSTRAINT `file_user_FK` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
 -- Table structure for logs
 -- ----------------------------
 DROP TABLE IF EXISTS `logs`;
@@ -81,7 +99,7 @@ CREATE TABLE `logs` (
   PRIMARY KEY (`id`),
   KEY `user_logs` (`uid`),
   CONSTRAINT `user_logs` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for tag

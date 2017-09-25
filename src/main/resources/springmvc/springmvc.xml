@@ -52,13 +52,14 @@
 
     <!--时间类型转换-->
     <!--<bean id="customConversionService"-->
-          <!--class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
-        <!--<property name="converters">-->
-            <!--<set>-->
-                <!--<bean class="cn.hutaotao.utils.DateConverter"/>-->
-            <!--</set>-->
-        <!--</property>-->
+    <!--class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
+    <!--<property name="converters">-->
+    <!--<set>-->
+    <!--<bean class="cn.hutaotao.utils.DateConverter"/>-->
+    <!--</set>-->
+    <!--</property>-->
     <!--</bean>-->
+
 
     <!--配置视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"

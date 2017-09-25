@@ -24,9 +24,12 @@
 
     <link rel="stylesheet" href="<c:url value='/css/app.v2.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/js/fuelux/fuelux.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="<c:url value='/css/plugins/toastr/toastr.min.css'/>" type="text/css"/>
 
 
     <script src="<c:url value='/js/jquery-3.2.1.min.js'/>"></script>
+    <script src="<c:url value='/js/plugins/toastr/toastr.min.js'/>"></script>
+    <script src="<c:url value='/js/demo/myBase.js'/>"></script>
 
     <script src="<c:url value='/js/iden/identicon.js'/>"></script>
     <script src="<c:url value='/js/iden/pnglib.js'/>"></script>
@@ -139,10 +142,12 @@
             display: block;
             margin-top: 1.4rem;
         }
+
         .navbar-brand {
             height: auto;
         }
-        .navbar-brand>img {
+
+        .navbar-brand > img {
             display: inherit;
         }
 
@@ -150,6 +155,14 @@
             font-size: 30px;
         }
 
+        .toast-top-center {
+            padding-top: 50px;
+        }
+
+        .myHidden {
+            position: absolute;
+            top: -999em; /* 不占据空间，无法点击 */
+        }
     </style>
 
 </head>
@@ -235,7 +248,8 @@
                                 class="fa fa-envelope-o fa-2x text-success"></i></span><span
                                 class="media-body block m-b-none">Sophi sent you a email<br><small class="text-muted">1 minutes ago</small></span></a>
                             <a href="#" class="media list-group-item"> <span class="pull-left thumb-sm"> <img
-                                    img src="<c:url value='/images/avatar_default.jpg'/>" class="img-circle headImg"> </span> <span
+                                    img src="<c:url value='/images/avatar_default.jpg'/>"
+                                    class="img-circle headImg"> </span> <span
                                     class="media-body block m-b-none"> Use awesome animate.css<br>
               <small class="text-muted">10 minutes ago</small> </span> </a> <a href="#"
                                                                                class="media list-group-item"> <span
