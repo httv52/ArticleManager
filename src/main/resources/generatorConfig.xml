@@ -70,11 +70,13 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表 -->
-        <table tableName="file"
+        <!--<table tableName="file"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
-               enableUpdateByExample="false"/>
+               enableUpdateByExample="false"/>-->
+
+
        <!-- <table tableName="article"
                enableCountByExample="false"
                enableDeleteByExample="false"

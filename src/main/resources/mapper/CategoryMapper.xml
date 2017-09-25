@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hutaotao.article.dao.CategoryMapper">
+    <resultMap id="BaseResultMap" type="cn.hutaotao.article.model.Category">
+        <id column="categoryId" property="categoryid" jdbcType="VARCHAR"/>
+        <result column="categoryName" property="categoryname" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="categoryRelation" type="Category" extends="BaseResultMap">
+        <association property="user" javaType="User">
+            <id column="uid" property="uid"/>
+            <result column="userName" property="username"/>
+            <result column="screen_name" property="screenName"/>
+        </association>
+    </resultMap>
+
+    <select id="findCategoryById" resultMap="categoryRelation" parameterType="String">
+        SELECT
+            c.*,
+            u.uid,
+            u.username,
+            u.screen_name
+        FROM category c, user u
+        WHERE c.uid = u.uid AND categoryId = #{categoryId}
+    </select>
+
+    <insert id="insertCategory" parameterType="Category">
+        INSERT INTO category VALUES (#{categoryid}, #{categoryname}, #{user.uid})
+    </insert>
+
+</mapper>
