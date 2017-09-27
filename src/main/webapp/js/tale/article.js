@@ -34,17 +34,17 @@ $(function () {
     $("#switch-btn").click(function () {
         var type = $('.myArticleType').val();
         var this_ = $(this);
-        if (type == 'markdown') {
+        if (type == '0') {
             // 切换为富文本编辑器
             $('#md-container').hide();
             $('#html-container').show();
             this_.text('切换为Markdown编辑器');
-            $('.myArticleType').val('summernote');
+            $('.myArticleType').val('1');
         } else {
             // 切换为markdown编辑器
             $('#html-container').hide();
             $('#md-container').show();
-            $('.myArticleType').val('markdown');
+            $('.myArticleType').val('0');
             this_.text('切换为富文本编辑器');
         }
     });
@@ -57,7 +57,6 @@ $(function () {
             $('#webuploader-container').show();
         } else {
             $('#webuploader-container').addClass('myHidden');
-            $('#previewImg').val('');
         }
     });
 
@@ -83,32 +82,6 @@ $(function () {
 
 });
 
-/*
- * 自动保存为草稿
- * */
-/*
- function autoSave() {
- var content = $('#type').val() == 'markdown' ? mditor.value : htmlEditor.summernote('code');
- var title = $('#articleForm input[name=title]').val();
- if (title != '' && content != '') {
- $('#content-editor').val(content);
- $("#articleForm #status").val('draft');
- $("#articleForm #categories").val($('#multiple-sel').val());
- var params = $("#articleForm").serialize();
- var url = $('#articleForm #cid').val() != '' ? '/admin/article/modify' : '/admin/article/publish';
- tale.post({
- url: url,
- data: params,
- success: function (result) {
- if (result && result.success) {
- $('#articleForm #cid').val(result.payload);
- } else {
- tale.alertError(result.msg || '保存文章失败');
- }
- }
- });
- }
- }*/
 
 /*分类*/
 function changeCategoryId(categoryId) {
@@ -131,96 +104,58 @@ function submitArticle(state) {
         hutao.infoContent('请输入您的文章标题正文内容');
         return;
     }
+    //若不添加缩略图，清空previewImg的值
+    if (!$("#hasPreviewImg").is(":checked") == true) {
+        $('#previewImg').val('');
+    }
+
     clearInterval(refreshIntervalId);
     $('#content-editor').val(content);
-    alert(content);
-    $("#articleForm #status").val(status);
+    $("#myArticleState").val(state);
     var url = $("#articleForm #ajax_url").val();
     var params = $("#articleForm").serialize();
-    /*var data = {};
-     $("#articleForm").serializeArray().map(function (x) {
-     if (data[x.name] !== undefined) {
-     if (!data[x.name].push) {
-     data[x.name] = [data[x.name]];
-     }
-     data[x.name].push(x.value || '');
-     } else {
-     data[x.name] = x.value || '';
-     }
-     });*/
-    // $("#result1").html(JSON.stringify(data));
 
+    if ($(".filelist .title").length > 0 && $("#previewImg").val() == '') {
+        hutao.questionAlert({
+            title: '确认发布',
+            text: '您的文章缩略图尚未上传，确认发布文章？',
+            then: function () {
+                alert("123");
+                saveArticle(url, params);
+                return;
+            }
+        });
+    }
+
+    saveArticle(url, params);
+}
+
+/**
+ * 保存文章或草稿
+ * @param params
+ */
+function saveArticle(url, params) {
     $.ajax({
         type: "POST",
         url: url,
         data: params,
         dataType: "json",
-        success: function (date) {
-            alert("123");
-            /*if (result && result.success) {
-             tale.alertOk({
-             text: '文章保存成功',
-             then: function () {
-             setTimeout(function () {
-             window.location.href = '/admin/article';
-             }, 500);
-             }
-             });
-             } else {
-             tale.alertError(result.msg || '保存文章失败');
-             }*/
+        success: function (result) {
+            if (result.success) {
+                hutao.successAlert({
+                    text: '文章保存成功'
+                }, function () {
+                    setTimeout(function () {
+                        window.location.href = '/article/admin/index';
+                    }, 500);
+                });
+            } else {
+                hutao.errorAlert(result.msg || '保存文章失败');
+            }
+
+        },
+        error: function (result) {
+            hutao.errorAlert(result.msg || '保存文章失败');
         }
     });
 }
-
-/*function allow_comment(obj) {
- var this_ = $(obj);
- var on = this_.attr('on');
- if (on == 'true') {
- this_.attr('on', 'false');
- $('#allow_comment').val('false');
- } else {
- this_.attr('on', 'true');
- $('#allow_comment').val('true');
- }
- }
-
- function allow_ping(obj) {
- var this_ = $(obj);
- var on = this_.attr('on');
- if (on == 'true') {
- this_.attr('on', 'false');
- $('#allow_ping').val('false');
- } else {
- this_.attr('on', 'true');
- $('#allow_ping').val('true');
- }
- }
-
-
- function allow_feed(obj) {
- var this_ = $(obj);
- var on = this_.attr('on');
- if (on == 'true') {
- this_.attr('on', 'false');
- $('#allow_feed').val('false');
- } else {
- this_.attr('on', 'true');
- $('#allow_feed').val('true');
- }
- }
-
- function add_thumbimg(obj) {
- var this_ = $(obj);
- var on = this_.attr('on');
- console.log(on);
- if (on == 'true') {
- this_.attr('on', 'false');
- $('#dropzone-container').addClass('hide');
- $('#thumb_img').val('');
- } else {
- this_.attr('on', 'true');
- $('#dropzone-container').removeClass('hide');
- $('#dropzone-container').show();
- }
- }*/

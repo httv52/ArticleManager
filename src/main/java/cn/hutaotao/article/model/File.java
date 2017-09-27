@@ -1,9 +1,39 @@
 package cn.hutaotao.article.model;
 
-public class File {
+import java.io.Serializable;
+
+public class File implements Serializable {
+    /*常量*/
+    public static final String PIC_HOST = "http://127.0.0.1:8081/SSMDemo2_img";
+    /**
+     * 其他类型
+     */
+    public static final Integer FILE_TYPEE_OTHER = 0;
+    /**
+     * 图片类型
+     */
+    public static final Integer FILE_TYPEE_IMAGE = 1;
+    /**
+     * 文本类型
+     */
+    public static final Integer FILE_TYPEE_TEXT = 2;
+    /**
+     * 链接类型
+     */
+    public static final Integer FILE_TYPEE_LINK = 3;
+    /**
+     * 视频类型
+     */
+    public static final Integer FILE_TYPEE_VEDIO = 4;
+    /**
+     * 音乐类型
+     */
+    public static final Integer FILE_TYPEE_MUSIC = 5;
+
+
     private String id;
 
-    private String fileName;
+    private String fileUrl;
 
     private String realName;
 
@@ -11,7 +41,7 @@ public class File {
 
     private Long created;
 
-    private User uid;
+    private User user;
 
     public String getId() {
         return id;
@@ -21,12 +51,12 @@ public class File {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName == null ? null : fileName.trim();
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 
     public String getRealName() {
@@ -53,11 +83,11 @@ public class File {
         this.created = created;
     }
 
-    public User getUid() {
-        return uid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUid(User uid) {
-        this.uid = uid;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

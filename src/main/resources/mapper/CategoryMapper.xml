@@ -14,6 +14,14 @@
         </association>
     </resultMap>
 
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+            categoryId,
+            categoryName
+        FROM category
+        WHERE categoryId = #{categoryId}
+    </select>
+
     <select id="findCategoryById" resultMap="categoryRelation" parameterType="String">
         SELECT
             c.*,
@@ -22,10 +30,21 @@
             u.screen_name
         FROM category c, user u
         WHERE c.uid = u.uid AND categoryId = #{categoryId}
+        ORDER BY c.indexes
     </select>
 
     <insert id="insertCategory" parameterType="Category">
-        INSERT INTO category VALUES (#{categoryid}, #{categoryname}, #{user.uid})
+        INSERT INTO category (categoryId, categoryName, uid, indexes)
+        VALUES (#{categoryid}, #{categoryname}, #{user.uid}, NULL)
     </insert>
 
+    <select id="findCategoryByUser" resultType="Category" parameterType="User">
+        SELECT
+            categoryId,
+            categoryName,
+            indexes
+        FROM category
+        WHERE uid = #{uid}
+        ORDER BY indexes;
+    </select>
 </mapper>

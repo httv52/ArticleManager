@@ -116,14 +116,18 @@ jQuery(function () {
                 switch (code) {
                     case 'exceed_size':
                         text = '文件大小超出';
+                        hutao.warningContent(text);
+
                         break;
 
                     case 'interrupt':
                         text = '上传暂停';
+                        hutao.infoContent(text);
                         break;
 
                     default:
                         text = '上传失败，请重试';
+                        hutao.errorContent(text);
                         break;
                 }
 
@@ -348,7 +352,7 @@ jQuery(function () {
             case 'finish':
                 stats = uploader.getStats();
                 if (stats.successNum) {
-                    hutao.successContent('上传成功');
+                    hutao.successContent('图片上传成功!');
                 } else {
                     // 没有成功的图片，重设
                     state = 'done';
@@ -359,6 +363,11 @@ jQuery(function () {
 
         updateStatus();
     }
+
+    //上传成功后触发事件;
+    uploader.on('uploadSuccess', function (file, response) {
+        $("#previewImg").val(response.relativePath);
+    });
 
     uploader.onUploadProgress = function (file, percentage) {
         var $li = $('#' + file.id),
@@ -452,6 +461,7 @@ jQuery(function () {
         $queue.hide();
         $statusBar.addClass('element-invisible');
         uploader.refresh();
+        $upload.text('开始上传').removeClass('disabled');
     });
 
     $upload.addClass('state-' + state);

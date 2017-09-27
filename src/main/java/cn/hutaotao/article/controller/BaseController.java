@@ -16,7 +16,7 @@ import java.util.List;
  * Created by ht on 2017/9/19.
  */
 public class BaseController {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     /*登录注册错误提示*/
     protected static final String REGIST_ERROR_MESSAGE = "注册失败,用户名已被注册";
@@ -91,7 +91,7 @@ public class BaseController {
     }
 
     public String show_404() {
-        return "redirect:/format/404";
+        return "redirect:/admin/404";
     }
 
     /**

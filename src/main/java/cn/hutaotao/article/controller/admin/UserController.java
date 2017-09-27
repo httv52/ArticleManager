@@ -1,7 +1,7 @@
 package cn.hutaotao.article.controller.admin;
 
 import cn.hutaotao.article.controller.BaseController;
-import cn.hutaotao.article.exception.MyUserException;
+import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.Logs;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.model.custom.UserCustom;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -98,17 +96,17 @@ public class UserController extends BaseController {
             userCustom.setUid(sessionUser.getUid());
             if (null == sessionUser.getLogged()) {
                 sessionUser = userService.updateUserWithLogged(sessionUser, currentTime);
-                logsService.savaLogs(userCustom, request, Logs.INIT_LOG, LogDataUtil.userInitDate(userCustom), currentTime);//记录日志
+                logsService.savaLogs(userCustom, request, Logs.INIT_LOG, LogDataUtil.userInitDate(userCustom), currentTime);//记录初始化日志
                 logsService.savaLogs(userCustom, request, Logs.LOGIN_LOG, LogDataUtil.userLogData(userCustom), System.currentTimeMillis());//记录日志
             } else {
                 logsService.savaLogs(userCustom, request, Logs.LOGIN_LOG, LogDataUtil.userLogData(userCustom), currentTime);//记录日志
             }
 
-            cache.set("login_error_count", 0);//清空登陆错误缓存
+            cache.set(userCustom.getUsername() + "_" + LOGIN_ERROR_COUNT, 0);//清空登陆错误缓存
 
             session.setAttribute(User.SESSION_USER_NAME, sessionUser);  //保存到session
 
-        } catch (MyUserException e) {
+        } catch (MyException e) {
             error_count += 1;
             cache.set(userCustom.getUsername() + "_" + LOGIN_ERROR_COUNT, error_count, 10);//10 * 60
             model.addAttribute("user", userCustom);
@@ -166,7 +164,7 @@ public class UserController extends BaseController {
             user.setActivateCode(activateCode);
 
             userService.registerUser(user); //判断是否已被注册
-        } catch (MyUserException e) {
+        } catch (MyException e) {
             LOGGER.warn("用户名" + user.getUsername() + REGIST_ERROR_MESSAGE, e);
 
             model.addAttribute("user", user);
@@ -198,7 +196,7 @@ public class UserController extends BaseController {
         User user = null;
         try {
             user = userService.activateUser(code);
-        } catch (MyUserException e) {
+        } catch (MyException e) {
             LOGGER.warn(code + ":激活失败 ---->" + e.getMessage(), e);
             model.addFlashAttribute("operateCode", OPERATE_CODE_REGISTER_ACTIV_FAULT);
             model.addFlashAttribute("errorMsg", e.getMessage());
@@ -216,7 +214,7 @@ public class UserController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/quit",method = RequestMethod.GET)
+    @RequestMapping(value = "/quit", method = RequestMethod.GET)
     public String quit(HttpSession session, Model model) {
         session.removeAttribute(User.SESSION_USER_NAME);
         model.addAttribute("operateCode", OPERATE_CODE_QUIT);

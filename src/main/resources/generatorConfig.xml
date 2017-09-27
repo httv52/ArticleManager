@@ -70,6 +70,13 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表 -->
+        <table tableName="comment"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"/>
+
+
         <!--<table tableName="file"
                enableCountByExample="false"
                enableDeleteByExample="false"

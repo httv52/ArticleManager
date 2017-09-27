@@ -36,6 +36,7 @@
                 <form id="articleForm" role="form" novalidate="novalidate" class="form-horizontal">
 
                     <input type="hidden" name="type" value="0" class="myArticleType">
+                    <input type="hidden" name="state" value="1" class="myArticleState">
                     <input type="hidden" name="cid" value="" id="aid"/>
                     <input type="hidden" name="previewimg" value="" id="previewImg"/>
                     <input type="hidden" id="ajax_url" value="<c:url value="/article/publish"/> "/>
@@ -45,9 +46,9 @@
                     <%--文章标题与网页标题--%>
                     <div class="form-group">
                         <div class="col-md-6">
-                            <label>文章标题</label>
+                            <label><span class="requiredFiled">* </span>文章标题</label>
                             <input type="text" class="form-control" placeholder="请输入文章标题（*必须）" name="title"
-                                   id="title" value="">
+                                   id="title" value="文章标题">
                         </div>
 
                         <div class="col-md-6">
@@ -66,14 +67,14 @@
                             <label>文章标签</label>
                             <div id="MyPillbox" class="pillbox clearfix" style="background: #fff;">
                                 <ul>
-                                    <li class="label bg-info">
+                                    <%--<li class="label bg-info">
                                         <input type="hidden" name="myOldTag" value="测试标签1"/>测试标签1
                                     </li>
                                     <li class="label bg-success">
                                         <input type="hidden" name="myOldTag" value="测试标签2"/>测试标签2
                                     </li>
                                     <li class="label bg-warning">测试标签3</li>
-                                    <li class="label bg-danger">测试标签4</li>
+                                    <li class="label bg-danger">测试标签4</li>--%>
                                     <input id="pillboxInput" type="text" placeholder="添加文章标签">
                                 </ul>
                             </div>
@@ -83,37 +84,19 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-select" id="pillboxSelect">
-                                    <li>
-                                        <a href="#">
-                                            <input type="checkbox"> 选项1
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <input type="checkbox"> 选项2
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <input type="checkbox"> 选项3
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <input type="checkbox"> 选项4
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <input type="checkbox"> 选项5
-                                        </a>
-                                    </li>
+                                    <c:forEach items="${tagList}" var="tag">
+                                        <li>
+                                            <a href="#">
+                                                <input type="checkbox" id="${tag.tagid}"> ${tag.tagname}
+                                            </a>
+                                        </li>
+                                    </c:forEach>
                                 </ul>
                             </div>
                         </div>
 
                         <div class="col-md-6">
-                            <label>文章分类</label>
+                            <label><span class="requiredFiled">* </span>文章分类</label>
                             <div id="myCombobox" class="input-group dropdown combobox">
                                 <input class="form-control" type="text" value="默认分类">
 
@@ -123,11 +106,14 @@
                                         <i class="caret"></i>
                                     </button>
                                     <ul class="dropdown-menu pull-right">
-                                        <li data-value="0"><a href="#" onclick="changeCategoryId('123')">默认分类</a></li>
+                                        <li data-value="0"><a href="#" onclick="changeCategoryId('0')">默认分类</a></li>
                                         <li class="divider"></li>
-                                        <li data-value="1"><a href="#" onclick="changeCategoryId('456')">测试分类1</a></li>
-                                        <li data-value="2"><a href="#">测试分类2</a></li>
-                                        <li data-value="3"><a href="#">测试分类3</a></li>
+                                        <c:forEach items="${categoryList}" var="categ" varStatus="status">
+                                            <li data-value="${status.count}">
+                                                <a href="#"
+                                                   onclick="changeCategoryId('${categ.categoryid}')"> ${categ.categoryname}</a>
+                                            </li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>
@@ -138,7 +124,7 @@
                     <div class="line pull-in"></div>
 
                     <div class="form-group col-md-12" style="padding-top: 10px">
-                        <label class="pull-left">文章正文</label>
+                        <label class="pull-left"><span class="requiredFiled">* </span>文章正文</label>
                         <div class="pull-right">
                             <a id="switch-btn" href="javascript:void(0)"
                                class="btn btn-dark btn-sm btn-shadow" type="markdown">切换为富文本编辑器</a>
@@ -146,7 +132,7 @@
                     </div>
 
                     <div id="md-container" class="form-group col-md-12">
-                        <textarea name="content" id="editor"></textarea>
+                        <textarea id="editor">文章正文</textarea>
                     </div>
 
                     <div id="html-container" class="form-group col-md-12" style="padding: 0px;">
@@ -222,11 +208,11 @@
                     <div class="text-right" style="padding-bottom: 20px">
                         <a class="btn btn-default waves-effect waves-light" href="/admin/article">返回列表</a>
                         <button type="button" class="btn btn-primary btn-shadow" style="text-align: center"
-                                onclick="submitArticle('publish');">
+                                onclick="submitArticle('1');">
                             保存文章
                         </button>
                         <button type="button" class="btn btn-warning btn-shadow" style=""
-                                onclick="submitArticle('draft');">
+                                onclick="submitArticle('0');">
                             存为草稿
                         </button>
                     </div>
@@ -246,7 +232,12 @@
 <script type="text/javascript">
     // 添加全局站点信息
     var BASE_URL = 'js/plugins/webuploader';
-    var img_URL = '<c:url value="/upload/uploadPic"/>';
+    var img_URL = '<c:url value="/file/uploadFile"/>';
+
+    /*var hutao = new $.hutao();
+     hutao.successAlert({
+     text: '文章保存成功'
+     });*/
 </script>
 <script src="<c:url value='/js/plugins/webuploader/webuploader.js'/>" cache="false"></script>
 <script src="<c:url value='/js/demo/webuploader-demo.js'/>" cache="false"></script>

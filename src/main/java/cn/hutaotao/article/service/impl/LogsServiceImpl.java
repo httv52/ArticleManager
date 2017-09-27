@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by ht on 2017/9/20.
@@ -29,5 +30,10 @@ public class LogsServiceImpl implements LogsService {
         logs.setCreatrd(currentTime);
 
         logsMapper.insert(logs);
+    }
+
+    @Override
+    public List<Logs> findAll(String loginUserId) {
+        return logsMapper.findAllLogs(loginUserId);
     }
 }

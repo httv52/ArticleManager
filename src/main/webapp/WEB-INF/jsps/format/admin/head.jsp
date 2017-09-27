@@ -25,10 +25,12 @@
     <link rel="stylesheet" href="<c:url value='/css/app.v2.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/js/fuelux/fuelux.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/plugins/toastr/toastr.min.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="<c:url value='/css/plugins/sweetalert/sweetalert.css'/>" type="text/css"/>
 
 
     <script src="<c:url value='/js/jquery-3.2.1.min.js'/>"></script>
     <script src="<c:url value='/js/plugins/toastr/toastr.min.js'/>"></script>
+    <script src="<c:url value='/js/plugins/sweetalert/sweetalert.min.js'/>"></script>
     <script src="<c:url value='/js/demo/myBase.js'/>"></script>
 
     <script src="<c:url value='/js/iden/identicon.js'/>"></script>
@@ -162,6 +164,26 @@
         .myHidden {
             position: absolute;
             top: -999em; /* 不占据空间，无法点击 */
+        }
+
+        .requiredFiled {
+            color: #ff5f5b;
+        }
+
+        .contentControl {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+
+        .contentControl_2 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
     </style>
 

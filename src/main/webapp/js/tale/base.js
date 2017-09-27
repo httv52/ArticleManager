@@ -24,7 +24,7 @@ $.tale.prototype.alertOk = function (options) {
     options.showCancelButton = false;
     options.showCloseButton = false;
     options.type = 'success';
-    this.alertBox(options);
+    this.baseAlert(options);
 };
 
 /**
@@ -49,7 +49,7 @@ $.tale.prototype.alertWarn = function (options) {
     options.text = options.text;
     options.timer = 3000;
     options.type = 'warning';
-    this.alertBox(options);
+    this.baseAlert(options);
 };
 
 /**
@@ -62,7 +62,7 @@ $.tale.prototype.alertConfirm = function (options) {
     options.text = options.text;
     options.showCancelButton = true;
     options.type = 'question';
-    this.alertBox(options);
+    this.baseAlert(options);
 };
 
 /**
@@ -74,14 +74,14 @@ $.tale.prototype.alertError = function (options) {
     options.title = options.title || '错误信息';
     options.text = options.text;
     options.type = 'error';
-    this.alertBox(options);
+    this.baseAlert(options);
 };
 
 /**
  * 公共弹框
  * @param options
  */
-$.tale.prototype.alertBox = function (options) {
+$.tale.prototype.baseAlert = function (options) {
     swal({
         title: options.title,
         text: options.text,

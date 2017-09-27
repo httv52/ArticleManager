@@ -37,8 +37,8 @@ public class UUIDUtil {
         int num = serNum++;
         int len2 = (num + "").length();
         String sec = new String(zeros, 0, len - len2);
-        System.out.println(new Long(fir + sec + num));
-        System.out.println(Long.toHexString(new Long(fir + sec + num)));
+//        System.out.println(new Long(fir + sec + num));
+//        System.out.println(Long.toHexString(new Long(fir + sec + num)));
         return (Long.toHexString(new Long(fir + sec + num)) + getUUID().substring(0, 4)).toLowerCase();
     }
 

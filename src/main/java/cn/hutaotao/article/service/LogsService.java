@@ -1,9 +1,11 @@
 package cn.hutaotao.article.service;
 
+import cn.hutaotao.article.model.Logs;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.model.custom.UserCustom;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by ht on 2017/9/20.
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface LogsService {
     /**
      * 保存日志
+     *
      * @param userCustom
      * @param request
      * @param logAction
@@ -18,4 +21,12 @@ public interface LogsService {
      * @param currentTime
      */
     void savaLogs(UserCustom userCustom, HttpServletRequest request, String logAction, String data, long currentTime) throws Exception;
+
+    /**
+     * 获取所有日志
+     *
+     * @param loginUserId 用户
+     * @return
+     */
+    List<Logs> findAll(String loginUserId);
 }

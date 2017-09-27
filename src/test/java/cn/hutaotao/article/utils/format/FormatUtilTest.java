@@ -19,4 +19,9 @@ public class FormatUtilTest {
         System.out.println(FormatUtil.formatDateTime(1505970482127L));
     }
 
+    @Test
+    public void getNewFileName() throws Exception {
+        System.out.println(FormatUtil.getNewFileName());
+    }
+
 }

@@ -1,7 +1,7 @@
 package cn.hutaotao.article.service.impl;
 
 import cn.hutaotao.article.dao.UserMapper;
-import cn.hutaotao.article.exception.MyUserException;
+import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.service.LogsService;
 import cn.hutaotao.article.service.UserService;
@@ -71,11 +71,11 @@ public class UserServiceImpl implements UserService {
      *
      * @param user
      */
-    public void registerUser(User user) throws MyUserException {
+    public void registerUser(User user) throws MyException {
         //首先判断用户名是否已被注册
         //若已被注册，抛出异常
         if (findUserByUsername(user.getUsername()) != null) {
-            throw new MyUserException("该用户名已被注册，请更换用户名");
+            throw new MyException("该用户名已被注册，请更换用户名");
         }
 
         user.setUid(UUIDUtil.getUUID());  //uuid
@@ -107,11 +107,11 @@ public class UserServiceImpl implements UserService {
         User tempUser = userMapper.selectByUsername(user.getUsername());
         //若未查出，抛出异常
         if (null == tempUser) {
-            throw new MyUserException("登录失败-密码或用户名错误");
+            throw new MyException("登录失败-密码或用户名错误");
         }
 
         if (tempUser.getState() == 0) {
-            throw new MyUserException("你尚未激活，请前往邮箱 " + tempUser.getEmail() + " 激活。");
+            throw new MyException("你尚未激活，请前往邮箱 " + tempUser.getEmail() + " 激活。");
         }
 
         String md5_dbPwd = tempUser.getPassword();  //数据库密码加密
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
 
         //若对比错误，抛出异常
         if (!md5_dbPwd.equalsIgnoreCase(md5_inputPwd)) { //忽略md5大小写
-            throw new MyUserException("登录失败-密码或用户名错误");
+            throw new MyException("登录失败-密码或用户名错误");
         }
 
         return tempUser;
@@ -138,11 +138,11 @@ public class UserServiceImpl implements UserService {
     public User activateUser(String code) {
         User user = userMapper.selectByActivateCode(code);
         if (null == user) {
-            throw new MyUserException("激活码不存在");
+            throw new MyException("激活码不存在");
         }
 
         if (1 == user.getState()) {
-            throw new MyUserException("此账号已被激活，请登录");
+            throw new MyException("此账号已被激活，请登录");
         }
 
         user = updateUserWithState(user);

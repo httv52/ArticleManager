@@ -4526,7 +4526,7 @@ Date.now = Date.now || function () {
         });
 
         /*我的*/
-        var addMyPill = function ($input, $pillText) {
+        var addMyPill = function ($input, $pillText, $myOldTagId) {
             var $text = $pillText, $pills = $input.closest('.pillbox'), $repeat = false, $repeatPill;
             if ($text == "")
                 return;
@@ -4541,7 +4541,7 @@ Date.now = Date.now || function () {
                 return;
             }
             ;
-            $item = $('<li class="label bg-success inputSeletePill"><input type="hidden" name="myOldTag" value="' + $text + '" />' + $text + '</li> ');
+            $item = $('<li class="label bg-success inputSeletePill"><input type="hidden" name="$myOldTagId" value="' + $myOldTagId + '" />' + $text + '</li> ');
             $item.insertBefore($input);
             $input.val('');
             $pills.trigger('change', $item);
@@ -4569,12 +4569,15 @@ Date.now = Date.now || function () {
             $items = $menu.find('li > a > input:checked');
             if ($items.length) {
                 $text = [];
+                $tagIds = [];
                 $items.each(function () {
                     var $str = $(this).parent().text();
+                    var $tagId = $(this).attr("id");
                     $str && $text.push($.trim($str));
+                    $tagId && $tagIds.push($.trim($tagId));
                     $(".inputSeletePill").remove()
                     for (var i = 0; i < $text.length; i++) {
-                        addMyPill($("#pillboxInput"), $text[i]);
+                        addMyPill($("#pillboxInput"), $text[i], $tagIds[i]);
                     }
                 });
                 $text = $text.length < 5 ? $text.join(', ') : $text.length + ' 个标签';

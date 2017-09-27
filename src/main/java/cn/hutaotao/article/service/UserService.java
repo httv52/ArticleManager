@@ -1,6 +1,6 @@
 package cn.hutaotao.article.service;
 
-import cn.hutaotao.article.exception.MyUserException;
+import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +47,7 @@ public interface UserService {
      *
      * @param user
      */
-    void registerUser(User user) throws MyUserException;
+    void registerUser(User user) throws MyException;
 
     /**
      * 登录方法

@@ -39,7 +39,8 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
           p:dataSource-ref="dataSource"
           p:mapperLocations="classpath:mapper/*.xml"
-          p:typeAliasesPackage="cn.hutaotao.article.model"/>
+          p:typeAliasesPackage="cn.hutaotao.article.model"
+          p:configLocation="classpath:mybatis/SqlMapConfig.xml"/>
 
     <!-- 使用MapperScannerConfigurer（扫描mapper接口）-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"

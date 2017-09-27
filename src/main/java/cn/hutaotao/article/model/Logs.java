@@ -1,5 +1,7 @@
 package cn.hutaotao.article.model;
 
+import cn.hutaotao.article.utils.format.FormatUtil;
+
 import java.io.Serializable;
 
 public class Logs implements Serializable {
@@ -23,6 +25,19 @@ public class Logs implements Serializable {
 
     private Long creatrd;
 
+    /*视图值*/
+    private String createdDateView;
+    private String createdDateTimeView;
+
+    public String getCreatedDateView() {
+        return createdDateView;
+    }
+
+    public String getCreatedDateTimeView() {
+        return createdDateTimeView;
+    }
+
+    /*get set*/
     public Integer getId() {
         return id;
     }
@@ -69,5 +84,7 @@ public class Logs implements Serializable {
 
     public void setCreatrd(Long creatrd) {
         this.creatrd = creatrd;
+        this.createdDateView = FormatUtil.formatDate(creatrd);
+        this.createdDateTimeView = FormatUtil.formatDateTime(creatrd);
     }
 }

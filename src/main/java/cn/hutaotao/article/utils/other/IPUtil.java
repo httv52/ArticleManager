@@ -18,19 +18,28 @@ public class IPUtil {
     public static String getIpAddr(HttpServletRequest request) throws Exception {
         String ip = request.getHeader("X-Real-IP");
         if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
-            return ip;
+            return ipHelper(ip);
         }
         ip = request.getHeader("X-Forwarded-For");
         if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
             // 多次反向代理后会有多个IP值，第一个为真实IP。
             int index = ip.indexOf(',');
             if (index != -1) {
-                return ip.substring(0, index);
+                String realIp = ip.substring(0, index);
+                return ipHelper(realIp);
             } else {
-                return ip;
+                return ipHelper(ip);
             }
         } else {
-            return request.getRemoteAddr();
+            return ipHelper(request.getRemoteAddr());
+        }
+    }
+
+    private static String ipHelper(String realIp) {
+        if ("0:0:0:0:0:0:0:1".equalsIgnoreCase(realIp)) {
+            return "127.0.0.1";
+        } else {
+            return realIp;
         }
     }
 }

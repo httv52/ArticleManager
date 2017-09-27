@@ -9,4 +9,19 @@ public class TODO {
      * 2.十分钟前效果
      * 3.
      */
+
+
+    /*
+    * /*var data = {};
+     $("#articleForm").serializeArray().map(function (x) {
+     if (data[x.name] !== undefined) {
+     if (!data[x.name].push) {
+     data[x.name] = [data[x.name]];
+     }
+     data[x.name].push(x.value || '');
+     } else {
+     data[x.name] = x.value || '';
+     }
+     });*/
+    // $("#result1").html(JSON.stringify(data));*/
 }

@@ -34,17 +34,17 @@
                     <div class="col-sm-6 col-md-3 padder-v b-r b-light bg-info dker">
                         <span class="fa-stack fa-2x pull-left m-r-sm">
                             <i class="fa fa-circle fa-stack-2x text-info"></i>
-                            <i class="fa fa-male fa-stack-1x text-white"></i>
+                            <i class="fa fa-paste fa-stack-1x text-white"></i>
                         </span>
                         <a class="clear" href="#">
-                            <span class="h3 block m-t-xs"><strong>12</strong></span>
+                            <span class="h3 block m-t-xs"><strong>${articleCount}</strong></span>
                             <span class="">篇文章</span>
                         </a>
                     </div>
                     <div class="col-sm-6 col-md-3 padder-v b-r b-light bg-danger">
                         <span class="fa-stack fa-2x pull-left m-r-sm">
                             <i class="fa fa-circle fa-stack-2x text-warning"></i>
-                            <i class="fa fa-male fa-stack-1x text-white"></i>
+                            <i class="fa fa-comment-o fa-stack-1x text-white"></i>
                         </span>
                         <a class="clear" href="#">
                             <span class="h3 block m-t-xs"><strong>12</strong></span>
@@ -54,21 +54,21 @@
                     <div class="col-sm-6 col-md-3 padder-v b-r b-light bg-primary">
                         <span class="fa-stack fa-2x pull-left m-r-sm">
                             <i class="fa fa-circle fa-stack-2x text-primary-li"></i>
-                            <i class="fa fa-male fa-stack-1x text-white"></i>
+                            <i class="fa fa-link fa-stack-1x text-white"></i>
                         </span>
                         <a class="clear" href="#">
                             <span class="h3 block m-t-xs"><strong>12</strong></span>
-                            <span class="">个链接</span>
+                            <span class="">条链接</span>
                         </a>
                     </div>
                     <div class="col-sm-6 col-md-3 padder-v b-r b-light bg-success bg-purple">
                         <span class="fa-stack fa-2x pull-left m-r-sm">
                             <i class="fa fa-circle fa-stack-2x text-success text-purple"></i>
-                            <i class="fa fa-male fa-stack-1x text-white"></i>
+                            <i class="fa fa-folder-open-o fa-stack-1x text-white"></i>
                         </span>
                         <a class="clear" href="#">
-                            <span class="h3 block m-t-xs"><strong>12</strong></span>
-                            <span class="">篇文章</span>
+                            <span class="h3 block m-t-xs"><strong>${fileCount}</strong></span>
+                            <span class="">个附件</span>
                         </a>
                     </div>
                 </div>
@@ -103,41 +103,48 @@
 
                             </c:if>--%>
                             <div>
-                                <article class="media">
-                                    <span class="pull-left thumb-sm">
-                                        <i class="fa fa-file-o fa-3x icon-muted"></i>
-                                    </span>
-                                    <div class="media-body">
-                                        <div class="pull-right media-xs text-center text-muted">
-                                            <span class="text-muted m-l-sm pull-right"> <i
-                                                    class="fa fa-clock-o"></i><span
-                                                    style="vertical-align: inherit;"><span
-                                                    style="vertical-align: inherit;"> 2017-10-10</span></span>
+                                <c:if test="${!empty articleList}">
+                                    <c:forEach items="${articleList}" var="article">
+                                        <article class="media">
+                                            <span class="pull-left thumb-sm">
+                                                <i class="fa fa-paste fa-3x icon-muted"></i>
                                             </span>
-                                        </div>
-                                        <a href="#" class="h4">通过javax.mail发送邮件(示例gmail、qq)</a>
-                                        <small class="block">
-                                            <span class="label label-info">政治</span></small>
-                                        <small class="block m-t-sm">
-                                            <a href="#">最近学习了一下javax.mail，想通过gmail邮箱发送邮件到qq邮箱。但是由于gmail的两步验证，一直授权无法通过。</a>
-                                        </small>
-                                    </div>
-                                </article>
-                                <div class="line pull-in"></div>
-
-                                <article class="media">
-                                    <div class="media-body text-center">
+                                            <div class="media-body">
+                                                <div class="pull-right media-xs text-center text-muted">
+                                            <span class="text-muted m-l-sm pull-right"> <i
+                                                    class="fa fa-clock-o"></i>
+                                                <span style="vertical-align: inherit;">
+                                                    <span style="vertical-align: inherit;"> ${article.createdDateView}</span>
+                                                </span>
+                                            </span>
+                                                </div>
+                                                <a href="#" class="h4 contentControl">${article.title}</a>
+                                                <small class="block">
+                                                    <span class="label label-info">${article.stateView}</span></small>
+                                                <small class="block m-t-sm">
+                                                    <a href="#"><p class="contentControl_2">${article.content}</p></a>
+                                                </small>
+                                            </div>
+                                        </article>
+                                        <div class="line pull-in"></div>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="${empty articleList}">
+                                    <article class="media">
+                                        <div class="media-body text-center">
                                         <span class="thumb-sm">
                                             <i class="fa fa-file-o fa-3x icon-muted"></i>
                                         </span>
-                                        <span class="h3">暂无文章</span><br>
+                                            <span class="h3">暂无文章</span><br>
 
-                                        <div style="padding: 20px">
-                                            <a href="<c:url value="/admin/publish"/> " class="block h4 text-success">点击前往发布文章</a>
+                                            <div style="padding: 20px">
+                                                <a href="<c:url value="/admin/publish"/> "
+                                                   class="block h4 text-success">点击前往发布文章</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </article>
-                                <div class="line pull-in"></div>
+                                    </article>
+                                    <div class="line pull-in"></div>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -292,38 +299,39 @@
                         <div class="ibox-content" style="display: block;">
                             <div>
                                 <ul class="layui-timeline">
-                                    <li class="layui-timeline-item">
-                                        <i class="layui-icon layui-timeline-axis"></i>
-                                        <div class="layui-timeline-content layui-text">
-                                            <div class="layui-timeline-title">2018年，layui 5.0
-                                                发布。并发展成为中国最受欢迎的前端UI框架（期望）
+                                    <c:forEach items="${logsList}" var="log" varStatus="status">
+                                        <li class="layui-timeline-item">
+                                            <c:choose>
+                                                <c:when test="${status.index == 0}">
+                                                    <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis">&#xe63d;</i>
+                                                </c:when>
+                                                <c:when test="${log.action == '初始化博客'}">
+                                                    <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis"></i>
+                                                </c:when>
+                                                <c:when test="${log.action == '登录后台'}">
+                                                    <i class="layui-icon layui-timeline-axis">&#xe60e;</i>
+                                                </c:when>
+                                                <c:when test="${log.action == '发表文章'}">
+                                                    <i class="layui-icon layui-timeline-axis">&#xe609;</i>
+                                                </c:when>
+                                                <c:when test="${log.action == '删除文章'}">
+                                                    <i class="layui-icon layui-timeline-axis">&#xe640;</i>
+                                                </c:when>
+                                                <c:when test="${log.action == '保存文件'}">
+                                                    <i class="layui-icon layui-timeline-axis">&#xe681;</i>
+                                                </c:when>
+                                                <c:when test="${log.action == '删除文件'}">
+                                                    <i class="layui-icon layui-timeline-axis">&#xe64d;</i>
+                                                </c:when>
+                                            </c:choose>
+
+                                            <div class="layui-timeline-content layui-text">
+                                                <div class="layui-timeline-title">
+                                                        ${log.createdDateTimeView} ： ${log.action} ---> IP-${log.ip}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                    <li class="layui-timeline-item">
-                                        <i class="layui-icon layui-timeline-axis"></i>
-                                        <div class="layui-timeline-content layui-text">
-                                            <div class="layui-timeline-title">2017年，layui 里程碑版本 2.0 发布</div>
-                                        </div>
-                                    </li>
-                                    <li class="layui-timeline-item">
-                                        <i class="layui-icon layui-timeline-axis"></i>
-                                        <div class="layui-timeline-content layui-text">
-                                            <div class="layui-timeline-title">2016年，layui 首个版本发布</div>
-                                        </div>
-                                    </li>
-                                    <li class="layui-timeline-item">
-                                        <i class="layui-icon layui-timeline-axis"></i>
-                                        <div class="layui-timeline-content layui-text">
-                                            <div class="layui-timeline-title">2015年，layui 孵化</div>
-                                        </div>
-                                    </li>
-                                    <li class="layui-timeline-item">
-                                        <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis"></i>
-                                        <div class="layui-timeline-content layui-text">
-                                            <div class="layui-timeline-title">更久前，轮子时代。维护几个独立组件：layer等</div>
-                                        </div>
-                                    </li>
+                                        </li>
+                                    </c:forEach>
                                 </ul>
                                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                                     <legend>系统日志 | 文章管理系统</legend>

@@ -14,4 +14,24 @@
         </association>
     </resultMap>
 
+    <insert id="insertTag" parameterType="Tag">
+        INSERT INTO tag (tagId, tagName, uid) VALUES (
+            #{tagid}, #{tagname}, #{user.uid}
+        )
+    </insert>
+
+    <insert id="insertArticle_Tag" parameterType="ArticleTagCustomer">
+        INSERT INTO article_tag_tbl (id, aid, tagId) VALUES (
+            #{id}, #{aid}, #{tagId}
+        )
+    </insert>
+
+    <select id="findTagByUser" resultType="Tag" parameterType="User">
+        SELECT
+            tagId,
+            tagName
+        FROM tag
+        WHERE uid = #{uid}
+    </select>
+
 </mapper>

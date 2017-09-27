@@ -3,11 +3,27 @@
 <mapper namespace="cn.hutaotao.article.dao.FileMapper">
     <resultMap id="BaseResultMap" type="cn.hutaotao.article.model.File">
         <id column="id" property="id" jdbcType="VARCHAR"/>
-        <result column="file_name" property="fileName" jdbcType="VARCHAR"/>
+        <result column="file_url" property="fileUrl" jdbcType="VARCHAR"/>
         <result column="real_name" property="realName" jdbcType="VARCHAR"/>
         <result column="file_type" property="fileType" jdbcType="INTEGER"/>
         <result column="created" property="created" jdbcType="BIGINT"/>
     </resultMap>
+
+    <insert id="saveFile" parameterType="File">
+        INSERT INTO file (
+            id, file_url, real_name,
+            file_type, created, uid
+        )
+        VALUES (#{id}, #{fileUrl}, #{realName},
+                #{fileType}, #{created}, #{user.uid}
+        )
+    </insert>
+
+    <select id="findFileCount" parameterType="String" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM file
+        WHERE uid = #{uid};
+    </select>
 
     <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
       select

@@ -1,5 +1,6 @@
 package cn.hutaotao.article.utils.format;
 
+import cn.hutaotao.article.model.Article;
 import cn.hutaotao.article.model.custom.UserCustom;
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LogDataUtil {
     public static String userInitDate(UserCustom user) {
-        return user.getUsername()+" ---> 初始化数据";
+        return user.getUsername() + " ---> 初始化数据";
     }
 
     public static String userLogData(UserCustom user) {
@@ -19,6 +20,10 @@ public class LogDataUtil {
             user.setRemeberPwd("off");
         }
         return "{\"username\":\"" + user.getUsername() + "\",\"remeber_me\":\"" + user.getRemeberPwd() + "\"}";
+    }
+
+    public static String publishArticle(UserCustom user, Article article) {
+        return user.getUsername() + " ---> 发布新文章:" + article.getTitle();
     }
 
 }

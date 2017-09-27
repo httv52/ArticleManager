@@ -1,17 +1,16 @@
 package cn.hutaotao.article.dao;
 
 import cn.hutaotao.article.model.Tag;
+import cn.hutaotao.article.model.User;
+import cn.hutaotao.article.model.custom.ArticleTagCustomer;
+
+import java.util.List;
 
 public interface TagMapper {
-    int deleteByPrimaryKey(String tagid);
 
-    int insert(Tag record);
+    void insertTag(Tag tag);
 
-    int insertSelective(Tag record);
+    void insertArticle_Tag(ArticleTagCustomer customer);
 
-    Tag selectByPrimaryKey(String tagid);
-
-    int updateByPrimaryKeySelective(Tag record);
-
-    int updateByPrimaryKey(Tag record);
+    List<Tag> findTagByUser(User user);
 }
