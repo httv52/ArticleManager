@@ -14,17 +14,29 @@ public class User implements Serializable {
     /*常量*/
     public static final String SESSION_USER_NAME = "loginUser"; //用户在session中的key
 
-    public static final Integer USER_STATE_OF__ACTIVATE = 1;//用户激活状态
-    public static final Integer USER_STATE_OF__LOSE_ACTIVATE = 0;//用户失效状态
+    /**
+     * 已注销
+     */
+    public static final Integer USER_STATE_OF__DELETE = 2;
+    /**
+     * 已注册
+     */
+    public static final Integer USER_STATE_OF__ACTIVATE = 1;
+    /**
+     * 未激活
+     */
+    public static final Integer USER_STATE_OF__LOSE_ACTIVATE = 0;
 
-    public static final String USER_STATE_OF__ACTIVATE_VIEW = "激活状态";//用户激活状态
-    public static final String USER_STATE_OF__LOSE_ACTIVATE_VIEW = "未激活状态";//用户失效状态
+    public static final String USER_STATE_OF__DELETE_VIEW = "已注销";
+    public static final String USER_STATE_OF__ACTIVATE_VIEW = "已注册";
+    public static final String USER_STATE_OF__LOSE_ACTIVATE_VIEW = "未激活";
 
     public static final Map<Integer, String> userStateMap = new HashMap<>();
 
     static {
         userStateMap.put(USER_STATE_OF__ACTIVATE, USER_STATE_OF__ACTIVATE_VIEW);
         userStateMap.put(USER_STATE_OF__LOSE_ACTIVATE, USER_STATE_OF__LOSE_ACTIVATE_VIEW);
+        userStateMap.put(USER_STATE_OF__DELETE, USER_STATE_OF__DELETE_VIEW);
     }
 
     /* -常量*/
@@ -64,6 +76,10 @@ public class User implements Serializable {
 
     public String getLoggedView() {
         return loggedView;
+    }
+
+    public String getStateView() {
+        return stateView;
     }
     /* -视图值*/
 

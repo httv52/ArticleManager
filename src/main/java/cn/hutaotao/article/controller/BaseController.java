@@ -1,6 +1,7 @@
 package cn.hutaotao.article.controller;
 
 import cn.hutaotao.article.controller.admin.UserController;
+import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.utils.cache.MapCache;
 import org.slf4j.Logger;
@@ -77,7 +78,10 @@ public class BaseController {
      * @return
      */
     public User getLoginUser(HttpSession session) {
-        return (User) session.getAttribute(User.SESSION_USER_NAME);
+        User loginUser = (User) session.getAttribute(User.SESSION_USER_NAME);
+        if (null == loginUser)
+            throw new MyException();
+        return loginUser;
     }
 
     /**

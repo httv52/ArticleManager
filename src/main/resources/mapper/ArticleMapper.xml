@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.hutaotao.article.dao.ArticleMapper">
-    <resultMap id="BaseResultMap" type="cn.hutaotao.article.model.Article">
+    <resultMap id="BaseResultMap" type="Article">
         <id column="aid" property="aid" jdbcType="VARCHAR"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="pageTitle" property="pageTitle" jdbcType="VARCHAR"/>
@@ -16,7 +16,7 @@
         <result column="allowCommon" property="allowcommon" jdbcType="INTEGER"/>
         <result column="allowSub" property="allowsub" jdbcType="INTEGER"/>
     </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="cn.hutaotao.article.model.Article" extends="BaseResultMap">
+    <resultMap id="ResultMapWithBLOBs" type="Article" extends="BaseResultMap">
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
 
@@ -38,12 +38,12 @@
     <select id="findArticleByUser" parameterType="String" resultMap="article_relation">
         SELECT *
         FROM article
-        WHERE uid = #{uid}
+        WHERE uid = #{uid} AND state NOT IN (0, 3)
     </select>
     <select id="findArticleCount" parameterType="String" resultType="Integer">
         SELECT count(*)
         FROM `article`
-        WHERE uid = #{uid};
+        WHERE uid = #{uid} AND state NOT IN (0, 3)
     </select>
 
     <!--<sql id="Base_Column_List">-->

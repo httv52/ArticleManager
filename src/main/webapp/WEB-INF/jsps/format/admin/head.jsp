@@ -185,6 +185,11 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
+
+        .find-nothing {
+            margin-top: 13px;
+            text-align: center;
+        }
     </style>
 
 </head>
@@ -216,7 +221,7 @@
                 <section class="dropdown-menu aside-xl on animated fadeInLeft no-borders lt">
                     <div class="wrapper lter m-t-n-xs">
                         <a href="#" class="thumb pull-left m-r">
-                            <img src="<c:url value='/images/avatar_default.jpg'/>" class="img-circle headImg">
+                            <img src="<c:url value='/images/avatar_default.jpg'/>" class="img-circle myHeadImg">
                         </a>
                         <div class="clear">
                             <span class="text-white font-bold">@${sessionScope.loginUser.screenName} </span>
@@ -268,11 +273,14 @@
                                                                                        style="display: block;"><span
                                 class="pull-left thumb-sm text-center"><i
                                 class="fa fa-envelope-o fa-2x text-success"></i></span><span
-                                class="media-body block m-b-none">Sophi sent you a email<br><small class="text-muted">1 minutes ago</small></span></a>
-                            <a href="#" class="media list-group-item"> <span class="pull-left thumb-sm"> <img
-                                    img src="<c:url value='/images/avatar_default.jpg'/>"
-                                    class="img-circle headImg"> </span> <span
-                                    class="media-body block m-b-none"> Use awesome animate.css<br>
+                                class="media-body block m-b-none">Sophi sent you a email<br><small class="text-muted">1 minutes ago</small>
+                        </span>
+                        </a>
+                            <a href="#" class="media list-group-item"> <span class="pull-left thumb-sm">
+                                <img src="<c:url value='/images/avatar_default.jpg'/>" class="img-circle myHeadImg">
+                                     </span>
+                                <span
+                                        class="media-body block m-b-none"> Use awesome animate.css<br>
               <small class="text-muted">10 minutes ago</small> </span> </a> <a href="#"
                                                                                class="media list-group-item"> <span
                                     class="media-body block m-b-none"> 1.0 initial released<br>
@@ -307,7 +315,7 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <span class="thumb-sm avatar pull-left">
-                        <img src="<c:url value='/images/avatar_default.jpg'/> " class="headImg">
+                       <img src="<c:url value='/images/avatar_default.jpg'/>" class="img-circle myHeadImg">
                     </span>　
                     <span class="font-bold">${sessionScope.loginUser.screenName}</span>　<b class="caret"></b>
                 </a>

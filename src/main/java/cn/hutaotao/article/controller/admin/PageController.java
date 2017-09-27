@@ -1,10 +1,7 @@
 package cn.hutaotao.article.controller.admin;
 
 import cn.hutaotao.article.controller.BaseController;
-import cn.hutaotao.article.model.Article;
-import cn.hutaotao.article.model.Category;
-import cn.hutaotao.article.model.Logs;
-import cn.hutaotao.article.model.Tag;
+import cn.hutaotao.article.model.*;
 import cn.hutaotao.article.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +27,8 @@ public class PageController extends BaseController {
     @Autowired
     FileService fileService;
     @Autowired
+    CommentService commentService;
+    @Autowired
     LogsService logsService;
 
     @RequestMapping("/index")
@@ -37,13 +36,13 @@ public class PageController extends BaseController {
         String loginUserId = getLoginUserId(session);
 
         List<Article> articleList = articleService.findAll(loginUserId);
-        Integer articleCount = articleService.findArticleCount(loginUserId);
         Integer fileCount = fileService.findFileCount(loginUserId);
+        List<Comment> commentList = commentService.findCommentByUser(loginUserId);
         List<Logs> logsList = logsService.findAll(loginUserId);
 
         model.addAttribute("articleList", articleList);
-        model.addAttribute("articleCount", articleCount);
         model.addAttribute("fileCount", fileCount);
+        model.addAttribute("commentList", commentList);
         model.addAttribute("logsList", logsList);
 
         setNavNumber(model, 1, -1);

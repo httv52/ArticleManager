@@ -3,17 +3,13 @@
 
 <script type="text/javascript">
     $(function () {
-        $(".myFullscreen").click();
+        var $myHeadImgId = '${sessionScope.loginUser.uid}';
+        changeHeadImg($(".myHeadImg"), $myHeadImgId);
 
-        var hash = '${sessionScope.loginUser.uid}';
-        var options = {
-            /*foreground: [0, 0, 0, 255],               // 后景色 RGBA黑色
-            background: [255, 255, 255, 255],         // 前景色 RGBA白色*/
-            margin: 0.2,                              // 20% margin
-            size: 320,                                // 420px square
-            format: 'svg'                             // use SVG instead of PNG
-        };
-        var data = new Identicon(hash, options).toString();
-        $(".headImg").attr("src", 'data:image/svg+xml;base64,' + data + '');
+//        var commentHeadImg = $(".comment-list").find(".commentHeadImg");
+//        commentHeadImg.each(function () {
+//            var $hashId = $(this).attr("name");
+//            changeHeadImg($(this), $hashId);
+//        });
     });
 </script>
