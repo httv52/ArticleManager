@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-09-26 07:41:53
+Date: 2017-09-28 02:33:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
-  `aid` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `aid` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `pageTitle` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `content` mediumtext COLLATE utf8_unicode_ci,
@@ -38,7 +38,9 @@ CREATE TABLE `article` (
   `categoryId` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`aid`),
   KEY `article-user` (`uid`),
-  CONSTRAINT `article-user` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`)
+  KEY `article_category` (`categoryId`),
+  CONSTRAINT `article-user` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`),
+  CONSTRAINT `article_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`categoryId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
@@ -46,12 +48,12 @@ CREATE TABLE `article` (
 -- ----------------------------
 DROP TABLE IF EXISTS `article_tag_tbl`;
 CREATE TABLE `article_tag_tbl` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `aid` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
-  `tagId` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
+  `tagId` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `article_FK` (`aid`),
   KEY `tag_FK` (`tagId`),
+  KEY `article_FK` (`aid`),
   CONSTRAINT `article_FK` FOREIGN KEY (`aid`) REFERENCES `article` (`aid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tag_FK` FOREIGN KEY (`tagId`) REFERENCES `tag` (`tagId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -64,9 +66,31 @@ CREATE TABLE `category` (
   `categoryId` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `categoryName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `uid` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `indexes` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`categoryId`),
   KEY `user_category` (`uid`),
+  KEY `category_index` (`indexes`) USING BTREE,
   CONSTRAINT `user_category` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment` (
+  `id` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `content` varchar(4000) COLLATE utf8_unicode_ci NOT NULL,
+  `created` bigint(20) NOT NULL,
+  `ip` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `state` int(1) NOT NULL,
+  `parent` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `aid` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `uid` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `comment_user_FK` (`uid`),
+  KEY `comment_article_FK` (`aid`),
+  CONSTRAINT `comment_article_FK` FOREIGN KEY (`aid`) REFERENCES `article` (`aid`),
+  CONSTRAINT `comment_user_FK` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
@@ -75,7 +99,7 @@ CREATE TABLE `category` (
 DROP TABLE IF EXISTS `file`;
 CREATE TABLE `file` (
   `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `file_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `file_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `real_name` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
   `file_type` int(1) NOT NULL,
   `uid` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
@@ -99,7 +123,7 @@ CREATE TABLE `logs` (
   PRIMARY KEY (`id`),
   KEY `user_logs` (`uid`),
   CONSTRAINT `user_logs` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for tag
@@ -109,10 +133,12 @@ CREATE TABLE `tag` (
   `tagId` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `tagName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `uid` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `indexes` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`tagId`),
   KEY `user_tag` (`uid`),
+  KEY `category_index` (`indexes`) USING BTREE,
   CONSTRAINT `user_tag` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for user

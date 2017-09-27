@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hutaotao.article.dao.CommentMapper">
+    <resultMap id="BaseResultMap" type="Comment">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="BIGINT"/>
+        <result column="ip" property="ip" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="parent" property="parent" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="commentRelation" type="Comment" extends="BaseResultMap">
+        <association property="user" javaType="User">
+            <id column="uid" property="uid"/>
+            <result column="userName" property="username"/>
+            <result column="screen_name" property="screenName"/>
+            <result column="state" property="state"/>
+        </association>
+        <association property="article" javaType="Article">
+            <id column="aid" property="aid"/>
+        </association>
+    </resultMap>
+
+    <select id="findCommentCountByUser" parameterType="String" resultType="Integer">
+        SELECT COUNT(*)
+        FROM `comment` c, article a
+        WHERE c.aid = a.aid AND a.uid = #{articleUserId} AND c.state = 1
+    </select>
+    <select id="findCommentByUser" resultMap="commentRelation" parameterType="String">
+        SELECT c.*
+        FROM `comment` c, article a
+        WHERE c.aid = a.aid AND a.uid = #{articleUserId} AND c.state = 1
+        ORDER BY created DESC;
+    </select>
+
+</mapper>
