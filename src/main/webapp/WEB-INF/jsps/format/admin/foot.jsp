@@ -18,15 +18,12 @@
 <%@include file="/WEB-INF/jsps/format/tools/nav_bar.jsp" %>
 
 
-<script src="<c:url value='/js/app.v2.js'/>"></script>
 <script src="<c:url value='/js/fuelux/fuelux.js'/>"></script>
 
 <!-- layui -->
 <script src="<c:url value='/js/layer-v3.1.0/layer/layer.js'/>"></script>
 <script src="<c:url value='/js/layer-v3.1.0/layer/dist.js'/>"></script>
 
-<%--H+的js--%>
-<script src="<c:url value='/js/content.js'/>" cache="false"></script>
 
 <%-- chat--%>
 <script src="<c:url value='/js/charts/easypiechart/jquery.easy-pie-chart.js'/>" cache="false"></script>

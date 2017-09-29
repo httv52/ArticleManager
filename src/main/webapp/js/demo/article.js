@@ -119,11 +119,11 @@ function submitArticle(state) {
     var params = $("#articleForm").serialize();
 
     if ($(".filelist .title").length > 0 && $("#previewImg").val() == '') {
+        alert("123");
         hutao.questionAlert({
             title: '确认发布',
             text: '您的文章缩略图尚未上传，确认发布文章？',
             then: function () {
-                alert("123");
                 saveArticle(url, params);
                 return;
             }

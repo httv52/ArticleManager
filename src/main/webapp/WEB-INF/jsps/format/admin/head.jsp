@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="<c:url value='/js/mditor/css/mditor.min.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/plugins/webuploader/webuploader.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/demo/webuploader-demo.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="<c:url value='/css/plugins/footable/footable.core.css'/>" type="text/css"/>
 
     <link rel="stylesheet" href="<c:url value='/js/layui/css/layui.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/js/layer-v3.1.0/layer/theme/default/dist.css'/>" type="text/css"/>
@@ -27,8 +28,12 @@
     <link rel="stylesheet" href="<c:url value='/css/plugins/toastr/toastr.min.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/plugins/sweetalert/sweetalert.css'/>" type="text/css"/>
 
+    <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
+    <script src="<c:url value='/js/app.v2.js'/>"></script>
+    <%--H+的js--%>
+    <script src="<c:url value='/js/content.js'/>" cache="false"></script>
 
-    <script src="<c:url value='/js/jquery-3.2.1.min.js'/>"></script>
+    <script src="<c:url value='/js/jquery.min.js'/>"></script>
     <script src="<c:url value='/js/plugins/toastr/toastr.min.js'/>"></script>
     <script src="<c:url value='/js/plugins/sweetalert/sweetalert.min.js'/>"></script>
     <script src="<c:url value='/js/demo/myBase.js'/>"></script>
@@ -189,6 +194,30 @@
         .find-nothing {
             margin-top: 13px;
             text-align: center;
+        }
+
+        .btn:hover {
+            -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            opacity: 1
+        }
+
+        .btn:focus {
+            -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            opacity: 1
+        }
+
+        .pagination > li > .active {
+            background-color: #6e8cd7 !important;
+            color: #fff;
+        }
+
+        td a {
+            color: #4e81ad;
+            text-decoration: none;
         }
     </style>
 

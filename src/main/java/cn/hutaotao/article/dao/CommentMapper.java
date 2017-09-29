@@ -11,7 +11,7 @@ public interface CommentMapper {
      * @param articleUserId
      * @return
      */
-    Integer findCommentCountByUser(String articleUserId);
+    Integer findCommentCountByUserPrimary(String articleUserId);
 
     /**
      * 获取自己发表文章的评论列表
@@ -19,5 +19,5 @@ public interface CommentMapper {
      * @param articleUserId
      * @return
      */
-    List<Comment> findCommentByUser(String articleUserId);
+    List<Comment> findCommentByUserPrimary(String articleUserId);
 }

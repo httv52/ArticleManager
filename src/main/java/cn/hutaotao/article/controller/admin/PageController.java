@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -19,25 +18,25 @@ import java.util.List;
 @RequestMapping("/admin")
 public class PageController extends BaseController {
     @Autowired
-    TagService tagService;
+    private TagService tagService;
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
     @Autowired
-    ArticleService articleService;
+    private ArticleService articleService;
     @Autowired
-    FileService fileService;
+    private FileService fileService;
     @Autowired
-    CommentService commentService;
+    private CommentService commentService;
     @Autowired
-    LogsService logsService;
+    private LogsService logsService;
 
     @RequestMapping("/index")
     public String index(Model model, HttpSession session) {
         String loginUserId = getLoginUserId(session);
 
-        List<Article> articleList = articleService.findAll(loginUserId);
+        List<Article> articleList = articleService.findAllPublished(loginUserId);
         Integer fileCount = fileService.findFileCount(loginUserId);
-        List<Comment> commentList = commentService.findCommentByUser(loginUserId);
+        List<Comment> commentList = commentService.findCommentByUserPrimary(loginUserId);
         List<Logs> logsList = logsService.findAll(loginUserId);
 
         model.addAttribute("articleList", articleList);
@@ -51,15 +50,16 @@ public class PageController extends BaseController {
 
 
     @RequestMapping("/articleManege")
-    public String articleManege(Model model) {
+    public String articleManege(Model model, HttpSession session) {
         setNavNumber(model, 2, 1);
-        return "admin/articleManege";
+        return "forward:/article/findByState";
     }
 
     @RequestMapping("/publish")
     public String publishing(Model model, HttpSession session) {
-        List<Tag> tagList = tagService.findTagByUser(getLoginUser(session));
-        List<Category> categoryList = categoryService.findCategoryByUser(getLoginUser(session));
+        String loginUserId = getLoginUserId(session);
+        List<Tag> tagList = tagService.findTagByUser(loginUserId);
+        List<Category> categoryList = categoryService.findCategoryByUser(loginUserId);
 
         setNavNumber(model, 6, -1);
         model.addAttribute("tagList", tagList);

@@ -22,9 +22,9 @@
 
     <resultMap id="article_relation" type="Article" extends="ResultMapWithBLOBs">
         <!--配置懒加载select-->
-        <association property="user" column="uid" select="cn.hutaotao.article.dao.UserMapper.selectByPrimaryKey"/>
+        <association property="user" column="uid" select="cn.hutaotao.article.dao.UserMapper.lazyLoadUser"/>
         <association property="category" column="categoryid"
-                     select="cn.hutaotao.article.dao.CategoryMapper.selectByPrimaryKey"/>
+                     select="cn.hutaotao.article.dao.CategoryMapper.lazyLoadUser"/>
         <collection property="tagList" ofType="Tag" resultMap="cn.hutaotao.article.dao.TagMapper.BaseResultMap"/>
     </resultMap>
 
@@ -35,23 +35,47 @@
         )
     </insert>
 
-    <select id="findArticleByUser" parameterType="String" resultMap="article_relation">
+    <select id="findArticleByUserPublished" parameterType="String" resultMap="article_relation">
         SELECT *
         FROM article
-        WHERE uid = #{uid} AND state NOT IN (0, 3)
-    </select>
-    <select id="findArticleCount" parameterType="String" resultType="Integer">
-        SELECT count(*)
-        FROM `article`
-        WHERE uid = #{uid} AND state NOT IN (0, 3)
+        WHERE uid = #{uid} AND state = 1
     </select>
 
-    <!--<sql id="Base_Column_List">-->
-    <!--aid, url, previewImg, created, modified, type, state, views, commens, allowCommon,-->
-    <!--allowSub, uid, categoryId-->
-    <!--</sql>-->
-    <!--<sql id="Blob_Column_List">-->
-    <!--content-->
-    <!--</sql>-->
+    <select id="findArticleCountPublished" parameterType="String" resultType="Integer">
+        SELECT count(*)
+        FROM `article`
+        WHERE uid = #{uid} AND state = 1
+    </select>
+
+    <select id="findArticleCount" parameterType="String" resultType="Integer">
+        SELECT count(DISTINCT a.aid)
+        FROM `article` a, article_tag_tbl att
+        WHERE uid = #{uid}
+        <if test="state!=null">
+            AND state = #{state}
+        </if>
+        <if test="categoryId!=null">
+            AND categoryId = #{categoryId}
+        </if>
+        <if test="tagId!=null">
+            AND att.tagId = #{tagId} AND att.aid = a.aid
+        </if>
+    </select>
+
+    <select id="findArticleAll" resultMap="article_relation">
+        SELECT DISTINCT a.*
+        FROM `article` a, article_tag_tbl att
+        WHERE uid = #{uid}
+        <if test="state!=null">
+            AND state = #{state}
+        </if>
+        <if test="categoryId!=null">
+            AND categoryId = #{categoryId}
+        </if>
+        <if test="tagId!=null">
+            AND att.tagId = #{tagId} AND att.aid = a.aid
+        </if>
+        LIMIT #{startPos},#{pageSize}
+    </select>
 
 </mapper>

@@ -26,7 +26,7 @@
         )
     </insert>
 
-    <select id="findTagByUser" resultType="Tag" parameterType="User">
+    <select id="findTagByUser" resultType="Tag" parameterType="String">
         SELECT
             tagId,
             tagName

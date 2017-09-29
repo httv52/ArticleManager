@@ -19,12 +19,12 @@ public interface ArticleService {
     void insertArticle(Article article, String categoryId, User loginUser);
 
     /**
-     * 获取所有文章
+     * 获取所有发布过的文章
      *
      * @param uid 用户
      * @return
      */
-    List<Article> findAll(String uid);
+    List<Article> findAllPublished(String uid);
 
     /**
      * 获取文章数量
@@ -32,5 +32,23 @@ public interface ArticleService {
      * @param uid 用户
      * @return
      */
-    Integer findArticleCount(String uid);
+    Integer findArticleCountPublished(String uid);
+
+    /**
+     * 所有的文章数量
+     *
+     * @param uid
+     * @return
+     */
+    Integer findArticleCount(String uid, String state, String categoryId, String tagId);
+
+    /**
+     * 分页-所有文章列表
+     *
+     * @param uid
+     * @param state
+     * @param categoryId
+     * @param tagId      @return
+     */
+    List<Article> findArticleAll(String uid, Integer startPos, Integer pageSize, String state, String categoryId, String tagId);
 }

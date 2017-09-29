@@ -24,4 +24,11 @@ public class FormatUtilTest {
         System.out.println(FormatUtil.getNewFileName());
     }
 
+    @Test
+    public void test() {
+        int a = 10;
+        System.out.println(a/2);
+        System.out.println(a-(a/2)-1);
+    }
+
 }

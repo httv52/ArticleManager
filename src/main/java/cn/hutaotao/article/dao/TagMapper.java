@@ -12,5 +12,5 @@ public interface TagMapper {
 
     void insertArticle_Tag(ArticleTagCustomer customer);
 
-    List<Tag> findTagByUser(User user);
+    List<Tag> findTagByUser(String uid);
 }

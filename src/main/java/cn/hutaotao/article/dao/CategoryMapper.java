@@ -10,5 +10,5 @@ public interface CategoryMapper {
 
     void insertCategory(Category category);
 
-    List<Category> findCategoryByUser(User loginUser);
+    List<Category> findCategoryByUser(String uid);
 }

@@ -18,7 +18,7 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryMapper categoryMapper;
 
     @Override
-    public List<Category> findCategoryByUser(User loginUser) {
-        return categoryMapper.findCategoryByUser(loginUser);
+    public List<Category> findCategoryByUser(String loginUserId) {
+        return categoryMapper.findCategoryByUser(loginUserId);
     }
 }

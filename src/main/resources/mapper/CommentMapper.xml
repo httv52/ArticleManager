@@ -10,26 +10,26 @@
         <result column="parent" property="parent" jdbcType="VARCHAR"/>
     </resultMap>
     <resultMap id="commentRelation" type="Comment" extends="BaseResultMap">
-        <association property="user" javaType="User">
-            <id column="uid" property="uid"/>
-            <result column="userName" property="username"/>
-            <result column="screen_name" property="screenName"/>
-            <result column="state" property="state"/>
-        </association>
+        <association property="user" column="uid" select="cn.hutaotao.article.dao.UserMapper.lazyLoadUser"/>
         <association property="article" javaType="Article">
             <id column="aid" property="aid"/>
         </association>
     </resultMap>
 
-    <select id="findCommentCountByUser" parameterType="String" resultType="Integer">
+    <select id="findCommentCountByUserPrimary" parameterType="String" resultType="Integer">
         SELECT COUNT(*)
         FROM `comment` c, article a
         WHERE c.aid = a.aid AND a.uid = #{articleUserId} AND c.state = 1
     </select>
-    <select id="findCommentByUser" resultMap="commentRelation" parameterType="String">
-        SELECT c.*
-        FROM `comment` c, article a
-        WHERE c.aid = a.aid AND a.uid = #{articleUserId} AND c.state = 1
+    <select id="findCommentByUserPrimary" resultMap="commentRelation" parameterType="String">
+        SELECT
+            c.*,
+            u.uid,
+            u.username,
+            u.screen_name,
+            u.state
+        FROM `comment` c, article a, user u
+        WHERE c.aid = a.aid AND a.uid = u.uid AND a.uid = #{articleUserId} AND c.state = 1
         ORDER BY created DESC;
     </select>
 

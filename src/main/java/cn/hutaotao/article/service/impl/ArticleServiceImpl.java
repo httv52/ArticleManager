@@ -5,7 +5,6 @@ import cn.hutaotao.article.model.Article;
 import cn.hutaotao.article.model.Category;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.service.ArticleService;
-import cn.hutaotao.article.utils.code.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,12 +36,22 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> findAll(String uid) {
-        return articleMapper.findArticleByUser(uid);
+    public List<Article> findAllPublished(String uid) {
+        return articleMapper.findArticleByUserPublished(uid);
     }
 
     @Override
-    public Integer findArticleCount(String uid) {
-        return articleMapper.findArticleCount(uid);
+    public Integer findArticleCountPublished(String uid) {
+        return articleMapper.findArticleCountPublished(uid);
+    }
+
+    @Override
+    public Integer findArticleCount(String uid, String state, String categoryId, String tagId) {
+        return articleMapper.findArticleCount(uid, state, categoryId, tagId);
+    }
+
+    @Override
+    public List<Article> findArticleAll(String uid, Integer startPos, Integer pageSize, String state, String categoryId, String tagId) {
+        return articleMapper.findArticleAll(uid, startPos, pageSize, state, categoryId, tagId);
     }
 }

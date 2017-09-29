@@ -139,12 +139,28 @@
 
                         <div class="summernote">
 
-                            <iframe id='time' name="time" src="<c:url value="/admin/summer"/>" class="col-md-12"
-                                    height="406px" frameborder="0" scrolling="no"></iframe>
-
+                            <iframe id='summernoteText' name="summernoteText" src="<c:url value="/admin/summer"/>"
+                                    class="col-md-12" height="406px" frameborder="0" scrolling="no"></iframe>
                         </div>
 
                     </div>
+                    <%--js--%>
+                    <script type="text/javascript">
+                        function reinitIframe() {
+                            var iframe = document.getElementById("summernoteText");
+                            try {
+                                var bHeight = iframe.contentWindow.document.body.scrollHeight;
+                                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+                                var height = Math.max(bHeight, dHeight);
+                                iframe.height = height;
+                                console.log(height);
+                            } catch (ex) {
+                            }
+                        }
+
+                        window.setInterval("reinitIframe()", 200);
+                    </script>
+                    <%--js--%>
 
 
                     <div class="form-group col-md-12" style="margin-bottom: 0px;">
@@ -243,7 +259,7 @@
 <script src="<c:url value='/js/demo/webuploader-demo.js'/>" cache="false"></script>
 
 
-<script src="<c:url value='/js/tale/article.js'/>" cache="false"></script>
+<script src="<c:url value='/js/demo/article.js'/>" cache="false"></script>
 
 
 <%--<script src="<c:url value='/js/tale/base.js'/>" cache="false"></script>--%>

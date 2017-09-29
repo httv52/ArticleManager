@@ -17,13 +17,13 @@ public class CommentServiceImpl implements CommentService {
     CommentMapper commentMapper;
 
     @Override
-    public Integer findCommentCountByUser(String loginUserId) {
-        return commentMapper.findCommentCountByUser(loginUserId);
+    public Integer findCommentCountByUserPrimary(String loginUserId) {
+        return commentMapper.findCommentCountByUserPrimary(loginUserId);
     }
 
     @Override
-    public List<Comment> findCommentByUser(String loginUserId) {
-        return commentMapper.findCommentByUser(loginUserId);
+    public List<Comment> findCommentByUserPrimary(String loginUserId) {
+        return commentMapper.findCommentByUserPrimary(loginUserId);
     }
 
 }

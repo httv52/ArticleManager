@@ -83,7 +83,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> findTagByUser(User loginUser) {
-        return tagMapper.findTagByUser(loginUser);
+    public List<Tag> findTagByUser(String loginUserId) {
+        return tagMapper.findTagByUser(loginUserId);
     }
 }

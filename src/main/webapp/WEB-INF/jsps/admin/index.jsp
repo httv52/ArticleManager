@@ -112,12 +112,17 @@
                                             </span>
                                             <div class="media-body">
                                                 <div class="pull-right media-xs text-center text-muted">
-                                            <span class="text-muted m-l-sm pull-right"> <i
-                                                    class="fa fa-clock-o"></i>
-                                                <span style="vertical-align: inherit;">
-                                                    <span style="vertical-align: inherit;"> ${article.createdDateView}</span>
+                                                <span class="text-muted m-l-sm pull-right" data-toggle="tooltip"
+                                                      data-placement="bottom"
+                                                      title="${article.createdDateTimeView}">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    <span style="vertical-align: inherit;">
+                                                        <span style="vertical-align: inherit;" class="dateTimeStamp">
+                                                                <input class="temp" type="hidden"
+                                                                       value="${article.created}">
+                                                        </span>
+                                                    </span>
                                                 </span>
-                                            </span>
                                                 </div>
                                                 <a href="<c:url value="/p/"/>${article.aid}"
                                                    class="h4 contentControl">${article.title}</a>
@@ -184,7 +189,9 @@
                                             <article id="comment-id-1" class="comment-item">
                                                 <a class="pull-left thumb-sm avatar">
                                                     <img src="<c:url value='/images/avatar_default.jpg'/>"
-                                                         class="img-shadow commentHeadImg" name="${comment.user.uid}">
+                                                         class="img-shadow commentHeadImg" name="${comment.user.uid}"
+                                                         data-toggle="tooltip" data-placement="bottom"
+                                                         title="${comment.user.screenName}">
                                                 </a>
                                                 <span class="arrow left"></span>
                                                 <section class="comment-body panel panel-default">
@@ -201,10 +208,12 @@
                                                         </label>
 
                                                             <%--时间--%>
-                                                        <span class="text-muted m-l-sm pull-right">
+                                                        <span class="text-muted m-l-sm pull-right" data-toggle="tooltip"
+                                                              data-placement="bottom"
+                                                              title="${comment.createdDateTimeView}">
                                                     <i class="fa fa-clock-o"></i>
                                                     <span style="vertical-align: inherit;">
-                                                        <span style="vertical-align: inherit;" class="commentTime">
+                                                        <span style="vertical-align: inherit;" class="dateTimeStamp">
                                                             <input class="temp" type="hidden"
                                                                    value="${comment.created}">
                                                         </span>
@@ -275,24 +284,6 @@
                                             </section>
                                         </article>
                                     </section>
-
-                                    <script>
-                                        $(function () {
-                                            var $commentHeadImg = $(".comment-list").find(".commentHeadImg");
-                                            $commentHeadImg.each(function () {
-                                                var $hashId = $(this).attr("name");
-                                                changeHeadImg($(this), $hashId);
-                                            });
-
-                                            var $timeEle = $(".comment-list .commentTime");
-                                            $timeEle.each(function () {
-                                                var $time = $(this).children(".temp").val();
-                                                var $dateTimeStamp = getDateDiff($time);
-                                                $(this).html($dateTimeStamp);
-                                            });
-                                        })
-                                    </script>
-
                                 </c:if>
 
                                 <%--评论项--%>
@@ -311,8 +302,25 @@
                 </div>
                 <%-- //最新评论--%>
 
+                <script>
+                    $(function () {
+                        var $commentHeadImg = $(".comment-list").find(".commentHeadImg");
+                        $commentHeadImg.each(function () {
+                            var $hashId = $(this).attr("name");
+                            changeHeadImg($(this), $hashId);
+                        });
 
+                        var $timeEle = $(".dateTimeStamp");
+                        $timeEle.each(function () {
+                            var $time = $(this).children(".temp").val();
+                            var $dateTimeStamp = getDateDiff($time);
+                            $(this).html($dateTimeStamp);
+                        });
+                    })
+                </script>
             </div>
+
+
             <div class="row">
 
                 <%--系统日志--%>

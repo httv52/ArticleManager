@@ -15,6 +15,16 @@
     <sql id="Base_Column_List">
         uid, username, password, email, screen_name, created, logged, state, activateCode
     </sql>
+    <select id="lazyLoadUser" resultType="User" parameterType="String">
+        SELECT
+            uid,
+            username,
+            screen_name,
+            state
+        FROM user
+        WHERE uid = #{uid}
+    </select>
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
@@ -141,14 +151,14 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="cn.hutaotao.article.model.User">
         UPDATE user
-        SET username    = #{username,jdbcType=VARCHAR},
-            password    = #{password,jdbcType=VARCHAR},
-            email       = #{email,jdbcType=VARCHAR},
-            screen_name = #{screenName,jdbcType=VARCHAR},
-            created     = #{created,jdbcType=BIGINT},
-            logged      = #{logged,jdbcType=BIGINT},
-            state       = #{state,jdbcType=INTEGER},
-            activateCode       = #{activateCode,jdbcType=VARCHAR}
+        SET username     = #{username,jdbcType=VARCHAR},
+            password     = #{password,jdbcType=VARCHAR},
+            email        = #{email,jdbcType=VARCHAR},
+            screen_name  = #{screenName,jdbcType=VARCHAR},
+            created      = #{created,jdbcType=BIGINT},
+            logged       = #{logged,jdbcType=BIGINT},
+            state        = #{state,jdbcType=INTEGER},
+            activateCode = #{activateCode,jdbcType=VARCHAR}
         WHERE uid = #{uid,jdbcType=VARCHAR}
     </update>
 </mapper>

@@ -14,7 +14,7 @@
         </association>
     </resultMap>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String">
+    <select id="lazyLoadUser" resultType="Category" parameterType="String">
         SELECT
             categoryId,
             categoryName
@@ -38,7 +38,7 @@
         VALUES (#{categoryid}, #{categoryname}, #{user.uid}, NULL)
     </insert>
 
-    <select id="findCategoryByUser" resultType="Category" parameterType="User">
+    <select id="findCategoryByUser" resultType="Category" parameterType="String">
         SELECT
             categoryId,
             categoryName,

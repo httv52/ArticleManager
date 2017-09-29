@@ -11,7 +11,19 @@ import java.util.List;
  * Created by ht on 2017/9/27.
  */
 public interface CommentService {
-    Integer findCommentCountByUser(String loginUserId);
+    /**
+     * 正常状态的评论列表
+     *
+     * @param loginUserId
+     * @return
+     */
+    Integer findCommentCountByUserPrimary(String loginUserId);
 
-    List<Comment> findCommentByUser(String loginUserId);
+    /**
+     * 正常状态的评论数量
+     *
+     * @param loginUserId
+     * @return
+     */
+    List<Comment> findCommentByUserPrimary(String loginUserId);
 }

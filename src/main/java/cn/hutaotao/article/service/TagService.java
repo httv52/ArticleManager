@@ -36,8 +36,8 @@ public interface TagService {
 
     /**
      * 查询用户的文章标签列表
-     * @param loginUser
+     * @param loginUserId
      * @return
      */
-    List<Tag> findTagByUser(User loginUser);
+    List<Tag> findTagByUser(String loginUserId);
 }

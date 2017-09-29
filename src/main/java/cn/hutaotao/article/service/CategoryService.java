@@ -14,5 +14,5 @@ public interface CategoryService{
      * @param loginUser
      * @return
      */
-    List<Category> findCategoryByUser(User loginUser);
+    List<Category> findCategoryByUser(String loginUserId);
 }
