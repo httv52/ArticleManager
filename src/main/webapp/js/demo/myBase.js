@@ -159,7 +159,7 @@ $.hutao.prototype.warningAlert = function (options, callback) {
 $.hutao.prototype.questionAlert = function (options, callback) {
     options = options || {};
     options.title = options.title || '确定要删除吗？';
-    options.text = options.text;
+    options.text = options.text || '确定要删除吗？';
     options.showCancelButton = true;
     options.type = 'warning';
     this.baseAlert(options, callback);

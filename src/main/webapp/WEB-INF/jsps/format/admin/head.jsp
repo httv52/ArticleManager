@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set var="imgPath" value="http://127.0.0.1:8081/SSMDemo2_img"/>
+
 <!DOCTYPE html>
 <html class="app">
 
@@ -219,6 +221,21 @@
             color: #4e81ad;
             text-decoration: none;
         }
+
+        .panel .panel-body button, .panel .panel-body a {
+            padding: 7px 12px;
+        }
+
+        .panel-my_success {
+            border-color: #13ca46;
+        }
+
+        .panel-my_success > .panel-heading {
+            color: #ffffff;
+            background-color: #65bd77;
+            border-color: #17b50f;
+        }
+
     </style>
 
 </head>
@@ -253,8 +270,8 @@
                             <img src="<c:url value='/images/avatar_default.jpg'/>" class="img-circle myHeadImg">
                         </a>
                         <div class="clear">
-                            <span class="text-white font-bold">@${sessionScope.loginUser.screenName} </span>
-                            <small class="block">姓名</small>
+                            <small>姓名</small>
+                            <span class="text-white font-bold block">@${sessionScope.loginUser.screenName} </span>
                             <a href="#" class="btn btn-xs btn-success m-t-xs">修改资料</a>
                         </div>
                     </div>
@@ -266,13 +283,13 @@
                         </div>
                         <div class="col-xs-4 dk">
                             <div class="padder-v">
-                                <small class="text-muted">文章数</small>
-                                <span class="m-b-xs h5 block text-white"> 12 </span></div>
+                                <small class="text-muted">发表文章</small>
+                                <span class="m-b-xs h5 block text-white"> ${articleNum} </span></div>
                         </div>
                         <div class="col-xs-4">
                             <div class="padder-v">
-                                <small class="text-muted">附件数</small>
-                                <span class="m-b-xs h5 block text-white">10</span></div>
+                                <small class="text-muted">发表评论</small>
+                                <span class="m-b-xs h5 block text-white"> ${myCountNum} </span></div>
                         </div>
                     </div>
                 </section>
@@ -419,13 +436,16 @@
                                         <ul class="nav lt">
                                             <li class="second" id="1">
                                                 <a href="<c:url value="/admin/articleManege"/> ">
-                                                    <i class="fa fa-angle-right"></i> <span>文管管理</span> </a>
+                                                    <i class="fa fa-angle-right"></i> <span>文管管理</span>
+                                                </a>
                                             </li>
                                             <li class="second" id="2">
                                                 <a href=""> <i class="fa fa-angle-right"></i> <span>评论管理</span> </a>
                                             </li>
                                             <li class="second">
-                                                <a href=""> <i class="fa fa-angle-right"></i> <span>分类/标签管理</span> </a>
+                                                <a href="<c:url value="/admin/categManege"/>">
+                                                    <i class="fa fa-angle-right"></i> <span>分类/标签管理</span>
+                                                </a>
                                             </li>
                                         </ul>
                                     </li>
@@ -439,6 +459,11 @@
                                             <li class="second">
                                                 <a href="#">
                                                     <i class="fa fa-angle-right"></i> <span>文件管理</span>
+                                                </a>
+                                            </li>
+                                            <li class="second">
+                                                <a href="#">
+                                                    <i class="fa fa-angle-right"></i> <span>文件上传</span>
                                                 </a>
                                             </li>
                                             <li class="second">

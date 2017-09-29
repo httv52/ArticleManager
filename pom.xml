@@ -8,6 +8,18 @@
     <name>ArticleManager Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>
+        <!-- 添加jersey支持 -->
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+            <version>1.19</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>1.19</version>
+        </dependency>
+
         <!--字节码操作-->
         <dependency>
             <groupId>javassist</groupId>

@@ -1,6 +1,8 @@
 package cn.hutaotao.article.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Category implements Serializable {
     private String categoryid;
@@ -10,6 +12,8 @@ public class Category implements Serializable {
     /*关联关系*/
     //多对一
     private User user;
+    /*多对多*/
+    private List<Article> articleList = new ArrayList<>();
 
     public String getCategoryid() {
         return categoryid;
@@ -33,5 +37,21 @@ public class Category implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Article> getArticleList() {
+        return articleList;
+    }
+
+    public void setArticleList(List<Article> articleList) {
+        this.articleList = articleList;
+    }
+
+    public Category() {
+        super();
+    }
+
+    public Category(String categoryid) {
+        this.categoryid = categoryid;
     }
 }

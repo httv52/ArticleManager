@@ -121,13 +121,13 @@ function submitArticle(state) {
     if ($(".filelist .title").length > 0 && $("#previewImg").val() == '') {
         alert("123");
         hutao.questionAlert({
-            title: '确认发布',
-            text: '您的文章缩略图尚未上传，确认发布文章？',
-            then: function () {
+                title: '确认发布',
+                text: '您的文章缩略图尚未上传，确认发布文章？'
+            }, function () {
                 saveArticle(url, params);
                 return;
             }
-        });
+        );
     }
 
     saveArticle(url, params);

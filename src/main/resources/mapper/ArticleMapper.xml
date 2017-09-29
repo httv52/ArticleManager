@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.hutaotao.article.dao.ArticleMapper">
+    <resultMap id="littleMap" type="Article">
+        <id column="aid" property="aid" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <resultMap id="BaseResultMap" type="Article">
         <id column="aid" property="aid" jdbcType="VARCHAR"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>

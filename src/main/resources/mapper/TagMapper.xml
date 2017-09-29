@@ -14,6 +14,11 @@
         </association>
     </resultMap>
 
+    <resultMap id="tagWithArticle" type="Tag" extends="BaseResultMap">
+        <collection property="articleList" ofType="Article"
+                    resultMap="cn.hutaotao.article.dao.ArticleMapper.littleMap"/>
+    </resultMap>
+
     <insert id="insertTag" parameterType="Tag">
         INSERT INTO tag (tagId, tagName, uid) VALUES (
             #{tagid}, #{tagname}, #{user.uid}
@@ -25,6 +30,10 @@
             #{id}, #{aid}, #{tagId}
         )
     </insert>
+    <delete id="deleteTagById">
+        DELETE FROM tag
+        WHERE tagId = #{tagId}
+    </delete>
 
     <select id="findTagByUser" resultType="Tag" parameterType="String">
         SELECT
@@ -32,6 +41,16 @@
             tagName
         FROM tag
         WHERE uid = #{uid}
+    </select>
+
+    <select id="findTagWithArticle" resultMap="tagWithArticle" parameterType="String">
+        SELECT
+            t.*,
+            att.aid
+        FROM tag t LEFT JOIN article_tag_tbl att
+                ON t.tagId = att.tagId
+        WHERE t.uid = #{uid}
+        ORDER BY indexes
     </select>
 
 </mapper>

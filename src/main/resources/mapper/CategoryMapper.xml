@@ -14,6 +14,25 @@
         </association>
     </resultMap>
 
+    <resultMap id="categoryWithArticle" type="Category" extends="BaseResultMap">
+        <collection property="articleList" ofType="Article"
+                    resultMap="cn.hutaotao.article.dao.ArticleMapper.littleMap"/>
+    </resultMap>
+    <update id="updateCategoryById" parameterType="Category">
+        update category
+        <set>
+            <if test="categoryname != null">
+                categoryname = #{categoryname},
+            </if>
+        </set>
+        where categoryid = #{categoryid}
+    </update>
+
+    <delete id="deleteCategoryById">
+        DELETE FROM category
+        WHERE categoryId = #{id}
+    </delete>
+
     <select id="lazyLoadUser" resultType="Category" parameterType="String">
         SELECT
             categoryId,
@@ -46,5 +65,28 @@
         FROM category
         WHERE uid = #{uid}
         ORDER BY indexes;
+    </select>
+
+    <select id="findCategoryWithArticle" resultMap="categoryWithArticle" parameterType="String">
+        SELECT DISTINCT *
+        FROM
+            `category` c
+            LEFT JOIN article a ON c.categoryId = a.categoryId
+        WHERE
+            c.uid = #{uid}
+            OR (c.categoryId = '0'
+                AND a.uid = #{uid})
+        ORDER BY
+            indexes;
+    </select>
+    <select id="findSimpleCategoryById" resultType="Category">
+        SELECT *
+        FROM category
+        WHERE categoryId = #{categoryId}
+    </select>
+    <select id="findCategoryByName" resultType="Category" parameterType="String">
+        SELECT categoryId
+        FROM category
+        WHERE categoryName = #{name}
     </select>
 </mapper>

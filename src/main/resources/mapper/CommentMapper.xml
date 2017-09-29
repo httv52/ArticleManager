@@ -18,9 +18,10 @@
 
     <select id="findCommentCountByUserPrimary" parameterType="String" resultType="Integer">
         SELECT COUNT(*)
-        FROM `comment` c, article a
+        FROM comment c, article a
         WHERE c.aid = a.aid AND a.uid = #{articleUserId} AND c.state = 1
     </select>
+
     <select id="findCommentByUserPrimary" resultMap="commentRelation" parameterType="String">
         SELECT
             c.*,
@@ -28,9 +29,15 @@
             u.username,
             u.screen_name,
             u.state
-        FROM `comment` c, article a, user u
+        FROM comment c, article a, user u
         WHERE c.aid = a.aid AND a.uid = u.uid AND a.uid = #{articleUserId} AND c.state = 1
         ORDER BY created DESC;
+    </select>
+
+    <select id="findCommentWithMyself" resultType="Integer" parameterType="String">
+        SELECT COUNT(*)
+        FROM comment
+        WHERE uid = #{myId} AND state = 1
     </select>
 
 </mapper>

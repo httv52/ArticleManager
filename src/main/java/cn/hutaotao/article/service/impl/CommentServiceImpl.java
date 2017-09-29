@@ -26,4 +26,9 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.findCommentByUserPrimary(loginUserId);
     }
 
+    @Override
+    public Integer findCommentWithMyself(String loginUserId) {
+        return commentMapper.findCommentWithMyself(loginUserId);
+    }
+
 }

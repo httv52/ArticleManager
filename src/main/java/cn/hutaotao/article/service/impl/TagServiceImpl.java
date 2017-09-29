@@ -1,12 +1,15 @@
 package cn.hutaotao.article.service.impl;
 
 import cn.hutaotao.article.dao.TagMapper;
+import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.Article;
+import cn.hutaotao.article.model.Category;
 import cn.hutaotao.article.model.Tag;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.model.custom.ArticleTagCustomer;
 import cn.hutaotao.article.service.TagService;
 import cn.hutaotao.article.utils.code.UUIDUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,5 +88,28 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<Tag> findTagByUser(String loginUserId) {
         return tagMapper.findTagByUser(loginUserId);
+    }
+
+    @Override
+    public List<Tag> findTagWithArticle(String loginUserId) {
+        return tagMapper.findTagWithArticle(loginUserId);
+    }
+
+    @Override
+    public String deleteTagById(String tagId) {
+        try {
+            if (!StringUtils.isNotBlank(tagId)) {
+                throw new MyException("标签 id 不能为空");
+            }
+            tagMapper.deleteTagById(tagId);
+
+            return "{\"success\":true}";
+        } catch (Exception e) {
+            String msg = "未知原因";
+            if (e instanceof MyException) {
+                msg = e.getMessage();
+            }
+            throw new MyException("分类删除失败：" + msg);
+        }
     }
 }

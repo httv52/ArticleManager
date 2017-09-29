@@ -5,7 +5,6 @@
 <%--导入头文件--%>
 <%@include file="/WEB-INF/jsps/format/admin/head.jsp" %>
 
-
 <!-- 中间内容 -->
 <section id="content">
 

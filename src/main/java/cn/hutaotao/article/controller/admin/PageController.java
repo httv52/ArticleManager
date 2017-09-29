@@ -44,15 +44,30 @@ public class PageController extends BaseController {
         model.addAttribute("commentList", commentList);
         model.addAttribute("logsList", logsList);
 
-        setNavNumber(model, 1, -1);
+        setNavNumber(model, 1, -1, session);
         return "admin/index";
     }
 
 
+    /*文章管理*/
     @RequestMapping("/articleManege")
     public String articleManege(Model model, HttpSession session) {
-        setNavNumber(model, 2, 1);
+        setNavNumber(model, 2, 1, session);
         return "forward:/article/findByState";
+    }
+
+    /*分类-标签管理*/
+    @RequestMapping("/categManege")
+    public String categAndTagManege(Model model, HttpSession session) {
+        setNavNumber(model, 2, 3, session);
+        return "forward:/category/categManege";
+    }
+
+    /*文件管理*/
+    @RequestMapping("/fileManage")
+    public String fileManage(Model model, HttpSession session) {
+        setNavNumber(model, 3, 1, session);
+        return "forward:/file/fileManage";
     }
 
     @RequestMapping("/publish")
@@ -61,7 +76,7 @@ public class PageController extends BaseController {
         List<Tag> tagList = tagService.findTagByUser(loginUserId);
         List<Category> categoryList = categoryService.findCategoryByUser(loginUserId);
 
-        setNavNumber(model, 6, -1);
+        setNavNumber(model, 6, -1, session);
         model.addAttribute("tagList", tagList);
         model.addAttribute("categoryList", categoryList);
         return "admin/publish";
@@ -80,7 +95,13 @@ public class PageController extends BaseController {
 
 
     /*设置侧边常量*/
-    private void setNavNumber(Model model, int firstCode, int secondCode) {
+    private void setNavNumber(Model model, int firstCode, int secondCode, HttpSession session) {
+        String loginUserId = getLoginUserId(session);
+        Integer articleNum = articleService.findArticleCountPublished(loginUserId);
+        Integer myCountNum = commentService.findCommentWithMyself(loginUserId);
+
+        model.addAttribute("articleNum", articleNum);
+        model.addAttribute("myCountNum", myCountNum);
         model.addAttribute("firstCode", firstCode);
         model.addAttribute("secondCode", secondCode);
     }

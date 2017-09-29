@@ -1,13 +1,19 @@
 package cn.hutaotao.article.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tag implements Serializable {
     private String tagid;
 
     private String tagname;
 
+    /*关联关系*/
+    //多对一
     private User user;
+    //多对多
+    List<Article> articleList = new ArrayList<>();
 
     public String getTagid() {
         return tagid;
@@ -31,5 +37,13 @@ public class Tag implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Article> getArticleList() {
+        return articleList;
+    }
+
+    public void setArticleList(List<Article> articleList) {
+        this.articleList = articleList;
     }
 }

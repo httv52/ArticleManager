@@ -38,9 +38,19 @@ public class FileController extends BaseController {
             result = fileService.uploadFile(file, getLoginUser(session));
             out.print(result);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new MyException("文价上传失败，请重新上传");
+            String msg = "文价上传失败，请重新上传";
+            if (e instanceof MyException) {
+                msg = e.getMessage();
+            } else {
+                LOGGER.error(msg, e);
+            }
+            throw new MyException(msg);
         }
 
     }
+
+//    @RequestMapping("fileManage")
+//    public String fileManage() {
+//
+//    }
 }

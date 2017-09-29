@@ -20,4 +20,6 @@ public interface CommentMapper {
      * @return
      */
     List<Comment> findCommentByUserPrimary(String articleUserId);
+
+    Integer findCommentWithMyself(String myId);
 }

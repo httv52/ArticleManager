@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface CommentService {
     /**
-     * 正常状态的评论列表
+     * 正常状态的评论数量列表
      *
      * @param loginUserId
      * @return
@@ -20,10 +20,18 @@ public interface CommentService {
     Integer findCommentCountByUserPrimary(String loginUserId);
 
     /**
-     * 正常状态的评论数量
+     * 正常状态的评论列表
      *
      * @param loginUserId
      * @return
      */
     List<Comment> findCommentByUserPrimary(String loginUserId);
+
+    /**
+     * 获取登录人发表的评论数量
+     *
+     * @param loginUserId
+     * @return
+     */
+    Integer findCommentWithMyself(String loginUserId);
 }
