@@ -17,12 +17,12 @@
                     <a href="<c:url value="/admin/articleManege"/> "><i class="fa fa-edit"></i> 文章管理</a>
                 </li>
                 <li class="active">
-                    <i class="fa"> 分类/标签管理</i>
+                    <i class="fa"> 文章管理</i>
                 </li>
             </ul>
             <div class="m-b-md">
                 <h3 class="m-b-none"><span style="vertical-align: inherit;"><span
-                        style="vertical-align: inherit;">分类/标签管理</span></span></h3>
+                        style="vertical-align: inherit;">文章管理</span></span></h3>
             </div>
 
             <%--主要数据--%>

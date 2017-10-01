@@ -45,7 +45,8 @@
                                         </span>
                                         </c:when>
                                         <c:otherwise>
-                                        <span class="btn-group m-b-10" style="padding-top: 7px">
+                                        <span class="btn-group m-b-10" style="padding-top: 7px"
+                                              id="categ_${categ.categoryid}">
                                             <span class="dropdown" style="padding: 11px 0px">
                                                 <a data-target="#"
                                                         <c:if test="${status.count%5==0}">
@@ -116,7 +117,7 @@
                                     </div>
                                 </c:if>
                                 <c:forEach items="${tagList}" var="tag" varStatus="status">
-                                <span class="btn-group m-b-10" style="padding-top: 7px">
+                                <span class="btn-group m-b-10" style="padding-top: 7px" id="tag_${tag.tagid}">
                                     <span class="dropdown" style="padding: 11px 0px">
                                         <a data-target="#"
                                                 <c:if test="${status.count%5==0}">
@@ -184,8 +185,9 @@
                             title: '分类删除成功'
                         }, function () {
                             setTimeout(function () {
-                                window.location.reload();
-                            }, 10);
+                                $("#categ_" + $id).remove();
+                            }, 100);
+                            return;
                         });
                     } else {
                         hutao.errorAlert({
@@ -206,8 +208,8 @@
 
     }
     function updateCateg($id, $name) {
-        var categoryId = $('#my_form #my_categoryId').val($id);
-        var categoryName = $('#my_form #my_categoryName').val($name);
+        $('#my_form #my_categoryId').val($id);
+        $('#my_form #my_categoryName').val($name);
     }
     function deleteTag($id) {
         if ($id == '') {
@@ -232,8 +234,9 @@
                             title: '标签删除成功'
                         }, function () {
                             setTimeout(function () {
-                                window.location.reload();
-                            }, 10);
+                                $("#tag_" + $id).remove();
+                            }, 100);
+                            return;
                         });
                     } else {
                         hutao.errorAlert({
@@ -278,7 +281,8 @@
                         }, function () {
                             setTimeout(function () {
                                 window.location.reload();
-                            }, 10);
+                            }, 100);
+                            return;
                         });
                     } else {
                         hutao.errorAlert({
@@ -288,8 +292,12 @@
                     }
                 },
                 error: function (result) {
+                    var msg;
+                    if (!result.msg) {
+                        msg = "该分类已存在，请更换名称";
+                    }
                     hutao.errorAlert({
-                        text: result.msg || '分类保存失败',
+                        text: msg || '分类保存失败',
                         title: '分类保存失败'
                     });
                 }

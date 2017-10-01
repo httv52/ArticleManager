@@ -83,34 +83,35 @@
 
                 <%--最新文章--%>
                 <div class="col-lg-6">
-                    <div class="ibox float-e-margins">
-                        <%--工具栏--%>
-                        <div class="ibox-title">
-                            <h5>最新文章</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link" data-toggle="tooltip" data-placement="top" title="折叠">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <%--工具栏--%>
+                            <div class="ibox-title">
+                                <h5>最新文章</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link" data-toggle="tooltip" data-placement="top" title="折叠">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
 
-                                <a class="close-link" data-toggle="tooltip" data-placement="top" title="关闭">
-                                    <i class="fa fa-times"></i>
-                                </a>
+                                    <a class="close-link" data-toggle="tooltip" data-placement="top" title="关闭">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="ibox-content" style="display: block;">
-                            <%--<c:if test="${articleList == null}">
+                            <div class="ibox-content" style="display: block;">
+                                <%--<c:if test="${articleList == null}">
 
-                            </c:if>--%>
-                            <div>
-                                <c:if test="${!empty articleList}">
-                                    <c:forEach items="${articleList}" var="article">
-                                        <article class="media">
+                                </c:if>--%>
+                                <div>
+                                    <c:if test="${!empty articleList}">
+                                        <c:forEach items="${articleList}" var="article">
+                                            <article class="media">
                                             <span class="pull-left thumb-sm">
                                                 <i class="fa fa-paste fa-3x icon-muted"></i>
                                             </span>
-                                            <div class="media-body">
-                                                <div class="pull-right media-xs text-center text-muted">
+                                                <div class="media-body">
+                                                    <div class="pull-right media-xs text-center text-muted">
                                                 <span class="text-muted m-l-sm pull-right" data-toggle="tooltip"
                                                       data-placement="bottom"
                                                       title="${article.createdDateTimeView}">
@@ -122,40 +123,105 @@
                                                         </span>
                                                     </span>
                                                 </span>
+                                                    </div>
+                                                    <a href="<c:url value="/p/"/>${article.aid}"
+                                                       class="h4 contentControl">${article.title}</a>
+                                                    <small class="block">
+                                                        <span class="label label-info">${article.stateView}</span>
+                                                    </small>
+                                                    <small class="block m-t-sm">
+                                                        <a href="<c:url value="/p/"/>${article.aid}">
+                                                            <p class="contentControl_2">${article.content}</p>
+                                                        </a>
+                                                    </small>
                                                 </div>
-                                                <a href="<c:url value="/p/"/>${article.aid}"
-                                                   class="h4 contentControl">${article.title}</a>
-                                                <small class="block">
-                                                    <span class="label label-info">${article.stateView}</span></small>
-                                                <small class="block m-t-sm">
-                                                    <a href="<c:url value="/p/"/>${article.aid}">
-                                                        <p class="contentControl_2">${article.content}</p>
-                                                    </a>
-                                                </small>
-                                            </div>
-                                        </article>
-                                        <div class="line pull-in"></div>
-                                    </c:forEach>
-                                </c:if>
-                                <c:if test="${empty articleList}">
-                                    <article class="media">
-                                        <div class="media-body text-center">
+                                            </article>
+                                            <div class="line pull-in"></div>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="${empty articleList}">
+                                        <article class="media">
+                                            <div class="media-body text-center">
                                         <span class="thumb-sm">
                                             <i class="fa fa-file-o fa-3x icon-muted"></i>
                                         </span>
-                                            <span class="h3">暂无文章</span><br>
+                                                <span class="h3">暂无文章</span><br>
 
-                                            <div style="padding: 20px">
-                                                <a href="<c:url value="/admin/publish"/> "
-                                                   class="block h4 text-success">点击前往发布文章</a>
+                                                <div style="padding: 20px">
+                                                    <a href="<c:url value="/admin/publish"/> "
+                                                       class="block h4 text-success">点击前往发布文章</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </article>
-                                    <div class="line pull-in"></div>
-                                </c:if>
+                                        </article>
+                                        <div class="line pull-in"></div>
+                                    </c:if>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <%--系统日志--%>
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <%--工具栏--%>
+                            <div class="ibox-title">
+                                <h5>系统日志</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link" data-toggle="tooltip" data-placement="top" title="折叠">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="close-link" data-toggle="tooltip" data-placement="top" title="关闭">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <%--日志记录--%>
+                            <div class="ibox-content" style="display: block;">
+                                <div>
+                                    <ul class="layui-timeline">
+                                        <c:forEach items="${logsList}" var="log" varStatus="status">
+                                            <li class="layui-timeline-item">
+                                                <c:choose>
+                                                    <c:when test="${status.index == 0}">
+                                                        <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis">&#xe63d;</i>
+                                                    </c:when>
+                                                    <c:when test="${log.action == '初始化博客'}">
+                                                        <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis"></i>
+                                                    </c:when>
+                                                    <c:when test="${log.action == '登录后台'}">
+                                                        <i class="layui-icon layui-timeline-axis">&#xe60e;</i>
+                                                    </c:when>
+                                                    <c:when test="${log.action == '发表文章'}">
+                                                        <i class="layui-icon layui-timeline-axis">&#xe609;</i>
+                                                    </c:when>
+                                                    <c:when test="${log.action == '删除文章'}">
+                                                        <i class="layui-icon layui-timeline-axis">&#xe640;</i>
+                                                    </c:when>
+                                                    <c:when test="${log.action == '保存文件'}">
+                                                        <i class="layui-icon layui-timeline-axis">&#xe681;</i>
+                                                    </c:when>
+                                                    <c:when test="${log.action == '删除文件'}">
+                                                        <i class="layui-icon layui-timeline-axis">&#xe64d;</i>
+                                                    </c:when>
+                                                </c:choose>
+
+                                                <div class="layui-timeline-content layui-text">
+                                                    <div class="layui-timeline-title">
+                                                            ${log.createdDateTimeView} ： ${log.action} --->
+                                                        IP-${log.ip}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                        <legend>系统日志 | 文章管理系统</legend>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%-- //系统日志--%>
                 </div>
                 <%-- //最新文章--%>
 
@@ -320,71 +386,10 @@
             </div>
 
 
-            <div class="row">
+            <%--<div class="row">--%>
 
-                <%--系统日志--%>
-                <div class="col-lg-6">
-                    <div class="ibox float-e-margins">
-                        <%--工具栏--%>
-                        <div class="ibox-title">
-                            <h5>系统日志</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link" data-toggle="tooltip" data-placement="top" title="折叠">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="close-link" data-toggle="tooltip" data-placement="top" title="关闭">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <%--日志记录--%>
-                        <div class="ibox-content" style="display: block;">
-                            <div>
-                                <ul class="layui-timeline">
-                                    <c:forEach items="${logsList}" var="log" varStatus="status">
-                                        <li class="layui-timeline-item">
-                                            <c:choose>
-                                                <c:when test="${status.index == 0}">
-                                                    <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis">&#xe63d;</i>
-                                                </c:when>
-                                                <c:when test="${log.action == '初始化博客'}">
-                                                    <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis"></i>
-                                                </c:when>
-                                                <c:when test="${log.action == '登录后台'}">
-                                                    <i class="layui-icon layui-timeline-axis">&#xe60e;</i>
-                                                </c:when>
-                                                <c:when test="${log.action == '发表文章'}">
-                                                    <i class="layui-icon layui-timeline-axis">&#xe609;</i>
-                                                </c:when>
-                                                <c:when test="${log.action == '删除文章'}">
-                                                    <i class="layui-icon layui-timeline-axis">&#xe640;</i>
-                                                </c:when>
-                                                <c:when test="${log.action == '保存文件'}">
-                                                    <i class="layui-icon layui-timeline-axis">&#xe681;</i>
-                                                </c:when>
-                                                <c:when test="${log.action == '删除文件'}">
-                                                    <i class="layui-icon layui-timeline-axis">&#xe64d;</i>
-                                                </c:when>
-                                            </c:choose>
-
-                                            <div class="layui-timeline-content layui-text">
-                                                <div class="layui-timeline-title">
-                                                        ${log.createdDateTimeView} ： ${log.action} ---> IP-${log.ip}
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                                    <legend>系统日志 | 文章管理系统</legend>
-                                </fieldset>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%-- //系统日志--%>
-            </div>
+            <%----%>
+            <%--</div>--%>
 
 
         </section>

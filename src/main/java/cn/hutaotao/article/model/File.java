@@ -1,5 +1,7 @@
 package cn.hutaotao.article.model;
 
+import cn.hutaotao.article.utils.format.FormatUtil;
+
 import java.io.Serializable;
 
 public class File implements Serializable {
@@ -43,6 +45,30 @@ public class File implements Serializable {
 
     private User user;
 
+    /*视图值*/
+    private String createdDateView;
+
+    private String createdDateTimeView;
+
+    private Integer count;
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public String getCreatedDateView() {
+        return createdDateView;
+    }
+
+    public String getCreatedDateTimeView() {
+        return createdDateTimeView;
+    }
+
+    /* get set*/
     public String getId() {
         return id;
     }
@@ -81,6 +107,8 @@ public class File implements Serializable {
 
     public void setCreated(Long created) {
         this.created = created;
+        this.createdDateView = FormatUtil.formatDate(created);
+        this.createdDateTimeView = FormatUtil.formatDateTime(created);
     }
 
     public User getUser() {

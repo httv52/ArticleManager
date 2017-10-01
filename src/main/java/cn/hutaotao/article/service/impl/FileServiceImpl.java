@@ -10,11 +10,12 @@ import cn.hutaotao.article.utils.format.FileSuffixUtil;
 import cn.hutaotao.article.utils.format.FormatUtil;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by ht on 2017/9/26.
@@ -30,6 +31,7 @@ public class FileServiceImpl implements FileService {
         if (sessionUser == null) {
             throw new MyException("登录状态已过期");
         }
+
 
         //获取文件上传流
         byte[] fbytes = new byte[0];
@@ -83,6 +85,36 @@ public class FileServiceImpl implements FileService {
     @Override
     public Integer findFileCount(String loginUserId) {
         return fileMapper.findFileCount(loginUserId);
+    }
+
+    @Override
+    public List<File> findAllFileByUser(String loginUserId, Integer pageNow, Integer pageSize, Integer fileType) {
+        return fileMapper.findAllFileByUser(loginUserId, pageNow, pageSize, fileType);
+    }
+
+    @Override
+    public Integer findFileCountByType(String loginUserId, Integer type) {
+        return fileMapper.findFileCountByType(loginUserId, type);
+    }
+
+    @Override
+    public List<File> findFileGroupByType(String uid) {
+        return fileMapper.findFileGroupByType(uid);
+    }
+
+    @Override
+    public String deleteFileById(String fileId) {
+        try {
+            if (StringUtils.isBlank(fileId)) {
+                throw new MyException("文件 ID 为空，删除失败");
+            }
+
+            fileMapper.deleteFileById(fileId);
+
+            return "{\"success\":true}";
+        } catch (Exception e) {
+            throw new MyException("分类删除失败");
+        }
     }
 
 }

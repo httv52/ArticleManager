@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="<c:url value='/css/plugins/webuploader/webuploader.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/demo/webuploader-demo.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/plugins/footable/footable.core.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="<c:url value='/css/plugins/dropzone/dropzone.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="<c:url value='/css/plugins/dropzone/basic.css'/>" type="text/css"/>
 
     <link rel="stylesheet" href="<c:url value='/js/layui/css/layui.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/js/layer-v3.1.0/layer/theme/default/dist.css'/>" type="text/css"/>
@@ -222,9 +224,9 @@
             text-decoration: none;
         }
 
-        .panel .panel-body button, .panel .panel-body a {
-            padding: 7px 12px;
-        }
+        /*.panel .panel-body button, .panel .panel-body a {*/
+            /*padding: 7px 12px;*/
+        /*}*/
 
         .panel-my_success {
             border-color: #13ca46;
@@ -234,6 +236,80 @@
             color: #ffffff;
             background-color: #65bd77;
             border-color: #17b50f;
+        }
+
+        .file .icon {
+            padding: 31px 10px;
+            text-align: center;
+        }
+
+        .file .icon, .file .image {
+            height: 130px;
+            overflow: hidden;
+        }
+
+        .file-box a {
+            color: #4e81ad;
+            text-decoration: none;
+        }
+
+        .file {
+            margin-right: 0px;
+        }
+
+        .folder-list li {
+            padding-top: 7px;
+        }
+
+        .bg-primary {
+            background-color: #71d485;
+            color: #ffffff;
+        }
+
+        .file .icon {
+            background-color: #66677c;
+        }
+
+        .file .icon i {
+            font-size: 70px;
+            color: #cecfdc;
+        }
+
+        #dropzone {
+            margin-bottom: 3rem;
+        }
+
+        .dropzone {
+            border: 2px dashed #0087F7;
+            border-radius: 5px;
+            background: white;
+        }
+
+        .dropzone .dz-message {
+            font-weight: 400;
+        }
+
+        .dropzone .dz-message .note {
+            font-size: 0.8em;
+            font-weight: 200;
+            display: block;
+            margin-top: 1.4rem;
+        }
+
+        .attach-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 8px #333;
+        }
+
+        .attach-text {
+            font-size: 12px;
+            font-weight: 300;
+        }
+
+        .attach-img:hover {
+            background-color: #f9f9f9;
         }
 
     </style>
@@ -436,7 +512,7 @@
                                         <ul class="nav lt">
                                             <li class="second" id="1">
                                                 <a href="<c:url value="/admin/articleManege"/> ">
-                                                    <i class="fa fa-angle-right"></i> <span>文管管理</span>
+                                                    <i class="fa fa-angle-right"></i> <span>文章管理</span>
                                                 </a>
                                             </li>
                                             <li class="second" id="2">
@@ -457,12 +533,12 @@
                                                 class="fa fa-angle-up text-active"></i> </span> <span>后台管理</span> </a>
                                         <ul class="nav lt">
                                             <li class="second">
-                                                <a href="#">
+                                                <a href="<c:url value="/admin/fileManage"/> ">
                                                     <i class="fa fa-angle-right"></i> <span>文件管理</span>
                                                 </a>
                                             </li>
                                             <li class="second">
-                                                <a href="#">
+                                                <a href="<c:url value="/admin/fileUpload"/>">
                                                     <i class="fa fa-angle-right"></i> <span>文件上传</span>
                                                 </a>
                                             </li>

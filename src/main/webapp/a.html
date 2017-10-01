@@ -13,6 +13,20 @@
     <!--color="#111"/>-->
     <!--<link rel="canonical" href="https://codepen.io/imshubhamsingh/pen/jGVemG"/>-->
 
+    <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+    .en-markup-crop-options {
+        top: 18px !important;
+        left: 50% !important;
+        margin-left: -100px !important;
+        width: 200px !important;
+        border: 2px rgba(255,255,255,.38) solid !important;
+        border-radius: 4px !important;
+    }
+
+    .en-markup-crop-options div div:first-of-type {
+        margin-left: 0px !important;
+    }
+    </style>
 
     <style class="cp-pen-styles">html {
         box-sizing: border-box;
@@ -943,15 +957,7 @@
     </style>
 </head>
 <body>
-<div style="position:absolute; color: #8e8e8e">
-    foreach的主要用在构建in条件中，它可以在SQL语句中进行迭代一个集合。foreach元素的属性主要有
-    item，index，collection，open，separator，close。item表示集合中每一个元素进行迭代时的别名，index指
-    定一个名字，用于表示在迭代过程中，每次迭代到的位置，open表示该语句以什么开始，separator表示在每次进行迭代之间以什么符号作为分隔
-    符，close表示以什么结束，在使用foreach的时候最关键的也是最容易出错的就是collection属性，该属性是必须指定的，但是在不同情况 下，该属性的值是不一样的，主要有一下3种情况：
-    如果传入的是单参数且参数类型是一个List的时候，collection属性值为list
-    如果传入的是单参数且参数类型是一个array数组的时候，collection的属性值为array
-    如果传入的参数是多个的时候，我们就需要把它们封装成一个Map了，当然单参数也可以封装成map，实际上如果你在传入参数的时候，在breast里面也是会把它封装成一个Map的，map的key就是参数名，所以这个时候collection属性值就是传入的List或array对象在自己封装的map里面的key
-</div>
+
 <div class="view" style="position:absolute;">
     <canvas id="stars"></canvas>
     <div class="clouds">
@@ -980,6 +986,10 @@
     </div>
 </div>
 
+<div style="position:absolute;width: 100%;text-align: center">
+<img style="-webkit-user-select: none;background-position: 0px 0px, 10px 10px;background-size: 20px 20px;background-image:linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee 100%),linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);cursor: zoom-in;"
+     src="http://127.0.0.1:8081/SSMDemo2_img/upload/20170927040017475390773.jpg" width="316" height="316">
+</div>
 <!--<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>-->
 <script>  var canvas = document.getElementById("stars");
 canvas.width = window.innerWidth;

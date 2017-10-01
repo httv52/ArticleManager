@@ -70,6 +70,13 @@ public class PageController extends BaseController {
         return "forward:/file/fileManage";
     }
 
+    /*文件上传*/
+    @RequestMapping("/fileUpload")
+    public String fileUpload(Model model, HttpSession session) {
+        setNavNumber(model, 3, 2, session);
+        return "forward:/file/fileUpload";
+    }
+
     @RequestMapping("/publish")
     public String publishing(Model model, HttpSession session) {
         String loginUserId = getLoginUserId(session);

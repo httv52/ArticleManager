@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.hutaotao.article.dao.FileMapper">
-    <resultMap id="BaseResultMap" type="cn.hutaotao.article.model.File">
+    <resultMap id="BaseResultMap" type="File">
         <id column="id" property="id" jdbcType="VARCHAR"/>
         <result column="file_url" property="fileUrl" jdbcType="VARCHAR"/>
         <result column="real_name" property="realName" jdbcType="VARCHAR"/>
         <result column="file_type" property="fileType" jdbcType="INTEGER"/>
         <result column="created" property="created" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="fileRelation" type="File" extends="BaseResultMap">
+        <association property="user" javaType="User">
+            <id column="uid" property="uid"/>
+            <result column="userName" property="username"/>
+            <result column="screen_name" property="screenName"/>
+        </association>
     </resultMap>
 
     <insert id="saveFile" parameterType="File">
@@ -18,11 +26,44 @@
                 #{fileType}, #{created}, #{user.uid}
         )
     </insert>
+    <delete id="deleteFileById" parameterType="String">
+        DELETE FROM file
+        WHERE id = #{fileId}
+    </delete>
 
     <select id="findFileCount" parameterType="String" resultType="java.lang.Integer">
         SELECT count(*)
         FROM file
-        WHERE uid = #{uid};
+        WHERE uid = #{uid}
+    </select>
+
+    <select id="findAllFileByUser" resultMap="BaseResultMap">
+        SELECT *
+        FROM file
+        WHERE uid = #{uid}
+        <if test="type!=null">
+            AND file_type = #{type}
+        </if>
+        LIMIT #{pageNow}, #{pageSize}
+    </select>
+
+    <select id="findFileCountByType" resultType="Integer">
+        SELECT count(*)
+        FROM file
+        WHERE uid = #{uid}
+        <if test="type!=null">
+            AND file_type = #{type}
+        </if>
+    </select>
+
+    <select id="findFileGroupByType" parameterType="String" resultType="File">
+        SELECT
+            file_type        fileType,
+            COUNT(file_type) count
+        FROM
+            `file`
+        WHERE uid = #{uid}
+        GROUP BY file_type;
     </select>
 
     <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >

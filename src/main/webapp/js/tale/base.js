@@ -4,7 +4,7 @@
 $.extend({
     tale: function () {
     },
-    constant:function(){ //常量池
+    fileConstant:function(){ //常量池
         return{
             ///-------文件常量----------
             MAX_FILES:10,//一次队列最大文件数
