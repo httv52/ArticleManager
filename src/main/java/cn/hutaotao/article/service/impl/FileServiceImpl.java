@@ -32,7 +32,6 @@ public class FileServiceImpl implements FileService {
             throw new MyException("登录状态已过期");
         }
 
-
         //获取文件上传流
         byte[] fbytes = new byte[0];
         fbytes = file.getBytes();

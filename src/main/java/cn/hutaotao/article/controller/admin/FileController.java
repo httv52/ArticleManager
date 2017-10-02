@@ -7,8 +7,11 @@ import cn.hutaotao.article.model.custom.PageBean;
 import cn.hutaotao.article.service.FileService;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
+import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +28,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -58,6 +62,30 @@ public class FileController extends BaseController {
             throw new MyException(msg);
         }
 
+    }
+
+    @RequestMapping("multipUloadFile")
+    public void multipUloadFile(MultipartHttpServletRequest request, PrintWriter out, HttpSession session) throws IOException {
+        try {
+            Iterator<String> itr = request.getFileNames();
+            String result = "";
+            while (itr.hasNext()) {
+                String uploadedFile = itr.next();
+                MultipartFile file = request.getFile(uploadedFile);
+
+                result = fileService.uploadFile(file, getLoginUser(session));
+                out.print(result);
+            }
+
+        } catch (Exception e) {
+            String msg = "文价上传失败，请重新上传";
+            if (e instanceof MyException) {
+                msg = e.getMessage();
+            } else {
+                LOGGER.error(msg, e);
+            }
+            throw new MyException(msg);
+        }
     }
 
     @RequestMapping("fileManage")

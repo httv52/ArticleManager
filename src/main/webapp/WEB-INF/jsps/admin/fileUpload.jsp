@@ -29,27 +29,20 @@
             </div>
 
             <%--主要数据--%>
-            <div class="row">
-                <form id="my-awesome-dropzone" class="dropzone" action="http://localhost:8080/article/file/uploadFile">
-                    <div class="dropzone-previews"></div>
-                    <button type="submit" class="btn btn-primary pull-right">提交</button>
+            <div class="row" style="padding: 10px 50px">
+                <form action="<c:url value="/file/multipUloadFile"/>" class="dropzone needsclick dz-clickable"
+                      id="demo-upload" style="height: 380px">
+                    <div class="fallback">
+                        <input name="file" type="file" multiple/>
+                    </div>
+                    <div class="dz-message needsclick" style="padding: 80px 0px;">
+                        <p id="articleImgText">٩(๑❛ᴗ❛๑)۶ 可以上传多文件 ٩(๑❛ᴗ❛๑)۶</p>
+                        <p style="color: #747474;font-size: 16px">提示：可以直接拖拽文件或粘贴截图</p>
+                    </div>
                 </form>
-                <%--<div class="col-md-12 portlets">--%>
-                <%--<!-- Your awesome content goes here -->--%>
-                <%--<div class="m-b-30">--%>
-                <%--<form action="<c:url value="/file/fileUpload"/> " class="dropzone" id="dropzone" enctype="multipart/form-data">--%>
-                <%--<div class="fallback">--%>
-                <%--<input type="file" name="file" multiple>--%>
-                <%--</div>--%>
-                <%--<div class="dz-message">--%>
-                <%--<p>将文件拖至此处或点击上传.${attach_url}</p>--%>
-                <%--<p>--%>
-                <%--<span style="font-size: 16px; color: #d0d0d0;">一次最多可以上传10个文件</span>--%>
-                <%--</p>--%>
-                <%--</div>--%>
-                <%--</form>--%>
-                <%--</div>--%>
-                <%--</div>--%>
+                <div style="padding-top: 15px">
+                    <a href="<c:url value="/admin/fileManage"/> " class="btn bg-primary pull-right">回到文件管理</a>
+                </div>
             </div>
 
 
@@ -67,7 +60,7 @@
 <script>
     var hutao = new $.hutao();
     $("#dropzone").dropzone({
-        url: "<c:url value="/file/uploadFile"/>",
+        url: "<c:url value="/file/multipUloadFile"/>",
         filesizeBase: 1024,//定义字节算法 默认1000
         maxFiles: ${max_file_num},//最大文件数量
         maxFilesize: '${max_file_size}', //MB
@@ -79,13 +72,11 @@
             hutao.errorAlert('暂不支持您的浏览器上传!');
         },
         init: function () {
-            this.on('queuecomplete', function (files) {
-                hutao.successContent('上传成功');
+            this.on('success', function (files) {
+                hutao.successContent('上传成功:' + files.name);
             });
             this.on('error', function (a, errorMessage, result) {
-                if (!result.success && result.msg) {
-                    hutao.errorAlert(result.msg || '上传失败');
-                }
+                hutao.errorAlert(result.msg || '上传失败');
             });
             this.on('maxfilesreached', function () {
                 this.removeAllFiles(true);

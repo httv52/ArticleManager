@@ -55,7 +55,7 @@ public class ArticleController extends BaseController {
     @RequestMapping(value = "/publish", method = RequestMethod.POST) //TODO 提交有问题
     public void publish(String myOldTagId, String myNewTag, String categoryId, Article article,
                         HttpSession session, PrintWriter out, HttpServletRequest request) throws Exception {
-        /*生成文章 Id ---> 12位 *//*
+        //生成文章 Id ---> 12位
         String aid = UUIDUtil.getUUID_12();
         article.setAid(aid);
 
@@ -77,7 +77,7 @@ public class ArticleController extends BaseController {
         user.setUid(getLoginUserId(session));
         user.setUsername(getLoginUser(session).getUsername());
 
-        logsService.savaLogs(user, request, Logs.SAVA_ARTI_LOG, LogDataUtil.publishArticle(user, article), System.currentTimeMillis());*/
+        logsService.savaLogs(user, request, Logs.SAVA_ARTI_LOG, LogDataUtil.publishArticle(user, article), System.currentTimeMillis());
 
         String result = "{\"success\":true}";
         out.print(result);

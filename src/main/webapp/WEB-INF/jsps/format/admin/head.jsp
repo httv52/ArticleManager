@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="<c:url value='/css/demo/webuploader-demo.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/plugins/footable/footable.core.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/plugins/dropzone/dropzone.css'/>" type="text/css"/>
-    <link rel="stylesheet" href="<c:url value='/css/plugins/dropzone/basic.css'/>" type="text/css"/>
+    <%--<link rel="stylesheet" href="<c:url value='/css/plugins/dropzone/basic.css'/>" type="text/css"/>--%>
 
     <link rel="stylesheet" href="<c:url value='/js/layui/css/layui.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/js/layer-v3.1.0/layer/theme/default/dist.css'/>" type="text/css"/>
