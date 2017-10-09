@@ -14,7 +14,7 @@ public interface ArticleMapper {
      * @param uid
      * @return
      */
-    List<Article> findArticleByUserPublished(String uid);
+    List<Article> findArticleByUserPublished(@Param("uid") String uid, @Param("limit") Integer limit);
 
     /**
      * 发布的文章数量
@@ -44,6 +44,13 @@ public interface ArticleMapper {
     List<Article> findArticleAll(@Param("uid") String uid, @Param("startPos") Integer startPos,
                                  @Param("pageSize") Integer pageSize, @Param("state") String state,
                                  @Param("categoryId") String categoryId, @Param("tagId") String tagId);
+
+    /**
+     * 通过 id查找 文章
+     * @param aid
+     * @return
+     */
+    Article findArticleById(String aid);
 
 
 //    int deleteByPrimaryKey(String aid);

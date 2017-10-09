@@ -24,7 +24,7 @@ public interface ArticleService {
      * @param uid 用户
      * @return
      */
-    List<Article> findAllPublished(String uid);
+    List<Article> findAllPublished(String uid, Integer limit);
 
     /**
      * 获取文章数量
@@ -51,4 +51,11 @@ public interface ArticleService {
      * @param tagId      @return
      */
     List<Article> findArticleAll(String uid, Integer startPos, Integer pageSize, String state, String categoryId, String tagId);
+
+    /**
+     * 通过 id查找 文章
+     * @param aid
+     * @return
+     */
+    Article findArticleById(String aid);
 }

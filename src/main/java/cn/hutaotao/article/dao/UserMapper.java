@@ -1,6 +1,7 @@
 package cn.hutaotao.article.dao;
 
 import cn.hutaotao.article.model.User;
+import org.springframework.web.bind.annotation.PathVariable;
 
 public interface UserMapper {
     int deleteByPrimaryKey(String uid);
@@ -18,4 +19,6 @@ public interface UserMapper {
     User selectByUsername(String username);
 
     User selectByActivateCode(String activateCode);
+
+    void updateWordNumber(@PathVariable String uid, @PathVariable Integer wordNumber);
 }

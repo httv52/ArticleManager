@@ -1,6 +1,7 @@
 package cn.hutaotao.article.service.impl;
 
 import cn.hutaotao.article.dao.ArticleMapper;
+import cn.hutaotao.article.dao.UserMapper;
 import cn.hutaotao.article.model.Article;
 import cn.hutaotao.article.model.Category;
 import cn.hutaotao.article.model.User;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
     ArticleMapper articleMapper;
+    @Autowired
+    UserMapper userMapper;
 
     @Override
     public void insertArticle(Article article, String categoryId, User loginUser) {
@@ -25,6 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setModified(currentTime);
         article.setViews(0);
         article.setCommens(0);
+        article.setWordNumber(article.getContent().trim().length());
         article.setUser(loginUser);
 
         Category category = new Category();
@@ -33,11 +37,12 @@ public class ArticleServiceImpl implements ArticleService {
         article.setCategory(category);
 
         articleMapper.insertArticle(article);
+        userMapper.updateWordNumber(loginUser.getUid(), article.getWordNumber());
     }
 
     @Override
-    public List<Article> findAllPublished(String uid) {
-        return articleMapper.findArticleByUserPublished(uid);
+    public List<Article> findAllPublished(String uid, Integer limit) {
+        return articleMapper.findArticleByUserPublished(uid, limit);
     }
 
     @Override
@@ -53,5 +58,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> findArticleAll(String uid, Integer startPos, Integer pageSize, String state, String categoryId, String tagId) {
         return articleMapper.findArticleAll(uid, startPos, pageSize, state, categoryId, tagId);
+    }
+
+    @Override
+    public Article findArticleById(String aid) {
+        return articleMapper.findArticleById(aid);
     }
 }

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<c:set var="imgPath" value="http://127.0.0.1:8081/SSMDemo2_img"/>
+<%
+    String imgPath = request.getScheme() + "://" + request.getServerName() + ":8081/SSMDemo2_img";
+%>
+<%--<c:set var="imgPath" value="http://127.0.0.1:8081/SSMDemo2_img"/>--%>
 
 <!DOCTYPE html>
 <html class="app">
@@ -34,8 +36,6 @@
 
     <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
     <script src="<c:url value='/js/app.v2.js'/>"></script>
-    <%--H+的js--%>
-    <script src="<c:url value='/js/content.js'/>" cache="false"></script>
 
     <script src="<c:url value='/js/jquery.min.js'/>"></script>
     <script src="<c:url value='/js/plugins/toastr/toastr.min.js'/>"></script>
@@ -199,20 +199,32 @@
             margin-top: 13px;
             text-align: center;
         }
-
-        .btn:hover {
-            -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-            -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-            opacity: 1
+        .btn{
+            box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+            -webkit-transition: box-shadow 1s ease;
+            -o-transition: box-shadow 1s ease;
+            transition: box-shadow 1s ease;
+        }
+        .btn:focus{
+            box-shadow: 0 15px 24px rgba(0, 0, 0, 0.22), 0 19px 76px rgba(0, 0, 0, 0.3);
+        }
+        .btn:hover{
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.22), 0 14px 56px rgba(0, 0, 0, 0.25);
         }
 
-        .btn:focus {
-            -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-            -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-            opacity: 1
-        }
+        /*.btn:hover {*/
+            /*-moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);*/
+            /*-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);*/
+            /*box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);*/
+            /*opacity: 1*/
+        /*}*/
+
+        /*.btn:focus {*/
+            /*-moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);*/
+            /*-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);*/
+            /*box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);*/
+            /*opacity: 1*/
+        /*}*/
 
         .pagination > li > .active {
             background-color: #6e8cd7 !important;
@@ -225,7 +237,7 @@
         }
 
         /*.panel .panel-body button, .panel .panel-body a {*/
-            /*padding: 7px 12px;*/
+        /*padding: 7px 12px;*/
         /*}*/
 
         .panel-my_success {
@@ -310,6 +322,38 @@
 
         .attach-img:hover {
             background-color: #f9f9f9;
+        }
+
+        .group {
+            width: 400px;
+            height: 195px;
+            margin: 0 auto;
+        }
+
+        .clear {
+            /*clear: both;*/
+        }
+
+        #qr {
+            float: left;
+            width: 195px;
+            height: 195px;
+            margin: 0 auto;
+            margin-right: 10px;
+        }
+
+        #image {
+            float: left;
+            width: 195px;
+            height: 195px;
+            margin: 0 auto;
+            margin-top: 12px;
+        }
+
+        #combine {
+            width: 195px;
+            height: 195px;
+            margin: 0 auto;
         }
 
     </style>
@@ -558,10 +602,14 @@
                                         </a>
                                         <ul class="nav lt">
                                             <li class="second">
-                                                <a href=""> <i class="fa fa-angle-right"></i> <span>站点设置</span> </a>
+                                                <a href="<c:url value="/admin/updateAdmin"/> ">
+                                                    <i class="fa fa-angle-right"></i> <span>后台设置</span>
+                                                </a>
                                             </li>
                                             <li class="second">
-                                                <a href=""> <i class="fa fa-angle-right"></i> <span>主题设置</span> </a>
+                                                <a href="<c:url value="/admin/theme"/> ">
+                                                    <i class="fa fa-angle-right"></i> <span>前台设置</span>
+                                                </a>
                                             </li>
                                             <li class="second">
                                                 <a href="#">

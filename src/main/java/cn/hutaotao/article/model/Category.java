@@ -9,6 +9,8 @@ public class Category implements Serializable {
 
     private String categoryname;
 
+    private String img;
+
     /*关联关系*/
     //多对一
     private User user;
@@ -45,6 +47,14 @@ public class Category implements Serializable {
 
     public void setArticleList(List<Article> articleList) {
         this.articleList = articleList;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public Category() {

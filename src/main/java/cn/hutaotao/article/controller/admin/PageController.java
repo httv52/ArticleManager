@@ -30,13 +30,23 @@ public class PageController extends BaseController {
     @Autowired
     private LogsService logsService;
 
+    /**
+     * 首页显示的文章数和评论数
+     */
+    private static final Integer LIMIT_NUMBER = 6;
+
+    @RequestMapping("")
+    public String index() {
+        return "forward:/admin/index";
+    }
+
     @RequestMapping("/index")
     public String index(Model model, HttpSession session) {
         String loginUserId = getLoginUserId(session);
 
-        List<Article> articleList = articleService.findAllPublished(loginUserId);
+        List<Article> articleList = articleService.findAllPublished(loginUserId, LIMIT_NUMBER);
         Integer fileCount = fileService.findFileCount(loginUserId);
-        List<Comment> commentList = commentService.findCommentByUserPrimary(loginUserId);
+        List<Comment> commentList = commentService.findCommentByUserPrimary(loginUserId, LIMIT_NUMBER);
         List<Logs> logsList = logsService.findAll(loginUserId);
 
         model.addAttribute("articleList", articleList);
@@ -75,6 +85,20 @@ public class PageController extends BaseController {
     public String fileUpload(Model model, HttpSession session) {
         setNavNumber(model, 3, 2, session);
         return "forward:/file/fileUpload";
+    }
+
+    /*前台设置*/
+    @RequestMapping("/theme")
+    public String theme(Model model, HttpSession session) {
+        setNavNumber(model, 4, 2, session);
+        return "forward:/theme/theme";
+    }
+
+    /*后台设置*/
+    @RequestMapping("/updateAdmin")
+    public String updateAdmin(Model model, HttpSession session) {
+        setNavNumber(model, 4, 1, session);
+        return "forward:/user/updateAdmin";
     }
 
     @RequestMapping("/publish")

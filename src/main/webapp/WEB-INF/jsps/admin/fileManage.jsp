@@ -114,10 +114,10 @@
                                                             <c:choose>
                                                             <c:when test="${file.fileType == '1'}">
                                                             <span class="corner"></span>
-                                                            <a href="${imgPath}${file.fileUrl}" target="_blank">
+                                                            <a href="<%=imgPath%>${file.fileUrl}" target="_blank">
                                                                 <div class="image" style="height: 130px;">
                                                                     <img alt="image" class="img-responsive"
-                                                                         src="${imgPath}${file.fileUrl}">
+                                                                         src="<%=imgPath%>${file.fileUrl}">
                                                                 </div>
                                                                 </c:when>
                                                                 <c:otherwise>
@@ -164,7 +164,7 @@
                                                                     </span>
                                                                     </small>
                                                                     <div class="clearfix" style="padding-top: 3px">
-                                                                        <button url="${imgPath}${file.fileUrl}"
+                                                                        <button url="<%=imgPath%>${file.fileUrl}"
                                                                                 type="button"
                                                                                 class="btn btn-warning btn-sm waves-effect waves-light m-t-5 copy">
                                                                             <i class="fa fa-copy"></i>

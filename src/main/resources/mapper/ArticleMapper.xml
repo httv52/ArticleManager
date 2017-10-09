@@ -19,6 +19,7 @@
         <result column="commens" property="commens" jdbcType="INTEGER"/>
         <result column="allowCommon" property="allowcommon" jdbcType="INTEGER"/>
         <result column="allowSub" property="allowsub" jdbcType="INTEGER"/>
+        <result column="word_number" property="wordNumber"/>
     </resultMap>
     <resultMap id="ResultMapWithBLOBs" type="Article" extends="BaseResultMap">
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
@@ -39,10 +40,11 @@
         )
     </insert>
 
-    <select id="findArticleByUserPublished" parameterType="String" resultMap="article_relation">
+    <select id="findArticleByUserPublished" resultMap="article_relation">
         SELECT *
         FROM article
         WHERE uid = #{uid} AND state = 1
+        LIMIT 0, #{limit}
     </select>
 
     <select id="findArticleCountPublished" parameterType="String" resultType="Integer">
@@ -67,19 +69,42 @@
     </select>
 
     <select id="findArticleAll" resultMap="article_relation">
-        SELECT DISTINCT a.*
-        FROM `article` a, article_tag_tbl att
-        WHERE uid = #{uid}
+        SELECT DISTINCT a.*,c.categoryId,c.categoryName,c.img
+        FROM `article` a, article_tag_tbl att,category c
+        WHERE c.categoryId = a.categoryId AND a.uid = #{uid}
         <if test="state!=null">
-            AND state = #{state}
+            AND a.state = #{state}
         </if>
         <if test="categoryId!=null">
-            AND categoryId = #{categoryId}
+            AND a.categoryId = #{categoryId}
         </if>
         <if test="tagId!=null">
             AND att.tagId = #{tagId} AND att.aid = a.aid
         </if>
         LIMIT #{startPos},#{pageSize}
+    </select>
+    <select id="findArticleById" resultMap="article_relation">
+        SELECT
+            a.*,
+            u.uid,
+            u.username,
+            u.screen_name,
+            u.word_number,
+            u.resume,
+            c.categoryName,
+            t.tagName
+        FROM
+            article a,
+            USER u,
+            category c,
+            article_tag_tbl att,
+            tag t
+        WHERE
+            u.uid = a.uid
+            AND c.categoryId = a.categoryId
+            AND att.aid = a.aid
+            AND att.tagId = t.tagId
+            AND a.aid = #{aid}
     </select>
 
 </mapper>

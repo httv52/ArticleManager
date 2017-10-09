@@ -1,5 +1,6 @@
 package cn.hutaotao.article.model;
 
+import cn.hutaotao.article.utils.article.ArticleUtil;
 import cn.hutaotao.article.utils.format.FormatUtil;
 
 import java.io.Serializable;
@@ -86,6 +87,8 @@ public class Article implements Serializable {
 
     private String content;  //文章内容
 
+    private Integer wordNumber;  //文章字数
+
     /*关系映射*/
     /*关系映射*/
     /*关系映射*/
@@ -103,6 +106,8 @@ public class Article implements Serializable {
     private String createdDateTimeView;
     private String modifiedDateView;
     private String modifiedDateTimeView;
+    private String contentView;  //文章摘要
+    private String contentHTMLView;  //文章HTML展示
 
 
     /*视图值Get*/
@@ -125,6 +130,14 @@ public class Article implements Serializable {
 
     public String getModifiedDateTimeView() {
         return modifiedDateTimeView;
+    }
+
+    public String getContentView() {
+        return contentView;
+    }
+
+    public String getContentHTMLView() {
+        return contentHTMLView;
     }
 
     /*关联映射Get Set*/
@@ -269,5 +282,15 @@ public class Article implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+        this.contentView = ArticleUtil.htmlToText(ArticleUtil.mdToHtml(content));
+        this.contentHTMLView = ArticleUtil.articleToHtml(content);
+    }
+
+    public Integer getWordNumber() {
+        return wordNumber;
+    }
+
+    public void setWordNumber(Integer wordNumber) {
+        this.wordNumber = wordNumber;
     }
 }

@@ -86,6 +86,7 @@ public class CategoryServiceImpl implements CategoryService {
         category = new Category();
         category.setCategoryid(UUIDUtil.getUUID());
         category.setCategoryname(name);
+        category.setImg("");
         User user = new User();
         user.setUid(uid);
         category.setUser(user);

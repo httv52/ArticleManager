@@ -22,7 +22,7 @@
         WHERE c.aid = a.aid AND a.uid = #{articleUserId} AND c.state = 1
     </select>
 
-    <select id="findCommentByUserPrimary" resultMap="commentRelation" parameterType="String">
+    <select id="findCommentByUserPrimary" resultMap="commentRelation">
         SELECT
             c.*,
             u.uid,
@@ -30,8 +30,9 @@
             u.screen_name,
             u.state
         FROM comment c, article a, user u
-        WHERE c.aid = a.aid AND a.uid = u.uid AND a.uid = #{articleUserId} AND c.state = 1
-        ORDER BY created DESC;
+        WHERE c.aid = a.aid AND a.uid = u.uid AND a.uid = #{uid} AND c.state = 1
+        ORDER BY created DESC
+        limit 0,#{limit};
     </select>
 
     <select id="findCommentWithMyself" resultType="Integer" parameterType="String">

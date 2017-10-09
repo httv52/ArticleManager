@@ -12,13 +12,16 @@
 
 <%--导入返回顶部按钮--%>
 <%--<%@include file="/WEB-INF/jsps/format/tools/topBtn.jsp" %>--%>
-<%--导入恢复功能--%>
+
+<%--导入回复功能--%>
 <%@include file="/WEB-INF/jsps/format/tools/reply.jsp" %>
 
 <%@include file="/WEB-INF/jsps/format/tools/nav_bar.jsp" %>
 
 
 <script src="<c:url value='/js/fuelux/fuelux.js'/>"></script>
+<%--H+的js--%>
+<script src="<c:url value='/js/content.js'/>" cache="false"></script>
 
 <!-- layui -->
 <script src="<c:url value='/js/layer-v3.1.0/layer/layer.js'/>"></script>

@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="cn.hutaotao.article.model.Category">
         <id column="categoryId" property="categoryid" jdbcType="VARCHAR"/>
         <result column="categoryName" property="categoryname" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="categoryRelation" type="Category" extends="BaseResultMap">
@@ -36,7 +37,8 @@
     <select id="lazyLoadUser" resultType="Category" parameterType="String">
         SELECT
             categoryId,
-            categoryName
+            categoryName,
+            img
         FROM category
         WHERE categoryId = #{categoryId}
     </select>
@@ -53,8 +55,8 @@
     </select>
 
     <insert id="insertCategory" parameterType="Category">
-        INSERT INTO category (categoryId, categoryName, uid, indexes)
-        VALUES (#{categoryid}, #{categoryname}, #{user.uid}, NULL)
+        INSERT INTO category (categoryId, categoryName, img, uid, indexes)
+        VALUES (#{categoryid}, #{categoryname}, #{img}, #{user.uid}, NULL)
     </insert>
 
     <select id="findCategoryByUser" resultType="Category" parameterType="String">

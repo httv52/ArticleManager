@@ -146,7 +146,7 @@
                     </div>
                     <%--js--%>
                     <script type="text/javascript">
-                        function reinitIframe() {
+                        /*function reinitIframe() {
                             var iframe = document.getElementById("summernoteText");
                             try {
                                 var bHeight = iframe.contentWindow.document.body.scrollHeight;
@@ -158,13 +158,13 @@
                             }
                         }
 
-                        window.setInterval("reinitIframe()", 200);
+                        window.setInterval("reinitIframe()", 200);*/
                     </script>
                     <%--js--%>
 
 
                     <div class="form-group col-md-12" style="margin-bottom: 0px;">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 col-sm-4">
                             <label class="col-md-6 control-label">允许评论</label>
                             <input type="hidden" name="allowcommon" id="allowCommon" value="0">
                             <div class="col-sm-6">
@@ -174,7 +174,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 col-sm-4">
                             <label class="col-md-6 control-label">允许订阅</label>
                             <input type="hidden" name="allowsub" id="allowSub" value="0">
                             <div class="col-sm-6">
@@ -184,7 +184,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 col-sm-4">
                             <label class="col-md-6 control-label">添加缩略图</label>
                             <div class="col-sm-6">
                                 <label class="switch">

@@ -63,6 +63,10 @@ public class User implements Serializable {
 
     private String activateCode;  //激活码
 
+    private String resume;  //个人简介
+
+    private Integer wordNumber;  //文章字数
+
     /*视图值*/
     private String createdView;
 
@@ -156,5 +160,21 @@ public class User implements Serializable {
 
     public void setActivateCode(String activateCode) {
         this.activateCode = activateCode;
+    }
+
+    public String getResume() {
+        return resume;
+    }
+
+    public void setResume(String resume) {
+        this.resume = resume;
+    }
+
+    public Integer getWordNumber() {
+        return wordNumber;
+    }
+
+    public void setWordNumber(Integer wordNumber) {
+        this.wordNumber = wordNumber;
     }
 }

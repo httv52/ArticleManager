@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>涛哥的小窝　| 文章管理系统</title>
+    <meta name="description"
+          content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="css/app.v2.css" type="text/css">
+    <link rel="stylesheet" href="css/landing.css" type="text/css" cache="false">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
+    <!--[if lt IE 9]>
+    <script src="js/ie/html5shiv.js" cache="false"></script>
+    <script src="js/ie/respond.min.js" cache="false"></script>
+    <script src="js/ie/excanvas.js" cache="false"></script>
+    <![endif]-->
+    <style>
+        * {
+            font-family: "Pingfang SC", "STHeiti", "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
+        }
+
+        .navbar-brand img {
+            max-height: 38px;
+        }
+
+        textarea {
+            outline: none;
+            resize: none;
+        }
+    </style>
+</head>
+<body style="">
+<!-- header -->
+<header id="header" class="navbar navbar-fixed-top bg-white box-shadow b-b b-light affix-top" data-spy="affix"
+        data-offset-top="1">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="#" class="navbar-brand"><img src="images/logo.png" class="m-r-sm">
+                <span class="text-muted">
+                    <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">涛哥的小窝</font>
+                    </font>
+                </span>
+            </a>
+            <button class="btn btn-link visible-xs" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active">
+                    <a href="landing.html">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">首页</font>
+                        </font>
+                    </a>
+                </li>
+                <li>
+                    <a href="features.html">
+                        <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">指南</font></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="blog.html"><font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">博客</font></font>
+                    </a>
+                </li>
+                <li>
+                    <div class="m-t-sm" style="margin-top: 7px;">
+                        <a href="signin.html" class="btn btn-link btn-sm">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">登录</font></font>
+                        </a>
+                        <a href="signup.html" class="btn btn-sm btn-success m-l">
+                            <strong><font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">注册</font></font>
+                            </strong>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!-- / header -->
+
+<section id="content">
+    <div class="bg-dark lt">
+        <div class="container">
+            <div class="m-b-lg m-t-lg">
+                <h3 class="m-b-none">指南</h3>
+                <small class="text-muted">文章管理系统指南</small>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container m-t-xl">
+            <div class="row">
+                <div class="col-sm-7">
+                    <h2 class="font-thin m-b-lg">基于Bootstrap的响应式布局<br> 适用于
+                        <span class="text-primary">手机</span>,
+                        <span class="text-primary">平板</span>,
+                        <span class="text-primary">电脑</span></h2>
+                    <p class="h4 m-b-lg l-h-1x">您的管理系统在不同的操作系统，或是不同尺寸的设备上，都能得到完美的现实</p>
+                    <div class="row m-b-xl">
+                        <div class="col-sm-6"><i class="fa fa-fw fa-angle-right"></i>Windows</div>
+                        <div class="col-sm-6"><i class="fa fa-fw fa-angle-right"></i>手机</div>
+                        <div class="col-sm-6"><i class="fa fa-fw fa-angle-right"></i>Linux</div>
+                        <div class="col-sm-6"><i class="fa fa-fw fa-angle-right"></i>平板</div>
+                        <div class="col-sm-6"><i class="fa fa-fw fa-angle-right"></i>Android & IOS</div>
+                        <div class="col-sm-6"><i class="fa fa-fw fa-angle-right"></i>电脑</div>
+                    </div>
+                    <p class="clearfix">&nbsp;</p>
+                    <div class="row m-b-xl">
+                        <div class="col-xs-2"><i class="fa fa-desktop fa-4x icon-muted"></i></div>
+                        <div class="col-xs-2"><i class="fa fa-plus icon-muted m-t"></i></div>
+                        <div class="col-xs-2"><i class="fa fa-tablet fa-4x icon-muted"></i></div>
+                        <div class="col-xs-2"><i class="fa fa-plus icon-muted m-t"></i></div>
+                        <div class="col-xs-2"><i class="fa fa-mobile fa-4x icon-muted"></i></div>
+                    </div>
+                </div>
+                <div class="col-sm-5 text-center">
+                    <section class="panel bg-dark inline aside-md no-border device phone animated fadeInRightBig">
+                        <header class="panel-heading text-center"><i
+                                class="fa fa-minus fa-2x icon-muted m-b-n-xs block"></i></header>
+                        <div class="m-l-xs m-r-xs">
+                            <div class="carousel auto slide" id="c-fade" data-interval="3000">
+                                <div class="carousel-inner">
+                                    <div class="item active text-center"><img src="images/phone-2_1.png"
+                                                                              class="img-full"></div>
+                                    <div class="item text-center"><img src="images/phone-1_1.png" class="img-full">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="bg-dark text-center panel-footer no-border"><i
+                                class="fa fa-circle icon-muted fa-lg"></i></footer>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white b-t b-light">
+        <div class="container">
+            <div class="row m-t-xl m-b-xl">
+                <div class="col-sm-5 text-center clearfix m-t-xl" data-ride="animated" data-animation="fadeInLeftBig">
+                    <div class="h1 font-bold m-t-xl m-b-xl">
+                        <img src="images/screenshot.png" width="90%">
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <h2 class="font-thin m-b-lg">唯一标识的头像 Identicon</h2>
+                    <p class="h4 m-b-lg l-h-1x">
+                        Identicon是一种基于用户信息的哈希值生成图像的技术，通常使用用户登录时的IP地址作为输入值，并作为生成新建用户时的初始化头像用于保护用户隐私。其雏形是由九个方格构成的图案，现在第三方开发还有其他类型的生成模式。</p>
+                    <p class="m-b-xl">引用自一个开源的<a href="https://github.com/stewartlord/identicon.js/tree/master"
+                                                 target="_blank">Github库</a></p>
+                    <p class="m-t-xl m-b-xl h4"><i class="fa fa-quote-left fa-fw fa-1x icon-muted"></i> 暂不支持自定义头像</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="b-t b-light">
+        <div class="container m-t-xl">
+            <div class="row">
+                <div class="col-sm-7">
+                    <h2 class="font-thin m-b-lg">应用程序风格</h2>
+                    <p class="h4 m-b-lg l-h-1x">她是一种简介大方的风格，通过对BootStrap的深度定制而产生</p>
+                    <p class="h4 m-b-lg l-h-1x">
+                        管理后台界面(Dashboard)是给用户使用的一个信息管理系统，也称作仪表盘，用于管理和查看相关信息。我们在后台界面的用户体验上花了很多心思，从而告别单一的排版布局</p>
+                    <p class="m-b-xl"><a href="#" class="btn btn-sm btn-primary font-bold">试一试</a></p>
+                </div>
+                <div class="col-sm-5 text-center" data-ride="animated" data-animation="fadeInUp">
+                    <section class="panel bg-dark m-t-lg m-r-n-lg m-b-n-lg no-border device animated fadeInUp">
+                        <header class="panel-heading text-left"><i class="fa fa-circle fa-fw icon-muted"></i> <i
+                                class="fa fa-circle fa-fw icon-muted"></i> <i class="fa fa-circle fa-fw icon-muted"></i>
+                        </header>
+                        <img src="images/main_1.png" class="img-full"></section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white b-t b-light pos-rlt">
+        <div class="container">
+            <div class="row m-t-xl m-b-xl">
+                <div class="col-sm-5 text-center clearfix m-t-xl" data-ride="animated" data-animation="fadeInLeftBig">
+                    <div class="h3 font-bold m-t-xl m-b-xl"><i class="fa fa-circle text-primary fa-2x"></i> <i
+                            class="fa fa-circle text-info fa-2x"></i> <i class="fa fa-circle text-success fa-2x"></i> <i
+                            class="fa fa-circle text-warning fa-2x"></i> <i class="fa fa-circle text-danger fa-2x"></i>
+                        <i class="fa fa-circle text-dark fa-2x"></i> <i class="fa fa-circle text-light fa-2x"></i></div>
+                </div>
+                <div class="col-sm-7">
+                    <h2 class="font-thin m-b-lg">丰富多彩的配色</h2>
+                    <p class="h4 m-b-lg l-h-1x">我们修改了bootstrap的默认配色，提供了8种自己的调色板</p>
+                    <ul class="m-b-xl fa-ul">
+                        <li><i class="fa fa-li fa-check text-muted"></i>颜色简洁大方</li>
+                        <li><i class="fa fa-li fa-check text-muted"></i>告别审美疲劳</li>
+                        <li><i class="fa fa-li fa-check text-muted"></i>允许自己自定义风格</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="b-t b-light">
+        <div class="container m-t-xl">
+            <div class="row">
+                <div class="col-sm-7">
+                    <h2 class="font-thin m-b-lg">结合Mysql和RESTful API的文章系统</h2>
+                    <p class="h4 m-b-lg l-h-1x">我们更倾向以支持Markdown风格的文章编辑，你可以得到赏心悦目的博客文章</p>
+                    <p class="m-t-xl m-b-xl h4"><i class="fa fa-quote-left fa-fw fa-1x icon-muted"></i>
+                        Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。</p>
+                    <p class="m-b-xl"><a href="#" class="btn btn-dark font-bold">试一试</a></p>
+                </div>
+                <div class="col-sm-5 text-center" data-ride="animated" data-animation="fadeInRightBig">
+                    <section class="panel bg-light m-t-lg m-r-n-lg m-b-n-lg no-border device animated fadeInUp">
+                        <header class="panel-heading text-left"><i class="fa fa-circle fa-fw icon-muted"></i> <i
+                                class="fa fa-circle fa-fw icon-muted"></i> <i class="fa fa-circle fa-fw icon-muted"></i>
+                        </header>
+                        <img src="images/app_1.png" class="img-full"></section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="b-t b-light pos-rlt bg-white">
+        <div class="container">
+            <p class="m-t-xl m-b-xl"><font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">尽管她还不完美，但她一定会不断完善自己：待加入功能</font>
+            </font><span class="text-primary"><font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">相似文章推荐</font>
+                </font></span><font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">，</font></font>
+                <span class="text-primary"><font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">性能更高的点赞功能</font></font>
+                    </span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">，</font></font>
+                <span class="text-primary"><font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">积分系统</font></font>
+                    </span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> ...</font>
+                </font>
+            </p>
+        </div>
+    </div>
+</section>
+<!-- footer -->
+<footer id="footer">
+    <div class="bg-primary text-center">
+        <div class="container wrapper">
+            <div class="m-t-xl m-b"> 还在等什么？快点感受她的魅力吧
+                <a href="" target="_blank" class="btn btn-lg btn-dark b-white bg-empty m-sm">加入我们</a>
+                <a href="index.html" target="_blank" class="btn btn-lg btn-warning b-white bg-empty m-sm">我的博客</a>
+            </div>
+        </div>
+        <i class="fa fa-caret-down fa-4x text-primary m-b-n-lg block"></i></div>
+    <div class="bg-dark dker wrapper">
+        <div class="container text-center m-t-lg">
+            <div class="row m-t-xl m-b-xl">
+                <div class="col-sm-3" data-ride="animated" data-animation="fadeInLeft" data-delay="300"><i
+                        class="fa fa-list-alt fa-3x icon-muted"></i>
+                    <h5 class="text-uc m-b m-t-lg">备案</h5>
+                    <p class="text-sm"><a style="color:#fff;" href="http://www.miitbeian.gov.cn" target="_blank">皖ICP备17011465号</a></p>
+                </div>
+                <div class="col-sm-3" data-ride="animated" data-animation="fadeInLeft" data-delay="300"><i
+                        class="fa fa-map-marker fa-3x icon-muted"></i>
+                    <h5 class="text-uc m-b m-t-lg">地址</h5>
+                    <p class="text-sm">皖黄山市黄山学院南区 </p>
+                </div>
+                <div class="col-sm-3" data-ride="animated" data-animation="fadeInUp" data-delay="600"><i
+                        class="fa fa-envelope-o fa-3x icon-muted"></i>
+                    <h5 class="text-uc m-b m-t-lg">邮箱</h5>
+                    <p class="text-sm"><a href="mailto:tao@hutaotao.cn">tao@hutaotao.cn</a></p>
+                </div>
+                <div class="col-sm-3" data-ride="animated" data-animation="fadeInRight" data-delay="900"><i
+                        class="fa fa-phone-square fa-3x icon-muted"></i>
+                    <h5 class="text-uc m-b m-t-lg">电话</h5>
+                    <p class="text-sm">18855993890 </p>
+                </div>
+            </div>
+            <div class="m-t-xl m-b-xl">
+                <p>
+                    <a href="https://www.zhihu.com/people/hu-tao-6-91" class="btn btn-icon btn-rounded m-sm"
+                       data-toggle="tooltip" data-placement="top" title="知乎" target="_blank"
+                       style="background-color: #0f88eb;color: #fff;">
+                        知
+                    </a>
+                    <a href="http://weibo.com/u/5360387482" class="btn btn-rounded btn-danger btn-icon m-sm"
+                       data-toggle="tooltip"
+                       data-placement="top" title="微博" target="_blank">
+                        <i class="fa fa-weibo"></i>
+                    </a>
+                    <a href="https://github.com/httv52" class="btn btn-rounded btn-primary btn-icon  m-sm"
+                       data-toggle="tooltip" data-placement="top" title="Github" target="_blank">
+                        <i class="fa fa-github"></i>
+                    </a>
+                    <a href="#" class="btn btn-icon btn-rounded btn-facebook m-sm"
+                       data-toggle="tooltip" data-placement="top" title="FaceBook">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a href="#" class="btn btn-icon btn-rounded btn-twitter m-sm"
+                       data-toggle="tooltip" data-placement="top" title="推特">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                </p>
+                <p><a href="#content" data-jump="true"
+                      class="btn btn-icon btn-rounded btn-dark b-dark bg-empty m-sm text-muted"
+                      data-toggle="tooltip" data-placement="top" title="返回顶部">
+                    <i class="fa fa-angle-up"></i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- / footer -->
+<script src="js/app.v2.js"></script> <!-- Bootstrap --> <!-- App -->
+<script src="js/appear/jquery.appear.js" cache="false"></script>
+<script src="js/scroll/smoothscroll.js" cache="false"></script>
+<script src="js/landing.js" cache="false"></script>
+</body>
+</html>

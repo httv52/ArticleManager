@@ -5,15 +5,15 @@ function $childNode(name) {
 }
 
 // tooltips
-$('.tooltip-demo').tooltip({
-    selector: "[data-toggle=tooltip]",
-    container: "body"
-});
+// $('.tooltip-demo').tooltip({
+//     selector: "[data-toggle=tooltip]",
+//     container: "body"
+// });
 
 // 使用animation.css修改Bootstrap Modal
 $('.modal').appendTo("body");
 
-$("[data-toggle=popover]").popover();
+// $("[data-toggle=popover]").popover();
 
 //折叠ibox
 $('.collapse-link').click(function () {
@@ -35,6 +35,11 @@ $('.close-link').click(function () {
     content.remove();
 });
 
+// //判断当前页面是否在iframe中
+// if (top == this) {
+//     var gohome = '<div class="gohome"><a class="animated bounceInUp" href="index.html?v=4.0" title="返回首页"><i class="fa fa-home"></i></a></div>';
+//     $('body').append(gohome);
+// }
 
 //animation.css
 function animationHover(element, animation) {
@@ -57,11 +62,11 @@ function WinMove() {
     var handle = ".ibox-title";
     var connect = "[class*=col]";
     $(element).sortable({
-            handle: handle,
-            connectWith: connect,
-            tolerance: 'pointer',
-            forcePlaceholderSize: true,
-            opacity: 0.8,
-        })
+        handle: handle,
+        connectWith: connect,
+        tolerance: 'pointer',
+        forcePlaceholderSize: true,
+        opacity: 0.8,
+    })
         .disableSelection();
 };

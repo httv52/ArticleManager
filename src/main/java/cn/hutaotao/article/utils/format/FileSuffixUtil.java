@@ -14,7 +14,7 @@ public class FileSuffixUtil {
         suffix = suffix.trim();
         if (suffix.equalsIgnoreCase(".png") || suffix.equalsIgnoreCase(".jpg") ||
                 suffix.equalsIgnoreCase(".jpeg") || suffix.equalsIgnoreCase(".bmp") ||
-                suffix.equalsIgnoreCase("gif")) {
+                suffix.equalsIgnoreCase("gif") || suffix.equalsIgnoreCase(".ico")) {
             return File.FILE_TYPEE_IMAGE;
         }
         if (suffix.equalsIgnoreCase(".txt") || suffix.equalsIgnoreCase(".css") ||

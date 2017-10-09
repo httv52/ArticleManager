@@ -48,10 +48,22 @@ public class UserController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/showLogin")
+    @RequestMapping("showLogin")
     public String showLogin(Model model) {
         model.addAttribute("pageCode", PAGE_CODE_LOGIN);
         return "user/login";
+    }
+
+
+    /**
+     * 修改后台信息
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping("updateAdmin")
+    public String updateAdmin(Model model) {
+        return "admin/theme_admin";
     }
 
     /**

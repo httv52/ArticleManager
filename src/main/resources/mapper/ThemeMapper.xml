@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hutaotao.article.dao.ThemeMapper">
+    <resultMap id="linkResultMap" type="Theme">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="auther_name" property="autherName" jdbcType="VARCHAR"/>
+        <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+        <result column="describe" property="describe" jdbcType="VARCHAR"/>
+        <result column="logo_img" property="logoImg" jdbcType="VARCHAR"/>
+        <result column="homePage" property="homePage" jdbcType="VARCHAR"/>
+        <result column="account_weibo" property="accountWeibo" jdbcType="VARCHAR"/>
+        <result column="account_zhihu" property="accountZhihu" jdbcType="VARCHAR"/>
+        <result column="account_github" property="accountGithub" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap" type="Theme" extends="linkResultMap">
+        <result column="QR_type" property="qrType" jdbcType="INTEGER"/>
+        <result column="QR_img" property="qrImg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="themeRelation" type="Theme" extends="BaseResultMap">
+        <association property="user" javaType="User">
+            <id column="uid" property="uid"/>
+            <result column="userName" property="username"/>
+            <result column="screen_name" property="screenName"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, uid, logo_img, auther_name, keyword, describe, QR_type, QR_img, account_weibo,
+        account_zhihu, account_github
+    </sql>
+
+    <select id="findSimpleThemeByUser" resultMap="linkResultMap">
+        SELECT
+            id,
+            logo_img,
+            auther_name,
+            keyword,
+            `describe`,
+            homePage,
+            account_weibo,
+            account_zhihu,
+            account_github
+        FROM theme
+        WHERE uid = #{uid}
+    </select>
+
+    <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.hutaotao.article.model.ThemeKey">
+        select
+        <include refid="Base_Column_List"/>
+        from theme
+        where id = #{id,jdbcType=VARCHAR}
+        and uid = #{uid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="cn.hutaotao.article.model.ThemeKey">
+        DELETE FROM theme
+        WHERE id = #{id,jdbcType=VARCHAR}
+              AND uid = #{uid,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.hutaotao.article.model.Theme">
+        INSERT INTO theme (id, uid, logo_img,
+                           auther_name, keyword, describe,
+                           QR_type, QR_img, account_weibo,
+                           account_zhihu, account_github)
+        VALUES (#{id,jdbcType=VARCHAR}, #{user.uid,jdbcType=VARCHAR}, #{logoImg,jdbcType=VARCHAR},
+                                        #{autherName,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR},
+                                        #{describe,jdbcType=VARCHAR},
+                                        #{qrType,jdbcType=INTEGER}, #{qrImg,jdbcType=VARCHAR},
+                                        #{accountWeibo,jdbcType=VARCHAR},
+                                        #{accountZhihu,jdbcType=VARCHAR}, #{accountGithub,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.hutaotao.article.model.Theme">
+        insert into theme
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="logoImg != null">
+                logo_img,
+            </if>
+            <if test="autherName != null">
+                auther_name,
+            </if>
+            <if test="keyword != null">
+                keyword,
+            </if>
+            <if test="describe != null">
+                describe,
+            </if>
+            <if test="qrType != null">
+                QR_type,
+            </if>
+            <if test="qrImg != null">
+                QR_img,
+            </if>
+            <if test="accountWeibo != null">
+                account_weibo,
+            </if>
+            <if test="accountZhihu != null">
+                account_zhihu,
+            </if>
+            <if test="accountGithub != null">
+                account_github,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="logoImg != null">
+                #{logoImg,jdbcType=VARCHAR},
+            </if>
+            <if test="autherName != null">
+                #{autherName,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword != null">
+                #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="describe != null">
+                #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="qrType != null">
+                #{qrType,jdbcType=INTEGER},
+            </if>
+            <if test="qrImg != null">
+                #{qrImg,jdbcType=VARCHAR},
+            </if>
+            <if test="accountWeibo != null">
+                #{accountWeibo,jdbcType=VARCHAR},
+            </if>
+            <if test="accountZhihu != null">
+                #{accountZhihu,jdbcType=VARCHAR},
+            </if>
+            <if test="accountGithub != null">
+                #{accountGithub,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.hutaotao.article.model.Theme">
+        update theme
+        <set>
+            <if test="logoImg != null">
+                logo_img = #{logoImg,jdbcType=VARCHAR},
+            </if>
+            <if test="autherName != null">
+                auther_name = #{autherName,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword != null">
+                keyword = #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="describe != null">
+                describe = #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="qrType != null">
+                QR_type = #{qrType,jdbcType=INTEGER},
+            </if>
+            <if test="qrImg != null">
+                QR_img = #{qrImg,jdbcType=VARCHAR},
+            </if>
+            <if test="accountWeibo != null">
+                account_weibo = #{accountWeibo,jdbcType=VARCHAR},
+            </if>
+            <if test="accountZhihu != null">
+                account_zhihu = #{accountZhihu,jdbcType=VARCHAR},
+            </if>
+            <if test="accountGithub != null">
+                account_github = #{accountGithub,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+        and uid = #{uid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.hutaotao.article.model.Theme">
+        UPDATE theme
+        SET logo_img       = #{logoImg,jdbcType=VARCHAR},
+            auther_name    = #{autherName,jdbcType=VARCHAR},
+            keyword        = #{keyword,jdbcType=VARCHAR},
+            describe       = #{describe,jdbcType=VARCHAR},
+            QR_type        = #{qrType,jdbcType=INTEGER},
+            QR_img         = #{qrImg,jdbcType=VARCHAR},
+            account_weibo  = #{accountWeibo,jdbcType=VARCHAR},
+            account_zhihu  = #{accountZhihu,jdbcType=VARCHAR},
+            account_github = #{accountGithub,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=VARCHAR}
+              AND uid = #{uid,jdbcType=VARCHAR}
+    </update>-->
+</mapper>

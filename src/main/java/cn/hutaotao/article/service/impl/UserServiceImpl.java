@@ -83,6 +83,8 @@ public class UserServiceImpl implements UserService {
         user.setCreated(System.currentTimeMillis());  //创建时间
         user.setLogged(null);
         user.setActivateCode(user.getActivateCode());//激活码
+        user.setResume("暂无简介");
+        user.setWordNumber(0);
         user.setState(User.USER_STATE_OF__LOSE_ACTIVATE);
 
         saveUser(user);  //保存用户

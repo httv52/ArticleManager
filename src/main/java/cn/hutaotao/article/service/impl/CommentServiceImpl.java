@@ -22,8 +22,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> findCommentByUserPrimary(String loginUserId) {
-        return commentMapper.findCommentByUserPrimary(loginUserId);
+    public List<Comment> findCommentByUserPrimary(String loginUserId, Integer limit) {
+        return commentMapper.findCommentByUserPrimary(loginUserId, limit);
     }
 
     @Override
