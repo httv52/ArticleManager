@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-09-28 02:33:39
+Date: 2017-10-11 06:28:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,6 +36,7 @@ CREATE TABLE `article` (
   `allowSub` int(1) NOT NULL COMMENT '允许订阅',
   `uid` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `categoryId` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `word_number` int(11) DEFAULT NULL,
   PRIMARY KEY (`aid`),
   KEY `article-user` (`uid`),
   KEY `article_category` (`categoryId`),
@@ -65,13 +66,14 @@ DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `categoryId` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `categoryName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `img` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `uid` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `indexes` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`categoryId`),
   KEY `user_category` (`uid`),
   KEY `category_index` (`indexes`) USING BTREE,
   CONSTRAINT `user_category` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for comment
@@ -123,7 +125,7 @@ CREATE TABLE `logs` (
   PRIMARY KEY (`id`),
   KEY `user_logs` (`uid`),
   CONSTRAINT `user_logs` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for tag
@@ -141,6 +143,28 @@ CREATE TABLE `tag` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
+-- Table structure for theme
+-- ----------------------------
+DROP TABLE IF EXISTS `theme`;
+CREATE TABLE `theme` (
+  `id` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `logo_img` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `auther_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `keyword` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `describe` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `QR_type` int(1) DEFAULT NULL,
+  `QR_img` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `homePage` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `account_weibo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `account_zhihu` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `account_github` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `uid` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`,`uid`),
+  KEY `theme_user_FK` (`uid`),
+  CONSTRAINT `theme_user_FK` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -154,6 +178,8 @@ CREATE TABLE `user` (
   `logged` bigint(20) DEFAULT NULL,
   `activateCode` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `state` int(1) NOT NULL,
+  `resume` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `word_number` int(11) DEFAULT NULL,
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET FOREIGN_KEY_CHECKS=1;

@@ -31,7 +31,12 @@
           p:maxActive="${db.maxActive}"
           p:maxIdle="${db.maxIdle}"
           p:minIdle="${db.minIdle}"
-          p:maxWait="${db.maxWait}"/>
+          p:maxWait="${db.maxWait}"
+          p:validationQuery="select 1"
+          p:testWhileIdle="true"
+          p:timeBetweenEvictionRunsMillis="3600000"
+          p:minEvictableIdleTimeMillis="180000000"
+          p:testOnBorrow="true"/>
 
     <!-- sqlSessionFactory-->
     <!-- mapperLocations扫描sql配置文件代替configLocation:mybatis的Mapper配置文件-->
