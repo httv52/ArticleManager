@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<footer id="footer">
+<footer id="footer" >
     <div class="text-center">
         <div class="container wrapper">
 
@@ -40,8 +40,8 @@
                                     <img src="<%=imgPath%>${na.previewimg}" width="58px" height="43px">
                                 </a>
                                     <div class="media-body contentControl_2">
-                                        <a href="#" class="font-semibold">
-                                        ${na.content}
+                                        <a href="<c:url value="/p/${na.aid}"/>" class="font-semibold">
+                                        ${na.contentView}
                                         </a>
                                     </div>
                                     <div class="text-xs block m-t-xs"><i class="fa fa-clock-o"></i>

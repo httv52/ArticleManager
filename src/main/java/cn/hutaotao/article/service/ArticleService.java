@@ -58,4 +58,10 @@ public interface ArticleService {
      * @return
      */
     Article findArticleById(String aid);
+
+    /**
+     * 增加访问量
+     * @param aid
+     */
+    void updateViews(String aid);
 }

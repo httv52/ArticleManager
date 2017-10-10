@@ -31,4 +31,9 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.findCommentWithMyself(loginUserId);
     }
 
+    @Override
+    public List<Comment> findCommentWithChild(String aid, Integer limit) {
+        return commentMapper.findCommentWithChild(aid, limit);
+    }
+
 }

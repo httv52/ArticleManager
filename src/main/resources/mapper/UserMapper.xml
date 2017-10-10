@@ -22,7 +22,9 @@
             uid,
             username,
             screen_name,
-            state
+            state,
+            resume,
+            word_number
         FROM user
         WHERE uid = #{uid}
     </select>

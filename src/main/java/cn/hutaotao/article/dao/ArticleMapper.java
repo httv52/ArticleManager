@@ -52,6 +52,8 @@ public interface ArticleMapper {
      */
     Article findArticleById(String aid);
 
+    void updateViews(String aid);
+
 
 //    int deleteByPrimaryKey(String aid);
 //

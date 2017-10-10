@@ -39,6 +39,11 @@
                     #{state}, #{views}, #{commens}, #{allowcommon}, #{allowsub}, #{user.uid}, #{category.categoryid}
         )
     </insert>
+    <update id="updateViews">
+        UPDATE article
+        SET views = views + 1
+        WHERE aid = #{aid}
+    </update>
 
     <select id="findArticleByUserPublished" resultMap="article_relation">
         SELECT *
@@ -94,16 +99,14 @@
             c.categoryName,
             t.tagName
         FROM
-            article a,
-            USER u,
             category c,
-            article_tag_tbl att,
-            tag t
+            USER u,
+            article a
+            LEFT JOIN article_tag_tbl att ON att.aid = a.aid
+            LEFT JOIN tag t ON att.tagId = t.tagId
         WHERE
             u.uid = a.uid
             AND c.categoryId = a.categoryId
-            AND att.aid = a.aid
-            AND att.tagId = t.tagId
             AND a.aid = #{aid}
     </select>
 

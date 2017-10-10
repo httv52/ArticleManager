@@ -89,6 +89,14 @@
             margin: 4px;
         }
 
+        .contentControl_1 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+
         .contentControl_2 {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -123,10 +131,10 @@
 
         /*文章详情页*/
         .post-header .title {
-            word-break: break-word!important;
+            word-break: break-word !important;
             word-break: break-all;
             margin: 20px 0 0;
-            font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+            font-family: -apple-system, SF UI Display, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
             font-size: 34px;
             font-weight: 700;
             line-height: 1.3;
@@ -142,7 +150,7 @@
             border-radius: 50%;
         }
 
-        .author .info{
+        .author .info {
             vertical-align: middle;
             display: inline-block;
             margin-left: 8px;
@@ -154,22 +162,23 @@
             color: #969696;
         }
 
-        a{
+        a {
             color: #969696;
         }
-        }
+
         .page-page p, .page-page ul {
-            word-break: break-word!important;
+            /*word-break: break-word !important;*/
             word-break: break-all;
         }
 
         .post-content p {
             color: #525151;
-            word-break: break-word!important;
+            /*word-break: break-word !important;*/
             word-break: break-all;
             font-size: 16px;
             font-weight: 400;
             line-height: 1.7;
+        }
 
         .page-page p {
             margin: 0 0 25px;
@@ -179,21 +188,61 @@
             margin: 0 0 10px;
         }
 
-
         .page-page * {
             coloe: #333;
         }
 
-        /*返回顶部按钮*/
-        #btn_top {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            display: none;
-            box-shadow: 2px 2px 5px #363636;
+        .show-foot .notebook {
+            font-size: 12px;
+            color: #9b9b9b;
         }
 
-        /*代码风格*/
+        .myArticle .copyright {
+            float: right;
+            margin-top: 5px;
+            font-size: 12px;
+            line-height: 1.7;
+            color: #9b9b9b;
+        }
+
+        /*评论页*/
+        .page-comment {
+            max-width: 700px;
+            padding: 20px 25px 20px;
+        }
+
+        .new-comment .myAvatar {
+            position: absolute;
+            left: -48px;
+            margin-right: 5px;
+            width: 38px;
+            height: 38px;
+        }
+
+        .sign-container{
+            padding: 10px 15px;
+            width: 100%;
+            height: 80px;
+            font-size: 13px;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+            background-color: hsla(0, 0%, 71%, .1);
+            resize: none;
+            display: inline-block;
+            vertical-align: top;
+            outline-style: none
+        }
+
+        .new-comment .myAvatar img {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+        }
+
+        .comment-list:before{
+            background: #ffffff;
+        }
 
     </style>
 </head>
@@ -205,7 +254,7 @@
 <![endif]-->
 <header id="header" class="header bg-white">
     <div class="navbar-container">
-        <a href="#" class="navbar-logo">
+        <a href="<c:url value="/index/"/>${user.username} " class="navbar-logo">
             <img src="<%=imgPath%>/static/logo.png" alt="##"/>
             <span class="text-muted">
             <font style="vertical-align: inherit;">${theme.autherName}的博客</font>
@@ -237,10 +286,10 @@
                     <ul class="dropdown-menu animated fadeInRight">
                         <span class="arrow top"></span>
                         <li>
-                            <a href=""><i class="fa fa-user"></i>　我的首页</a>
+                            <a href="<c:url value="/home"/>" data-no-instant><i class="fa fa-home"></i>　首页</a>
                         </li>
                         <li>
-                            <a href=""><i class="fa fa-tachometer"></i>　我的后台</a>
+                            <a href="<c:url value="/admin/index"/>" data-no-instant><i class="fa fa-tachometer"></i>　我的后台</a>
                         </li>
                         <!--分割线-->
                         <li class="divider"></li>
@@ -256,11 +305,11 @@
             </c:when>
             <c:otherwise>
                 <div class="m-t-sm" style="margin-top: 1px;display: inline-block;">
-                    <a href="signin.html" class="btn btn-link btn-sm">
+                    <a href="<c:url value="/user/showLogin"/> " class="btn btn-link btn-sm" target="_blank">
                         <font style="vertical-align: inherit;">
                             <font style="vertical-align: inherit;">登录</font></font>
                     </a>
-                    <a href="signup.html" class="btn btn-sm btn-success m-l">
+                    <a href="<c:url value="/user/showRegister"/>" class="btn btn-sm btn-success m-l" target="_blank">
                         <strong><font style="vertical-align: inherit;">
                             <font style="vertical-align: inherit;">注册</font></font>
                         </strong>

@@ -32,4 +32,6 @@ public interface CommentService {
      * @return
      */
     Integer findCommentWithMyself(String loginUserId);
+
+    List<Comment> findCommentWithChild(String aid, Integer limit);
 }

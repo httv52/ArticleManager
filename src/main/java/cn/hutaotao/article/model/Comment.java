@@ -2,6 +2,9 @@ package cn.hutaotao.article.model;
 
 import cn.hutaotao.article.utils.format.FormatUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Comment {
     /*常量*/
     /**
@@ -42,6 +45,8 @@ public class Comment {
 
     private User user;
 
+    private List<Comment> childList = new ArrayList<>();
+
     public Article getArticle() {
         return article;
     }
@@ -56,6 +61,14 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Comment> getChildList() {
+        return childList;
+    }
+
+    public void setChildList(List<Comment> childList) {
+        this.childList = childList;
     }
     /* Get Set */
 

@@ -8,7 +8,7 @@
 <form action="<c:url value="/index/${user.username}"/>" id="index_form" method="post">
     <input type="hidden" name="pageNow" value="1" id="my_pageNow">
 
-    <div class="index-page row wrapper" style="transform: none;overflow: auto;">
+    <div class="index-page row wrapper" style="transform: none;overflow: auto;background-color: #f7f7f7">
         <div class="col-lg-9 col-xs-12 contentSidebar">
             <div class="main-content clearfix theiaStickySidebar">
                 <div class="post-lists">

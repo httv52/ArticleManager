@@ -488,6 +488,9 @@
                 <ul class="dropdown-menu animated fadeInRight">
                     <span class="arrow top"></span>
                     <li>
+                        <a href="<c:url value="/index/"/>${sessionScope.loginUser.username}"><i class="fa fa-user"></i>　我的博客</a>
+                    </li>
+                    <li>
                         <a href=""><i class="fa fa-key"></i>　修改密码</a>
                     </li>
                     <!--分割线-->

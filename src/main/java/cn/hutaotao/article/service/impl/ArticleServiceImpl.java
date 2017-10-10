@@ -64,4 +64,9 @@ public class ArticleServiceImpl implements ArticleService {
     public Article findArticleById(String aid) {
         return articleMapper.findArticleById(aid);
     }
+
+    @Override
+    public void updateViews(String aid) {
+        articleMapper.updateViews(aid);
+    }
 }

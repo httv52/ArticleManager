@@ -15,6 +15,9 @@
             <id column="aid" property="aid"/>
         </association>
     </resultMap>
+    <resultMap id="commentWithChild" type="Comment" extends="commentRelation">
+        <collection property="childList" ofType="Comment" resultMap="commentRelation"/>
+    </resultMap>
 
     <select id="findCommentCountByUserPrimary" parameterType="String" resultType="Integer">
         SELECT COUNT(*)
@@ -32,13 +35,27 @@
         FROM comment c, article a, user u
         WHERE c.aid = a.aid AND a.uid = u.uid AND a.uid = #{uid} AND c.state = 1
         ORDER BY created DESC
-        limit 0,#{limit};
+        LIMIT 0, #{limit};
     </select>
 
     <select id="findCommentWithMyself" resultType="Integer" parameterType="String">
         SELECT COUNT(*)
         FROM comment
         WHERE uid = #{myId} AND state = 1
+    </select>
+
+    <select id="findCommentWithChild" resultMap="commentWithChild">
+        SELECT
+            c1.*,
+            c2.*
+        FROM
+            `comment` c1
+            LEFT JOIN `comment` c2 ON c2.parent = c1.id
+        WHERE
+            c1.parent = '0'
+            AND c1.aid = #{aid}
+            AND c1.state = 1
+        LIMIT 0, #{limit};
     </select>
 
 </mapper>

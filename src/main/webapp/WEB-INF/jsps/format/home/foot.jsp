@@ -1,97 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>涛哥的小窝　| 文章管理系统</title>
-    <meta name="description"
-          content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="css/app.v2.css" type="text/css">
-    <link rel="stylesheet" href="css/landing.css" type="text/css" cache="false">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
-    <!--[if lt IE 9]>
-    <script src="js/ie/html5shiv.js" cache="false"></script>
-    <script src="js/ie/respond.min.js" cache="false"></script>
-    <script src="js/ie/excanvas.js" cache="false"></script>
-    <![endif]-->
-    <style>
-        * {
-            font-family: "Pingfang SC", "STHeiti", "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
-        }
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-        .navbar-brand img {
-            max-height: 38px;
-        }
+<%--导入头像文件--%>
+<script src="<c:url value='/js/iden/identicon.js'/>"></script>
+<script src="<c:url value='/js/iden/pnglib.js'/>"></script>
+<script src="<c:url value='/js/demo/myBase.js'/>"></script>
 
-        textarea {
-            outline: none;
-            resize: none;
-        }
-    </style>
-</head>
-<body style="">
-<!-- header -->
-<header id="header" class="navbar navbar-fixed-top bg-white box-shadow b-b b-light affix-top" data-spy="affix"
-        data-offset-top="1">
-    <div class="container">
-        <div class="navbar-header">
-            <a href="#" class="navbar-brand"><img src="images/logo.png" class="m-r-sm">
-                <span class="text-muted">
-                    <font style="vertical-align: inherit;">
-                    <font style="vertical-align: inherit;">涛哥的小窝</font>
-                    </font>
-                </span>
-            </a>
-            <button class="btn btn-link visible-xs" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-                <i class="fa fa-bars"></i>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active">
-                    <a href="landing.html">
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">首页</font>
-                        </font>
-                    </a>
-                </li>
-                <li>
-                    <a href="features.html">
-                        <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">指南</font></font>
-                    </a>
-                </li>
-                <li>
-                    <a href="blog.html"><font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">博客</font></font>
-                    </a>
-                </li>
-                <li>
-                    <div class="m-t-sm" style="margin-top: 7px;">
-                        <a href="signin.html" class="btn btn-link btn-sm">
-                            <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">登录</font></font>
-                        </a>
-                        <a href="signup.html" class="btn btn-sm btn-success m-l">
-                            <strong><font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">注册</font></font>
-                            </strong>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</header>
-<!-- / header -->
-
+<%@include file="/WEB-INF/jsps/format/admin/headImg.jsp" %>
 
 <!-- footer -->
 <footer id="footer">
     <div class="bg-primary text-center">
         <div class="container wrapper">
             <div class="m-t-xl m-b"> 还在等什么？快点感受她的魅力吧
-                <a href="" target="_blank" class="btn btn-lg btn-dark b-white bg-empty m-sm">加入我们</a>
-                <a href="index.html" target="_blank" class="btn btn-lg btn-warning b-white bg-empty m-sm">我的博客</a>
+                <a href="<c:url value="/user/showRegister"/>" target="_blank" class="btn btn-lg btn-dark b-white bg-empty m-sm">加入我们</a>
+                <a href="<c:url value="/index/hutao"/>" target="_blank" class="btn btn-lg btn-warning b-white bg-empty m-sm">我的博客</a>
             </div>
         </div>
         <i class="fa fa-caret-down fa-4x text-primary m-b-n-lg block"></i></div>

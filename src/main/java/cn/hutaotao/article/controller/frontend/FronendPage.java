@@ -36,16 +36,46 @@ public class FronendPage {
      */
     private static final Integer LIMIT_NUMBER = 6;
 
+    @RequestMapping("/home")
+    public String home() {
+        return "/front/home";
+    }
+
+    @RequestMapping("/guide")
+    public String guide() {
+        return "/front/guide";
+    }
 
     @RequestMapping("/p/{aid}")
     public String articleContext(@PathVariable("aid") String aid, Model model) {
         Article article = articleService.findArticleById(aid);
+        article.setViews(article.getViews() + 1);
         String uid = article.getUser().getUid();
 
         Theme theme = themeService.findSimpleThemeByUser(uid);
         model.addAttribute("theme", theme);
 
+        Integer articleNumber = articleService.findArticleCountPublished(uid);
+        Integer commonnNumber = commentService.findCommentWithMyself(uid);
+
+        List<Article> newArticleList = articleService.findAllPublished(uid, LIMIT_NUMBER);
+        List<Comment> newCommentList = commentService.findCommentByUserPrimary(uid, LIMIT_NUMBER);
+
+        List<Comment> commentList = commentService.findCommentWithChild(aid, LIMIT_NUMBER);
+
         model.addAttribute("article", article);
+        model.addAttribute("articleNumber", articleNumber);
+        model.addAttribute("commonnNumber", commonnNumber);
+        model.addAttribute("user", article.getUser());
+
+        model.addAttribute("newArticleList", newArticleList);
+        model.addAttribute("newCommentList", newCommentList);
+
+        model.addAttribute("commentList", commentList);
+
+        /*访问量 +1*/
+        articleService.updateViews(article.getAid());
+
         return "front/article";
     }
 
@@ -90,7 +120,6 @@ public class FronendPage {
         model.addAttribute("newCommentList", newCommentList);
 
         return "front/index";
-//        return "format/front/foot";
     }
 
 }

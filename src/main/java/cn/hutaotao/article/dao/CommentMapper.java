@@ -24,4 +24,6 @@ public interface CommentMapper {
     List<Comment> findCommentByUserPrimary(@Param("uid") String uid, @Param("limit") Integer limit);
 
     Integer findCommentWithMyself(String myId);
+
+    List<Comment> findCommentWithChild(@Param("aid") String aid, @Param("limit") Integer limit);
 }
