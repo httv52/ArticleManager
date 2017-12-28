@@ -6,6 +6,8 @@ import cn.hutaotao.article.model.Article;
 import cn.hutaotao.article.model.Category;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.service.ArticleService;
+import cn.hutaotao.article.utils.format.ImgUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void insertArticle(Article article, String categoryId, User loginUser) {
+        if (StringUtils.isBlank(article.getPreviewimg())) {
+            article.setPreviewimg(ImgUtil.articleImg());
+        }
+
         Long currentTime = System.currentTimeMillis();
         article.setCreated(currentTime);
         article.setModified(currentTime);

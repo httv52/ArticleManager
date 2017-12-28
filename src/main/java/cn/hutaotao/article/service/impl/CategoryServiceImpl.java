@@ -6,6 +6,7 @@ import cn.hutaotao.article.model.Category;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.service.CategoryService;
 import cn.hutaotao.article.utils.code.UUIDUtil;
+import cn.hutaotao.article.utils.format.ImgUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,7 +86,7 @@ public class CategoryServiceImpl implements CategoryService {
         category = new Category();
         category.setCategoryid(UUIDUtil.getUUID());
         category.setCategoryname(name);
-        category.setImg("");
+        category.setImg(ImgUtil.categoryImg());
         User user = new User();
         user.setUid(uid);
         category.setUser(user);

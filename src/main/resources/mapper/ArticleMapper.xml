@@ -36,7 +36,8 @@
     <insert id="insertArticle" parameterType="Article">
         INSERT INTO article VALUES (
             #{aid}, #{title}, #{pageTitle}, #{content}, #{url}, #{previewimg}, #{created}, #{modified}, #{type},
-                    #{state}, #{views}, #{commens}, #{allowcommon}, #{allowsub}, #{user.uid}, #{category.categoryid}
+                    #{state}, #{views}, #{commens}, #{allowcommon}, #{allowsub}, #{user.uid}, #{category.categoryid},
+            #{wordNumber}
         )
     </insert>
     <update id="updateViews">
