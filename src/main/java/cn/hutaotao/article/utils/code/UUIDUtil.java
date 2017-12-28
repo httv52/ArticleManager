@@ -18,7 +18,7 @@ public class UUIDUtil {
 
     public static int serNum = 1;  //初始值
     public static int len = 4;      //最多添加四个0
-    private static final byte[] zeros = {48, 48, 48, 48, 48};  //0的ascii码
+    private static final byte[] ZEROS = {48, 48, 48, 48, 48};  //0的ascii码
 
 
     /**
@@ -36,7 +36,7 @@ public class UUIDUtil {
         String fir = dateFormat.format(date);
         int num = serNum++;
         int len2 = (num + "").length();
-        String sec = new String(zeros, 0, len - len2);
+        String sec = new String(ZEROS, 0, len - len2);
 //        System.out.println(new Long(fir + sec + num));
 //        System.out.println(Long.toHexString(new Long(fir + sec + num)));
         return (Long.toHexString(new Long(fir + sec + num)) + getUUID().substring(0, 4)).toLowerCase();

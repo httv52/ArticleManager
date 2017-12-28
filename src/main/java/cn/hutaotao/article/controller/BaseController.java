@@ -79,8 +79,9 @@ public class BaseController {
      */
     public User getLoginUser(HttpSession session) {
         User loginUser = (User) session.getAttribute(User.SESSION_USER_NAME);
-        if (null == loginUser)
+        if (null == loginUser) {
             throw new MyException();
+        }
         return loginUser;
     }
 

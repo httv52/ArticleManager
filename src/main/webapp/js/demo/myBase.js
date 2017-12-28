@@ -153,7 +153,7 @@ $.hutao.prototype.warningAlert = function (options, callback) {
 };
 
 /**
- * 询问确认弹框，这里会传入then函数进来
+ * 询问确认弹框，这里会传入函数进来
  * @param options
  */
 $.hutao.prototype.questionAlert = function (options, callback) {

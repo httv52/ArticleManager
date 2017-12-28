@@ -6,7 +6,7 @@
     <meta name="description"
           content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!--<link rel="stylesheet" href="css/app.v2.css" type="text/css">-->
+    <link rel="stylesheet" href="css/app.v2.css" type="text/css">
     <link rel="stylesheet" href="css/landing.css" type="text/css" cache="false">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
     <!--[if lt IE 9]>
@@ -36,44 +36,25 @@
         <input type="text" id="myTextEle">
         <input type="submit" id="mySubmitEle" class="btn btn-success" value="提交">
     </div>
+    <div style="padding-bottom: 20px;" class="panel text-primary">
 
+    </div>
+<!---->
 
 </form>
 
 <!-- / footer -->
 <script src="js/jquery.min.js"></script>
 <script>
-    $myTextEle = $("#myTextEle");  //文本框
-    $mySubmitEle = $("#mySubmitEle");  //提交按钮
 
     /*
      * 初始化
      */
     $(function () {
-        checkTextContent();
-
-        $myTextEle.mouseout(function () {
-            alert("123");
-        });
-
-        // 文本被改变事件（包括粘贴与cookie填充）
-        $myTextEle.bind("input propertychange",function () {
-            checkTextContent();
-        });
+        alert("123");
     });
 
-    /*
-     * 检查 From 表单值是否为空
-     */
-    function checkTextContent() {
-        if( $myTextEle.val() == '') {
-//            $mySubmitEle.addClass("disabled");
-            $mySubmitEle.attr("disabled",true);
-        } else{
-//            $mySubmitEle.removeClass("disabled");
-            $mySubmitEle.attr("disabled",false);
-        }
-    }
 </script>
 </body>
 </html>
+

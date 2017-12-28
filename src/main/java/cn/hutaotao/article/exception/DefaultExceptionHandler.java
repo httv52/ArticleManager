@@ -15,6 +15,7 @@ import java.io.IOException;
 public class DefaultExceptionHandler implements HandlerExceptionResolver {
     private Logger log = BaseController.LOGGER;
 
+    @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         ModelAndView mv = new ModelAndView();
             /*	使用response返回	*/

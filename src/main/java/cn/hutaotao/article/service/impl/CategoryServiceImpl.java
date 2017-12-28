@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -45,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         Boolean hasPrimary = false;
         for (Category category : categoryList) {
-            if (category.getCategoryid().equalsIgnoreCase("0")) {
+            if ("0".equalsIgnoreCase(category.getCategoryid())) {
                 hasPrimary = true;
                 break;
             }

@@ -386,7 +386,8 @@
     }
 
 
-    document.body.oncopy = function () {
+    document.body.oncopy = function (event) {
+        event = event || window.event;
         var htmlDate = window.getSelection().getRangeAt(0);
         if ((htmlDate + "").length < 30) {
             return;

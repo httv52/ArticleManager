@@ -12,31 +12,34 @@ import java.util.Map;
 
 public class User implements Serializable {
     /*常量*/
+    /**
+     * Session用户
+     */
     public static final String SESSION_USER_NAME = "loginUser"; //用户在session中的key
 
     /**
      * 已注销
      */
-    public static final Integer USER_STATE_OF__DELETE = 2;
+    private static final Integer USER_STATE_OF__DELETE = 2;
     /**
      * 已注册
      */
-    public static final Integer USER_STATE_OF__ACTIVATE = 1;
+    private static final Integer USER_STATE_OF__ACTIVATE = 1;
     /**
      * 未激活
      */
     public static final Integer USER_STATE_OF__LOSE_ACTIVATE = 0;
 
-    public static final String USER_STATE_OF__DELETE_VIEW = "已注销";
-    public static final String USER_STATE_OF__ACTIVATE_VIEW = "已注册";
-    public static final String USER_STATE_OF__LOSE_ACTIVATE_VIEW = "未激活";
+    private static final String USER_STATE_OF__DELETE_VIEW = "已注销";
+    private static final String USER_STATE_OF__ACTIVATE_VIEW = "已注册";
+    private static final String USER_STATE_OF__LOSE_ACTIVATE_VIEW = "未激活";
 
-    public static final Map<Integer, String> userStateMap = new HashMap<>();
+    private static final Map<Integer, String> USER_STATE_MAP = new HashMap<>();
 
     static {
-        userStateMap.put(USER_STATE_OF__ACTIVATE, USER_STATE_OF__ACTIVATE_VIEW);
-        userStateMap.put(USER_STATE_OF__LOSE_ACTIVATE, USER_STATE_OF__LOSE_ACTIVATE_VIEW);
-        userStateMap.put(USER_STATE_OF__DELETE, USER_STATE_OF__DELETE_VIEW);
+        USER_STATE_MAP.put(USER_STATE_OF__ACTIVATE, USER_STATE_OF__ACTIVATE_VIEW);
+        USER_STATE_MAP.put(USER_STATE_OF__LOSE_ACTIVATE, USER_STATE_OF__LOSE_ACTIVATE_VIEW);
+        USER_STATE_MAP.put(USER_STATE_OF__DELETE, USER_STATE_OF__DELETE_VIEW);
     }
 
     /* -常量*/
@@ -151,7 +154,7 @@ public class User implements Serializable {
 
     public void setState(Integer state) {
         this.state = state;
-        this.stateView = userStateMap.get(state);
+        this.stateView = USER_STATE_MAP.get(state);
     }
 
     public String getActivateCode() {

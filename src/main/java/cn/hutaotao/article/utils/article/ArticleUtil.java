@@ -6,7 +6,7 @@ import org.commonmark.Extension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;;
+import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class ArticleUtil {
     /**
-     * An :grinning:awesome :smiley:string &#128516;with a few :wink:emojis!
-     * <p>
      * 这种格式的字符转换为emoji表情
      *
      * @param value

@@ -76,6 +76,7 @@ public class MailUtil {
         final String password = props.getProperty("password");
         user = username;
         session = Session.getInstance(props, new Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }
@@ -204,8 +205,9 @@ public class MailUtil {
     }
 
     public void send() throws MessagingException {
-        if (text == null && html == null)
+        if (text == null && html == null) {
             throw new NullPointerException("At least one context has to be provided: Text or Html");
+        }
 
         MimeMultipart cover;
         boolean usingAlternative = false;

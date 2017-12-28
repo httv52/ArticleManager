@@ -78,7 +78,7 @@
 
 <script src="//cdn.bootcss.com/headroom/0.9.1/headroom.min.js"></script>
 <script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
-<script src="//cdn.bootcss.com/instantclick/3.0.1/instantclick.min.js"></script>
+<!-- <script src="//cdn.bootcss.com/instantclick/3.0.1/instantclick.min.js"></script> -->
 <script type="text/javascript">
     var header = new Headroom(document.getElementById("header"), {
         tolerance: 10,
@@ -100,17 +100,23 @@
         }
     });
 </script>
-<script data-no-instant>
-    InstantClick.on('change', function (isInitialLoad) {
+<script>
+    $(function () {
         var blocks = document.querySelectorAll('pre code');
         for (var i = 0; i < blocks.length; i++) {
             hljs.highlightBlock(blocks[i]);
         }
-        if (isInitialLoad === false) {
-            if (typeof ga !== 'undefined') ga('send', 'pageview', location.pathname + location.search);
-        }
     });
-    InstantClick.init();
+//    InstantClick.on('change', function (isInitialLoad) {
+//        var blocks = document.querySelectorAll('pre code');
+//        for (var i = 0; i < blocks.length; i++) {
+//            hljs.highlightBlock(blocks[i]);
+//        }
+//        if (isInitialLoad === false) {
+//            if (typeof ga !== 'undefined') ga('send', 'pageview', location.pathname + location.search);
+//        }
+//    });
+//    InstantClick.init();
 </script>
 </body>
 </html>

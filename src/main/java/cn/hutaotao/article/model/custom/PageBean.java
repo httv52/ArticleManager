@@ -140,7 +140,7 @@ public class PageBean {
      */
     public boolean getHasLast() {
         // 如果不是最后一页就有尾页
-        return (pageNow == getTotalCount()) ? false : true;
+        return (pageNow.equals(getTotalCount())) ? false : true;
     }
 
     public void setHasLast(boolean hasLast) {

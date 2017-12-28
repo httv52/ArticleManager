@@ -12,28 +12,28 @@ public class FileSuffixUtil {
             return File.FILE_TYPEE_OTHER;
         }
         suffix = suffix.trim();
-        if (suffix.equalsIgnoreCase(".png") || suffix.equalsIgnoreCase(".jpg") ||
-                suffix.equalsIgnoreCase(".jpeg") || suffix.equalsIgnoreCase(".bmp") ||
-                suffix.equalsIgnoreCase("gif") || suffix.equalsIgnoreCase(".ico")) {
+        if (".png".equalsIgnoreCase(suffix) || ".jpg".equalsIgnoreCase(suffix) ||
+                ".jpeg".equalsIgnoreCase(suffix) || ".bmp".equalsIgnoreCase(suffix) ||
+                "gif".equalsIgnoreCase(suffix) || ".ico".equalsIgnoreCase(suffix)) {
             return File.FILE_TYPEE_IMAGE;
         }
-        if (suffix.equalsIgnoreCase(".txt") || suffix.equalsIgnoreCase(".css") ||
-                suffix.equalsIgnoreCase(".js") || suffix.equalsIgnoreCase(".doc")) {
+        if (".txt".equalsIgnoreCase(suffix) || ".css".equalsIgnoreCase(suffix) ||
+                ".js".equalsIgnoreCase(suffix) || ".doc".equalsIgnoreCase(suffix)) {
             return File.FILE_TYPEE_TEXT;
         }
-        if (suffix.equalsIgnoreCase(".html") || suffix.equalsIgnoreCase(".htm") ||
-                suffix.equalsIgnoreCase(".jsp") || suffix.equalsIgnoreCase(".php") ||
-                suffix.equalsIgnoreCase(".do") || suffix.equalsIgnoreCase(".html")) {
+        if (".html".equalsIgnoreCase(suffix) || ".htm".equalsIgnoreCase(suffix) ||
+                ".jsp".equalsIgnoreCase(suffix) || ".php".equalsIgnoreCase(suffix) ||
+                ".do".equalsIgnoreCase(suffix) || ".html".equalsIgnoreCase(suffix)) {
             return File.FILE_TYPEE_LINK;
         }
-        if (suffix.equalsIgnoreCase(".avi") || suffix.equalsIgnoreCase(".mp4") ||
-                suffix.equalsIgnoreCase(".rm") || suffix.equalsIgnoreCase(".mov") ||
-                suffix.equalsIgnoreCase(".mpg") || suffix.equalsIgnoreCase(".mpg4")) {
+        if (".avi".equalsIgnoreCase(suffix) || ".mp4".equalsIgnoreCase(suffix) ||
+                ".rm".equalsIgnoreCase(suffix) || ".mov".equalsIgnoreCase(suffix) ||
+                ".mpg".equalsIgnoreCase(suffix) || ".mpg4".equalsIgnoreCase(suffix)) {
             return File.FILE_TYPEE_VEDIO;
         }
-        if (suffix.equalsIgnoreCase(".mp3") || suffix.equalsIgnoreCase(".ram") ||
-                suffix.equalsIgnoreCase(".wav") || suffix.equalsIgnoreCase(".wma") ||
-                suffix.equalsIgnoreCase(".amr") || suffix.equalsIgnoreCase(".ram")) {
+        if (".mp3".equalsIgnoreCase(suffix) || ".ram".equalsIgnoreCase(suffix) ||
+                ".wav".equalsIgnoreCase(suffix) || ".wma".equalsIgnoreCase(suffix) ||
+                ".amr".equalsIgnoreCase(suffix) || ".ram".equalsIgnoreCase(suffix)) {
             return File.FILE_TYPEE_MUSIC;
         }
         return File.FILE_TYPEE_OTHER;

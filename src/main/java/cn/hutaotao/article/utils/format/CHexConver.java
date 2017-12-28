@@ -97,10 +97,12 @@ public class CHexConver {
             c = strText.charAt(i);
             intAsc = (int) c;
             strHex = Integer.toHexString(intAsc);
-            if (intAsc > 128)
+            if (intAsc > 128) {
                 str.append("\\u" + strHex);
-            else // 低位在前面补00
+            } else // 低位在前面补00
+            {
                 str.append("\\u00" + strHex);
+            }
         }
         return str.toString();
     }

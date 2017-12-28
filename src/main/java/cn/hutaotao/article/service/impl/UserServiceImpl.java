@@ -22,18 +22,22 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private LogsService logsService;
 
+    @Override
     public User findUserById(String id) {
         return userMapper.selectByPrimaryKey(id);
     }
 
+    @Override
     public User findUserByUsername(String username) {
         return userMapper.selectByUsername(username);
     }
 
+    @Override
     public void saveUser(User user) {
         userMapper.insert(user);
     }
 
+    @Override
     public User updateUserWithState(User user) {
         User newUser = userMapper.selectByPrimaryKey(user.getUid());
 
@@ -51,6 +55,7 @@ public class UserServiceImpl implements UserService {
      * @param user
      * @param currentTime
      */
+    @Override
     public User updateUserWithLogged(User user, long currentTime) {
         User newUser = userMapper.selectByPrimaryKey(user.getUid());
 
@@ -71,6 +76,7 @@ public class UserServiceImpl implements UserService {
      *
      * @param user
      */
+    @Override
     public void registerUser(User user) throws MyException {
         //首先判断用户名是否已被注册
         //若已被注册，抛出异常

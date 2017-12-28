@@ -93,7 +93,7 @@ public class FileController extends BaseController {
                              @ModelAttribute("type") String type) {
         String loginUserId = getLoginUserId(session);
 
-        Integer fileType = type.equals("") ? null : Integer.valueOf(type);
+        Integer fileType = "".equals(type) ? null : Integer.valueOf(type);
         Integer totalCount = fileService.findFileCountByType(loginUserId, fileType);
 
         String pageNowStr = request.getParameter("pageNow");

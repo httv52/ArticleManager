@@ -94,12 +94,15 @@ public class ArticleController extends BaseController {
                               @ModelAttribute("state") String state, @ModelAttribute("categoryId") String categoryId,
                               @ModelAttribute("tagId") String tagId) {
         String loginUserId = getLoginUserId(session);
-        if (!StringUtils.isNotBlank(state))
+        if (!StringUtils.isNotBlank(state)) {
             state = null;
-        if (!StringUtils.isNotBlank(categoryId))
+        }
+        if (!StringUtils.isNotBlank(categoryId)) {
             categoryId = null;
-        if (!StringUtils.isNotBlank(tagId))
+        }
+        if (!StringUtils.isNotBlank(tagId)) {
             tagId = null;
+        }
 
         Integer totalCount = articleService.findArticleCount(loginUserId, state, categoryId, tagId);
         String pageNowStr = request.getParameter("pageNow");
