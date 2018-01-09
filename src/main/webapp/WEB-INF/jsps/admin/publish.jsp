@@ -144,24 +144,6 @@
                         </div>
 
                     </div>
-                    <%--js--%>
-                    <script type="text/javascript">
-                        /*function reinitIframe() {
-                            var iframe = document.getElementById("summernoteText");
-                            try {
-                                var bHeight = iframe.contentWindow.document.body.scrollHeight;
-                                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
-                                var height = Math.max(bHeight, dHeight);
-                                iframe.height = height;
-                                console.log(height);
-                            } catch (ex) {
-                            }
-                        }
-
-                        window.setInterval("reinitIframe()", 200);*/
-                    </script>
-                    <%--js--%>
-
 
                     <div class="form-group col-md-12" style="margin-bottom: 0px;">
                         <div class="form-group col-md-3 col-sm-4">

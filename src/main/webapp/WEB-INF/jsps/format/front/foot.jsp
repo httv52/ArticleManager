@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<footer id="footer" >
+<footer id="footer">
     <div class="text-center">
         <div class="container wrapper">
 
@@ -41,7 +41,7 @@
                                 </a>
                                     <div class="media-body contentControl_2">
                                         <a href="<c:url value="/p/${na.aid}"/>" class="font-semibold">
-                                        ${na.contentView}
+                                                ${na.contentView}
                                         </a>
                                     </div>
                                     <div class="text-xs block m-t-xs"><i class="fa fa-clock-o"></i>
@@ -72,7 +72,6 @@
 </footer>
 
 
-
 <%--导入头像文件--%>
 <%@include file="/WEB-INF/jsps/format/admin/headImg.jsp" %>
 
@@ -80,6 +79,18 @@
 <script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
 <!-- <script src="//cdn.bootcss.com/instantclick/3.0.1/instantclick.min.js"></script> -->
 <script type="text/javascript">
+    <c:if test="${article.type==0}">
+    var postDirectory = new Headroom(document.getElementById("directory-content"), {
+        tolerance: 0,
+        offset: 100,
+        classes: {
+            initial: "initial",
+            pinned: "pinned",
+            unpinned: "unpinned"
+        }
+    });
+
+    </c:if>
     var header = new Headroom(document.getElementById("header"), {
         tolerance: 10,
         offset: 80,
@@ -107,16 +118,16 @@
             hljs.highlightBlock(blocks[i]);
         }
     });
-//    InstantClick.on('change', function (isInitialLoad) {
-//        var blocks = document.querySelectorAll('pre code');
-//        for (var i = 0; i < blocks.length; i++) {
-//            hljs.highlightBlock(blocks[i]);
-//        }
-//        if (isInitialLoad === false) {
-//            if (typeof ga !== 'undefined') ga('send', 'pageview', location.pathname + location.search);
-//        }
-//    });
-//    InstantClick.init();
+    //    InstantClick.on('change', function (isInitialLoad) {
+    //        var blocks = document.querySelectorAll('pre code');
+    //        for (var i = 0; i < blocks.length; i++) {
+    //            hljs.highlightBlock(blocks[i]);
+    //        }
+    //        if (isInitialLoad === false) {
+    //            if (typeof ga !== 'undefined') ga('send', 'pageview', location.pathname + location.search);
+    //        }
+    //    });
+    //    InstantClick.init();
 </script>
 </body>
 </html>

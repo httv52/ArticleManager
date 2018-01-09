@@ -97,7 +97,14 @@ function changeCategoryId(categoryId) {
  * @param status
  */
 function submitArticle(state) {
-    var content = $('.myArticleType').val() == '0' ? mditor.value : '1';
+    var content;
+    // var content = $('.myArticleType').val() == '0' ? mditor.value : '1';
+    if($('.myArticleType').val() == '0'){
+        content = mditor.value;
+    }else{
+        var $iframeEle = document.getElementById('summernoteText').contentWindow;
+        content = $iframeEle.$(".summernote").code()
+    }
     var title = $('#articleForm input[name=title]').val();
     if (title == '') {
         hutao.infoContent("请输入您的文章标题");

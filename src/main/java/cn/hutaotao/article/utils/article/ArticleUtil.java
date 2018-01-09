@@ -15,6 +15,8 @@ import java.util.List;
  * Created by ht on 2017/10/9.
  */
 public class ArticleUtil {
+    public static final int ARTICLE_VIEW_LEN = 175;
+
     /**
      * 这种格式的字符转换为emoji表情
      *
@@ -73,15 +75,33 @@ public class ArticleUtil {
         return content;
     }
 
+
     /**
      * 提取html中的文字
      *
      * @param html
      * @return
      */
-    public static String htmlToText(String html) {
+    public static String getHtmlText(String html) {
         if (StringUtils.isNotBlank(html)) {
             return html.replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
+        }
+        return "";
+    }
+
+    public static String htmlToText(String html) {
+        if (StringUtils.isNotBlank(html)) {
+            int pos = html.indexOf("<!--more-->");
+            if (pos != -1) {
+                html = html.substring(0, pos);
+                return getHtmlText(mdToHtml(html));
+            } else {
+                html = getHtmlText(mdToHtml(html));
+                if (html.length() > ARTICLE_VIEW_LEN) {
+                    return html.substring(0, ARTICLE_VIEW_LEN);
+                }
+                return html;
+            }
         }
         return "";
     }

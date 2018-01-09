@@ -46,16 +46,14 @@
                 <!-- 如果是当前作者，加入编辑按钮 -->
             </div>
         </div>
+
         <div id="post-content" class="post-content" itemprop="articleBody">
-            <%--<p class="post-tags">${show_tags()}</p>--%>
-            ${article.contentHTMLView}
-            <%--<p class="post-info">--%>
-            <%--本文由 <a href="">${theme_option('author') ?! 'biezhi'}</a> 创作，采用 <a--%>
-            <%--href="https://creativecommons.org/licenses/by/4.0/" target="_blank"--%>
-            <%--rel="external nofollow">知识共享署名4.0</a> 国际许可协议进行许可<br>本站文章除注明转载/出处外，均为本站原创或翻译，转载前请务必署名<br>最后编辑时间为:--%>
-            <%--${modified('yyyy/MM/dd HH:mm')}--%>
-            <%--</p>--%>
-            <h2>— end —</h2>
+            <c:if test="${article.type==0}">
+                ${article.contentHTMLView}
+            </c:if>
+            <c:if test="${article.type==1}">
+                ${article.content}
+            </c:if>
         </div>
 
         <div class="show-foot" style="margin: 40px 0px 0px;">
@@ -81,6 +79,7 @@
             </div>
         </div>
     </article>
+
 
     <div class="col-md-6 col-md-offset-3">
         <section class="panel clearfix bg-dark lter" style="border: 1px solid #e1e1e1;border-radius: 4px;">
@@ -144,9 +143,6 @@
     </article>
 
 
-
-
-
     <div id="comments" class="clearfix" style="padding-top: 30px">
         <c:if test="${empty commentList}">
             <div class="find-nothing text-center">
@@ -160,14 +156,17 @@
                     <div id="comment-${coms.id}">
                         <div class="comment-view" onclick="">
                             <div class="comment-header">
-                                <img class="avatar" src="https://secure.gravatar.com/avatar/f97e618f7fc7c5a5b1cb15b05a547090?s=80&amp;r=G&amp;d=" title="14541" width="80" height="80">
+                                <img class="avatar"
+                                     src="https://secure.gravatar.com/avatar/f97e618f7fc7c5a5b1cb15b05a547090?s=80&amp;r=G&amp;d="
+                                     title="14541" width="80" height="80">
                                 <span class="comment-author">
                                 <a href="" target="_blank" rel="external nofollow">${coms.user.username}</a>
                             </span>
                             </div>
                             <div class="comment-content">
                                 <span class="comment-author-at"></span>
-                                <p></p><p>${coms.content}</p>
+                                <p></p>
+                                <p>${coms.content}</p>
                                 <p></p>
                             </div>
                             <div class="comment-meta">
@@ -181,30 +180,34 @@
                     <c:if test="${not empty coms.childList}">
                         <div class="comment-children">
                             <ol class="comment-list">
-                            <c:forEach items="${coms.childList}" var="child">
-                                <li id="li-comment-${child.id}" class="comment-body comment-child comment-level-odd comment-odd">
-                                    <div id="comment-${child.id}">
-                                        <div class="comment-view">
-                                            <div class="comment-header">
-                                                <img class="avatar" src="https://secure.gravatar.com/avatar/f97e618f7fc7c5a5b1cb15b05a547090?s=80&amp;r=G&amp;d=" title="44" width="80" height="80">
-                                                <span class="comment-author comment-by-author">
+                                <c:forEach items="${coms.childList}" var="child">
+                                    <li id="li-comment-${child.id}"
+                                        class="comment-body comment-child comment-level-odd comment-odd">
+                                        <div id="comment-${child.id}">
+                                            <div class="comment-view">
+                                                <div class="comment-header">
+                                                    <img class="avatar"
+                                                         src="https://secure.gravatar.com/avatar/f97e618f7fc7c5a5b1cb15b05a547090?s=80&amp;r=G&amp;d="
+                                                         title="44" width="80" height="80">
+                                                    <span class="comment-author comment-by-author">
                                                     <a href="" rel="external nofollow">${child.user.username}</a>
                                                 </span>
-                                            </div>
-                                            <div class="comment-content">
-                                                <p></p><p>${child.content}</p>
-                                                <p></p>
-                                            </div>
-                                            <div class="comment-meta">
-                                                <time class="comment-time">${child.createdDateTimeView}</time>
-                                                <span class="comment-reply">
+                                                </div>
+                                                <div class="comment-content">
+                                                    <p></p>
+                                                    <p>${child.content}</p>
+                                                    <p></p>
+                                                </div>
+                                                <div class="comment-meta">
+                                                    <time class="comment-time">${child.createdDateTimeView}</time>
+                                                    <span class="comment-reply">
                                             <a rel="nofollow" onclick="TaleComment.reply('${child.id}');">回复</a>
                                         </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </c:forEach>
+                                    </li>
+                                </c:forEach>
                             </ol>
                         </div>
                     </c:if>
@@ -213,7 +216,8 @@
         </ol>
 
 
-    </div>>
+    </div>
+
 
     <%--二维码--%>
     <script src="<c:url value='/js/plugins/QR/qrcode.js'/>"></script>
@@ -256,6 +260,7 @@
     <div id="directory"></div>
 </div>
 <script>
+    //todo  添加起始
     $('#directory').html('');
     var postDirectoryBuild = function () {
         var postChildren = function children(childNodes, reg) {
@@ -346,6 +351,7 @@
     };
     postDirectoryBuild();
 </script>
+
 
 <%--<script src="<c:url value="/js/plugins/sticky/ResizeSensor.min.js"/> "></script>--%>
 <%--<script src="<c:url value="/js/plugins/sticky/theia-sticky-sidebar.min.js"/> "></script>--%>
