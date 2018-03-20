@@ -25,7 +25,9 @@ import java.io.PrintWriter;
 import java.util.List;
 
 /**
- * Created by ht on 2017/9/25.
+ *
+ * @author ht
+ * @date 2017/9/25
  */
 @Controller
 @RequestMapping("/article")
