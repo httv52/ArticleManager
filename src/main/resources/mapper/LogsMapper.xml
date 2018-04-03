@@ -18,8 +18,10 @@
         FROM `logs`
         WHERE uid = #{uid}
         ORDER BY id DESC
+        <if test="limit!=null">
+            LIMIT 0, #{limit}
+        </if>
     </select>
-
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select

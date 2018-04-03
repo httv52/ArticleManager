@@ -37,10 +37,14 @@ import java.util.Properties;
 @Controller
 @RequestMapping("/user")
 public class UserController extends BaseController {
+    private final UserService userService;
+    private final LogsService logsService;
+
     @Autowired
-    private UserService userService;
-    @Autowired
-    private LogsService logsService;
+    public UserController(UserService userService, LogsService logsService) {
+        this.userService = userService;
+        this.logsService = logsService;
+    }
 
     /**
      * 去往 Login页面
@@ -58,11 +62,10 @@ public class UserController extends BaseController {
     /**
      * 修改后台信息
      *
-     * @param model
      * @return
      */
     @RequestMapping("updateAdmin")
-    public String updateAdmin(Model model) {
+    public String updateAdmin() {
         return "admin/theme_admin";
     }
 
@@ -205,7 +208,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/activate/{code}")
     public String activate(@PathVariable String code, RedirectAttributes model) {
-        User user = null;
+        User user;
         try {
             user = userService.activateUser(code);
         } catch (MyException e) {

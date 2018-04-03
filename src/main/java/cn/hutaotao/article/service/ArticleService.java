@@ -19,12 +19,20 @@ public interface ArticleService {
     void insertArticle(Article article, String categoryId, User loginUser);
 
     /**
-     * 获取所有发布过的文章
+     * 获取最近所有发布过的文章
      *
      * @param uid 用户
      * @return
      */
     List<Article> findAllPublished(String uid, Integer limit);
+
+    /**
+     * 获取所有发布过的文章数量
+     *
+     * @param uid 用户
+     * @return
+     */
+    Integer findAllPublishedCount(String uid);
 
     /**
      * 获取文章数量

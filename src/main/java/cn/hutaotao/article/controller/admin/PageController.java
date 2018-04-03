@@ -34,6 +34,10 @@ public class PageController extends BaseController {
      * 首页显示的文章数和评论数
      */
     private static final Integer LIMIT_NUMBER = 6;
+    /**
+     * 首页显示的日志数
+     */
+    private static final Integer LIMIT_LOG = 10;
 
     @RequestMapping("")
     public String index() {
@@ -45,11 +49,13 @@ public class PageController extends BaseController {
         String loginUserId = getLoginUserId(session);
 
         List<Article> articleList = articleService.findAllPublished(loginUserId, LIMIT_NUMBER);
+        Integer articleCount = articleService.findAllPublishedCount(loginUserId);
         Integer fileCount = fileService.findFileCount(loginUserId);
         List<Comment> commentList = commentService.findCommentByUserPrimary(loginUserId, LIMIT_NUMBER);
-        List<Logs> logsList = logsService.findAll(loginUserId);
+        List<Logs> logsList = logsService.findAll(loginUserId, LIMIT_LOG);
 
         model.addAttribute("articleList", articleList);
+        model.addAttribute("articleCount", articleCount);
         model.addAttribute("fileCount", fileCount);
         model.addAttribute("commentList", commentList);
         model.addAttribute("logsList", logsList);

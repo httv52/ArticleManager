@@ -54,7 +54,6 @@ public interface ArticleMapper {
 
     void updateViews(String aid);
 
-
 //    int deleteByPrimaryKey(String aid);
 //
 //    int insert(Article record);

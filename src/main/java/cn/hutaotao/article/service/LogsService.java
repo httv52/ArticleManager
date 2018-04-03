@@ -28,5 +28,5 @@ public interface LogsService {
      * @param loginUserId 用户
      * @return
      */
-    List<Logs> findAll(String loginUserId);
+    List<Logs> findAll(String loginUserId, Integer limit);
 }

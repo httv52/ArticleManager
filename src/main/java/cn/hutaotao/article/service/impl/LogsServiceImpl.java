@@ -33,7 +33,7 @@ public class LogsServiceImpl implements LogsService {
     }
 
     @Override
-    public List<Logs> findAll(String loginUserId) {
-        return logsMapper.findAllLogs(loginUserId);
+    public List<Logs> findAll(String loginUserId, Integer limit) {
+        return logsMapper.findAllLogs(loginUserId, limit);
     }
 }

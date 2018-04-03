@@ -52,6 +52,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Integer findAllPublishedCount(String uid) {
+        return articleMapper.findArticleCountPublished(uid);
+    }
+
+    @Override
     public Integer findArticleCountPublished(String uid) {
         return articleMapper.findArticleCountPublished(uid);
     }

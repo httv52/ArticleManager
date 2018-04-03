@@ -37,7 +37,7 @@
                             <i class="fa fa-paste fa-stack-1x text-white"></i>
                         </span>
                         <a class="clear" href="#">
-                            <span class="h3 block m-t-xs"><strong>${fn:length(articleList)}</strong></span>
+                            <span class="h3 block m-t-xs"><strong>${articleCount}</strong></span>
                             <span class="">篇文章</span>
                         </a>
                     </div>
@@ -107,9 +107,9 @@
                                     <c:if test="${!empty articleList}">
                                         <c:forEach items="${articleList}" var="article">
                                             <article class="media">
-                                            <span class="pull-left thumb-sm">
-                                                <i class="fa fa-paste fa-3x icon-muted"></i>
-                                            </span>
+                                                <%--<span class="pull-left thumb-sm">--%>
+                                                    <%--<i class="fa fa-paste fa-3x icon-muted"></i>--%>
+                                                <%--</span>--%>
                                                 <div class="media-body">
                                                     <div class="pull-right media-xs text-center text-muted">
                                                 <span class="text-muted m-l-sm pull-right" data-toggle="tooltip"
@@ -126,12 +126,12 @@
                                                     </div>
                                                     <a href="<c:url value="/p/"/>${article.aid}"
                                                        class="h4 contentControl">${article.title}</a>
-                                                    <small class="block">
-                                                        <span class="label label-info">${article.stateView}</span>
+                                                    <small class="block" style="padding-top: 5px">
+                                                        <span class="label label-success">${article.stateView}</span>
                                                     </small>
                                                     <small class="block m-t-sm">
                                                         <a href="<c:url value="/p/"/>${article.aid}">
-                                                            <p class="contentControl_2">${article.content}</p>
+                                                            <p class="contentControl_2">${article.contentView}</p>
                                                         </a>
                                                     </small>
                                                 </div>

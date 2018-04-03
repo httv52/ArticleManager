@@ -1,6 +1,7 @@
 package cn.hutaotao.article.dao;
 
 import cn.hutaotao.article.model.Logs;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface LogsMapper {
 
     int updateByPrimaryKey(Logs record);
 
-    List<Logs> findAllLogs(String uid);
+    List<Logs> findAllLogs(@Param("uid")String uid, @Param("limit")Integer limit);
 }

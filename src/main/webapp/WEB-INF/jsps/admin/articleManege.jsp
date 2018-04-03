@@ -142,7 +142,7 @@
                                             <thead>
                                             <tr>
                                                 <th width="30%" style="text-align:center;">文章标题</th>
-                                                <th style="text-align:center;">发布时间</th>
+                                                <th style="text-align:center;">最后修改时间</th>
                                                 <th style="text-align:center;">浏览量</th>
                                                 <th style="text-align:center;">所属分类</th>
                                                 <th style="text-align:center;">发布状态</th>
@@ -153,7 +153,7 @@
                                             <c:forEach items="${articleList}" var="article">
                                                 <tr>
                                                     <td>
-                                                        <a href="<c:url value="/p/"/>${article.aid} "
+                                                        <a href="<c:url value="/p/"/>${article.aid}"
                                                            title="${article.title}">
                                                         <span class="contentControl_2">
                                                                 ${article.title}
@@ -161,7 +161,11 @@
                                                         </a>
                                                     </td>
                                                     <td style="text-align:center;vertical-align:middle">
-                                                            ${article.createdDateTimeView}
+                                                            <span data-toggle="tooltip"
+                                                                  data-placement="bottom"
+                                                                  title="发布时间：${article.createdDateTimeView}">
+                                                                    ${article.modifiedDateTimeView}
+                                                            </span>
                                                     </td>
                                                     <td style="text-align:center; vertical-align:middle">
                                                             ${article.views}
@@ -203,8 +207,8 @@
                                                                 <i class="fa fa-trash-o"></i> 删除
                                                             </a>
                                                             <c:if test="${article.state != 0}">
-                                                                <a href="" class="btn btn-warning btn-sm"
-                                                                   style="color: #686868 !important">
+                                                                <a href="<c:url value="/p/"/>${article.aid}" class="btn btn-warning btn-sm"
+                                                                   style="color: #686868 !important"  target="_blank">
                                                                     <i class="fa fa-magic"></i> 预览
                                                                 </a>
                                                             </c:if>

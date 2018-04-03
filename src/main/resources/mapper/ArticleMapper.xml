@@ -50,7 +50,10 @@
         SELECT *
         FROM article
         WHERE uid = #{uid} AND state = 1
-        LIMIT 0, #{limit}
+        order by modified desc
+        <if test="limit!=null">
+            LIMIT 0, #{limit}
+        </if>
     </select>
 
     <select id="findArticleCountPublished" parameterType="String" resultType="Integer">
@@ -87,6 +90,7 @@
         <if test="tagId!=null">
             AND att.tagId = #{tagId} AND att.aid = a.aid
         </if>
+        order by a.modified DESC
         LIMIT #{startPos},#{pageSize}
     </select>
     <select id="findArticleById" resultMap="article_relation">
@@ -110,5 +114,4 @@
             AND c.categoryId = a.categoryId
             AND a.aid = #{aid}
     </select>
-
 </mapper>
