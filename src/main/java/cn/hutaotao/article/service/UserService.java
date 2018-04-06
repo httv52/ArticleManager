@@ -69,4 +69,17 @@ public interface UserService {
      * @return
      */
     User activateUser(String code);
+
+    /**
+     * 修改用户信息
+     * @param screenName
+     * @param email
+     * @param loginUserId
+     */
+    User updateUserInfo(String screenName, String email, String loginUserId);
+
+    /**
+     * 修改密码
+     */
+    void updatePassword(String oldPwd, String newPwd, String loginUserId);
 }

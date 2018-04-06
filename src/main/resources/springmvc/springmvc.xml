@@ -4,12 +4,13 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context.xsd ">
+		http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--注解扫描器-->
     <context:component-scan base-package="cn.hutaotao.article.controller"/>
@@ -82,6 +83,27 @@
           p:maxUploadSize="10240000"/>
 
     <!-- 配置拦截器 -->
-    <bean id="exceptionHandler" class="cn.hutaotao.article.exception.DefaultExceptionHandler"/>
+    <!--<bean id="exceptionHandler" class="cn.hutaotao.article.exception.DefaultExceptionHandler"/>-->
+
+    <!-- 拦截器 -->
+    <!--<mvc:interceptors>-->
+        <!--&lt;!&ndash; 多个拦截器，顺序执行 &ndash;&gt;-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/"/>-->
+            <!--<mvc:mapping path="/admin/*"/>-->
+            <!--<mvc:mapping path="/*"/>-->
+            <!--<bean class="cn.feiyang.tourism.utils.interceptor.LoginInterceptor"></bean>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
+    <!-- aop -->
+    <aop:aspectj-autoproxy/>
+    <bean id="controllerAop" class="cn.hutaotao.article.utils.aop.ControllerAOP"/>
+    <aop:config>
+        <aop:aspect id="myAop" ref="controllerAop">
+            <aop:pointcut id="target" expression="execution(public cn.hutaotao.article.model.custom.ResultBean *(..))"/>
+            <aop:around method="handlerControllerMethod" pointcut-ref="target"/>
+        </aop:aspect>
+    </aop:config>
 
 </beans>

@@ -11,6 +11,8 @@
         <result column="account_weibo" property="accountWeibo" jdbcType="VARCHAR"/>
         <result column="account_zhihu" property="accountZhihu" jdbcType="VARCHAR"/>
         <result column="account_github" property="accountGithub" jdbcType="VARCHAR"/>
+        <result column="QR_type" property="qrType" jdbcType="VARCHAR"/>
+        <result column="QR_img" property="qrImg" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="BaseResultMap" type="Theme" extends="linkResultMap">
@@ -30,6 +32,24 @@
         id, uid, logo_img, auther_name, keyword, describe, QR_type, QR_img, account_weibo,
         account_zhihu, account_github
     </sql>
+    <update id="updateBaseAdminTheme">
+        UPDATE theme t
+        SET t.logo_img    = #{logoImg},
+            t.auther_name = #{autherName},
+            t.`describe`  = #{describe},
+            t.keyword     = #{keyword}
+        WHERE
+            t.uid = #{uid};
+    </update>
+    <update id="updateLinkAdminTheme">
+        UPDATE theme t
+        SET t.homePage       = #{homePage},
+            t.account_weibo  = #{accountWeibo},
+            t.account_github = #{accountGithub},
+            t.account_zhihu  = #{accountZhihu}
+        WHERE
+            t.uid = #{uid};
+    </update>
 
     <select id="findSimpleThemeByUser" resultMap="linkResultMap">
         SELECT
@@ -41,7 +61,9 @@
             homePage,
             account_weibo,
             account_zhihu,
-            account_github
+            account_github,
+            QR_img,
+            QR_type
         FROM theme
         WHERE uid = #{uid}
     </select>

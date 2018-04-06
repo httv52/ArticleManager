@@ -24,7 +24,7 @@
             <div class="m-b-md">
                 <h3 class="m-b-none">
                         <span style="vertical-align: inherit;">
-                        <span style="vertical-align: inherit;">发布文章</span>
+                        <span style="vertical-align: inherit;">修改文章</span>
                         </span>
                 </h3>
             </div>
@@ -35,27 +35,29 @@
 
                 <form id="articleForm" role="form" novalidate="novalidate" class="form-horizontal">
 
-                    <input type="hidden" name="type" value="0" class="myArticleType">
+                    <input type="hidden" name="type" value="${article.type}" class="myArticleType">
                     <input type="hidden" name="state" value="1" class="myArticleState">
-                    <input type="hidden" name="cid" value="" id="aid"/>
-                    <input type="hidden" name="previewimg" value="" id="previewImg"/>
+                    <input type="hidden" name="aid" value="${article.aid}" id="aid"/>
+                    <input type="hidden" name="previewimg" value="${article.previewimg}" id="previewImg"/>
+                    <input type="hidden" name="oldImg" value="${article.previewimg}" id="oldImg"/>
                     <input type="hidden" id="ajax_url" value="<c:url value="/article/publish"/> "/>
-                    <input name="categoryId" id="categoryId" type="hidden" value="0">
-                    <input type="hidden" name="content" id="content-editor"/>
+                    <input name="categoryId" id="categoryId" type="hidden" value="${article.category.categoryid}">
+                    <input type="hidden" name="content" id="content-editor" />
+                    <input type="hidden" name="wordNumber" value="${article.wordNumber}"/>
 
                     <%--文章标题与网页标题--%>
                     <div class="form-group">
                         <div class="col-md-6">
                             <label><span class="requiredFiled">* </span>文章标题</label>
                             <input type="text" class="form-control" placeholder="请输入文章标题（*必须）" name="title"
-                                   id="title" value="文章标题">
+                                   id="title" value="${article.title}"/>
                         </div>
 
                         <div class="col-md-6">
                             <label>网页标题</label>
                             <input type="text" class="form-control"
                                    placeholder="自定义浏览器标题，如：欢迎页 | 文章管理系统  默认为文章标题 - 博客名"
-                                   name="pageTitle" id="pageTitle" value="">
+                                   name="pageTitle" id="pageTitle" value="${article.pageTitle}">
                         </div>
                     </div>
                     <%--文章标题与网页标题--%>
@@ -67,14 +69,13 @@
                             <label>文章标签</label>
                             <div id="MyPillbox" class="pillbox clearfix" style="background: #fff;">
                                 <ul>
-                                    <%--<li class="label bg-info">
-                                        <input type="hidden" name="myOldTag" value="测试标签1"/>测试标签1
-                                    </li>
-                                    <li class="label bg-success">
-                                        <input type="hidden" name="myOldTag" value="测试标签2"/>测试标签2
-                                    </li>
-                                    <li class="label bg-warning">测试标签3</li>
-                                    <li class="label bg-danger">测试标签4</li>--%>
+                                    <c:forEach items="${article.tagList}" var="tag">
+                                        <li class="label bg-info">
+                                            <input type="hidden" name="myOldTagId" value="${tag.tagid}">
+                                             ${tag.tagname}
+                                        </li>
+                                    </c:forEach>
+
                                     <input id="pillboxInput" type="text" placeholder="添加文章标签">
                                 </ul>
                             </div>
@@ -98,7 +99,7 @@
                         <div class="col-md-6">
                             <label><span class="requiredFiled">* </span>文章分类</label>
                             <div id="myCombobox" class="input-group dropdown combobox">
-                                <input class="form-control" type="text" value="默认分类">
+                                <input class="form-control" type="text" value="${article.category.categoryname}">
 
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-default dropdown-toggle"
@@ -132,7 +133,7 @@
                     </div>
 
                     <div id="md-container" class="form-group col-md-12">
-                        <textarea id="editor">文章正文</textarea>
+                        <textarea id="editor">${article.content}</textarea>
                     </div>
 
                     <div id="html-container" class="form-group col-md-12" style="padding: 0px;">
@@ -146,32 +147,43 @@
                     </div>
 
                     <div class="form-group col-md-12" style="margin-bottom: 0px;">
+                        <div class="form-group col-md-6 col-sm-4">
+                            <label class="col-md-3 control-label">缩略图</label>
+                            <input type="hidden" name="allowPreview" id="allowPreview" value="${article.allowPreview}">
+                            <div class="col-sm-9">
+                                <div><span id="articleImgEle" style="line-height: 150px;height: 150px">
+                                    <img id="articleImg" src="<%=imgPath%>${article.previewimg}" class="img-thumbnail" style="height: 150px">
+                                    </span>
+                                </div>
+                                <div style="vertical-align: middle; display: inline-block;">
+                                    <a href="javascript:;" onclick="changeArticleImg('<c:url value="/article/changeImg"/>','<%=imgPath%>')">
+                                        <label class="label bg-dark m-l-xs" style="cursor: pointer;">更换</label>
+                                    </a>
+                                    <a href="javascript:;" onclick="restoreArticleImg('<%=imgPath%>')" id="restoreArticleImg" style="display: none">
+                                        <label class="label bg-dark m-l-xs" style="cursor: pointer;">还原</label>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group col-md-3 col-sm-4">
                             <label class="col-md-6 control-label">允许评论</label>
-                            <input type="hidden" name="allowcommon" id="allowCommon" value="0">
+                            <input type="hidden" name="allowcommon" id="allowCommon" value="${article.allowcommon}"/>
                             <div class="col-sm-6">
                                 <label class="switch">
-                                    <input id="hasAllowCommon" type="checkbox">
+                                    <input id="hasAllowCommon" type="checkbox"
+                                           <c:if test="${article.allowcommon eq '1'}">checked="checked"</c:if> />
                                     <span></span>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group col-md-3 col-sm-4">
                             <label class="col-md-6 control-label">允许订阅</label>
-                            <input type="hidden" name="allowsub" id="allowSub" value="0">
+                            <input type="hidden" name="allowsub" id="allowSub" value="${article.allowsub}" />
                             <div class="col-sm-6">
                                 <label class="switch">
-                                    <input id="hasAllowSub" type="checkbox">
-                                    <span></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-4">
-                            <input type="hidden" name="allowPreview" id="allowPreview" value="0">
-                            <label class="col-md-6 control-label">添加缩略图</label>
-                            <div class="col-sm-6">
-                                <label class="switch">
-                                    <input id="hasPreviewImg" type="checkbox">
+                                    <input id="hasAllowSub" type="checkbox"
+                                           <c:if test="${article.allowsub eq '1'}">checked="checked"</c:if> />
                                     <span></span>
                                 </label>
                             </div>
@@ -203,7 +215,6 @@
 
 
                     <div class="clearfix"></div>
-
                     <div class="text-right" style="padding-bottom: 20px">
                         <a class="btn btn-default waves-effect waves-light" href="/admin/article">返回列表</a>
                         <button type="button" class="btn btn-primary btn-shadow" style="text-align: center"
@@ -240,7 +251,6 @@
 </script>
 <script src="<c:url value='/js/plugins/webuploader/webuploader.js'/>" cache="false"></script>
 <script src="<c:url value='/js/demo/webuploader-demo.js'/>" cache="false"></script>
-
 
 <script src="<c:url value='/js/demo/article.js'/>" cache="false"></script>
 

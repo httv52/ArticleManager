@@ -18,4 +18,16 @@ public class ThemeServiceImpl implements ThemeService {
     public Theme findSimpleThemeByUser(String uid) {
         return themeMapper.findSimpleThemeByUser(uid);
     }
+
+    @Override
+    public Theme updateBaseAdminTheme(String logoImg, String autherName, String describe, String keyword, String loginUserId) {
+        themeMapper.updateBaseAdminTheme(logoImg, autherName, describe, keyword, loginUserId);
+        return findSimpleThemeByUser(loginUserId);
+    }
+
+    @Override
+    public Theme updateLinkAdminTheme(String homePage, String accountWeibo, String accountZhihu, String accountGithub, String loginUserId) {
+        themeMapper.updateLinkAdminTheme(homePage, accountWeibo, accountZhihu, accountGithub, loginUserId);
+        return findSimpleThemeByUser(loginUserId);
+    }
 }

@@ -9,7 +9,9 @@ public class Logs implements Serializable {
     public static final String INIT_LOG = "初始化博客";
     public static final String LOGIN_LOG = "登录后台";
     public static final String SAVA_ARTI_LOG = "发表文章";
-    public static final String DELETE_ARTI_LOG = "删除文章";
+    public static final String UPDATE_ARTI_LOG = "修改文章";
+    public static final String DELETE_ARTI_LOG = "关闭文章";
+    public static final String RECOVER_ARTI_LOG = "恢复文章";
     public static final String SAVA_FILE_LOG = "保存文件";
     public static final String DELETE_FILE_LOG = "删除文件";
 

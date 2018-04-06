@@ -16,28 +16,33 @@
     <meta name="keywords" content="${theme.keyword}"/>
     <meta name="description" content="${theme.describe}"/>
     <title>${theme.autherName}的博客</title>
-    <c:choose>
-        <c:when test="${not empty theme.logoImg}">
-            <link rel="icon" href="<%=imgPath%>${theme.logoImg}" type="image/x-icon"/>
-        </c:when>
-        <c:otherwise>
-            <link rel="icon" href="<c:url value='/images/favicon.ico'/>" type="image/x-icon"/>
-        </c:otherwise>
-    </c:choose>
+    <%--<c:choose>--%>
+        <%--<c:when test="${not empty theme.logoImg}">--%>
+            <%--<link rel="icon" href="<%=imgPath%>${theme.logoImg}" type="image/x-icon"/>--%>
+        <%--</c:when>--%>
+        <%--<c:otherwise>--%>
+            <%--<link rel="icon" href="<c:url value='/images/favicon.ico'/>" type="image/x-icon"/>--%>
+        <%--</c:otherwise>--%>
+    <%--</c:choose>--%>
     <link href="<c:url value="/css/demo/xcode.min.css"/> " rel="stylesheet">
 
-    <%--<link rel="stylesheet" href="<c:url value='/css/style.css'/>" type="text/css"/>--%>
+    <link rel="stylesheet" href="<c:url value='/css/plugins/sweetalert/sweetalert.css'/>" type="text/css"/>
+
+    <script src="<c:url value="/js/jquery.min.js"/> "></script>
     <link rel="stylesheet" href="<c:url value='/css/plugins/toastr/toastr.min.css'/>" type="text/css"/>
     <link href="<c:url value="/css/app.v2.css"/> " rel="stylesheet">
     <link href="<c:url value="/js/tale/style.min.css"/> " rel="stylesheet">
-    <link href="<c:url value="/css/a.css"/> " rel="stylesheet">
+    <link href="<c:url value="/css/a.css"/>" rel="stylesheet">
 
-    <script src="<c:url value="/js/jquery.min.js"/> "></script>
+    <script src="<c:url value='/js/plugins/sweetalert/sweetalert.min.js'/>"></script>
+
     <script src="<c:url value='/js/plugins/toastr/toastr.min.js'/>"></script>
     <script src="<c:url value='/js/app.v2.js'/>"></script>
     <script src="<c:url value='/js/iden/identicon.js'/>"></script>
     <script src="<c:url value='/js/iden/pnglib.js'/>"></script>
     <script src="<c:url value="/js/demo/myBase.js"/> "></script>
+
+    <link rel="icon" href="<c:url value='/images/favicon.ico'/>" type="image/x-icon"/>
 
     <!--[if lt IE 9]>
     <script src="<c:url value='/js/ie/html5shiv.js'/>" cache="false"></script>
@@ -46,6 +51,10 @@
     <![endif]-->
 
     <style>
+        body{
+            color: #616060;
+        }
+
         .navbar-container {
             padding-right: 50px;
         }
@@ -244,9 +253,118 @@
             background: #ffffff;
         }
 
+        .hljs-section, .hljs-class .hljs-title, .hljs-type, .hljs-attr, .hljs-built_in, .hljs-builtin-name, .hljs-params {
+            color: #956cc4;
+        }
+
+        pre {
+            position: relative;
+            margin-bottom: 24px;
+            border-radius: 3px;
+            border: 1px solid #C3CCD0;
+            background: #FFF;
+            overflow: hidden;
+        }
+
+        code {
+            display: block;
+            padding: 12px 24px;
+            overflow-y: auto;
+            font-weight: 300;
+            /*font-family: Menlo, monospace;*/
+            font-size: 0.8em;
+        }
+
+        code.has-numbering {
+            margin-left: 21px;
+        }
+
+        .pre-numbering {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 20px;
+            padding: 6px 5px 6px 0;
+            border-right: 1px solid #C3CCD0;
+            border-radius: 3px 0 0 3px;
+            background-color: #2b313c;
+            text-align: right;
+            /*font-family: Menlo, monospace;*/
+            font-size: 0.8em;
+            color: #AAA;
+            margin-bottom: 5px;
+        }
+        .pre-numbering li{
+            line-height: 20px;
+        }
+
+        code {
+            padding: 2px 4px;
+            font-size: 90%;
+            color: #c7254e;
+            background-color: #f9f2f4;
+            border-radius: 4px;
+            display: inline;
+        }
+
+        table {
+            display: table;
+            table-layout:auto;//固定布局的算法，默认是auto，是基于表格内容的自动布局算法
+        }
+
+        .tag-list li a {
+            font-size: 10px;
+            background-color: #f3f3f4;
+            padding: 5px 12px;
+            color: #717171;
+            border-radius: 2px;
+            border: 1px solid #e7eaec;
+            margin-right: 5px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .tag-list li {
+            float: left;
+        }
+
+        ul.notes li, ul.tag-list li {
+            list-style: none;
+        }
+
+        .myCirBtn{
+            text-align: center;
+            box-sizing: border-box;
+            display: inline-block;
+            margin-bottom: 0;
+            font-weight: 400;
+            text-align: center;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857;
+            border-radius: 4px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin-bottom: 20px;
+            padding: 8px 25px;
+            font-size: 16px;
+            background-color: #5d482f;
+            border-radius: 20px;
+            color: #ffffff;
+            height: 40px;
+            line-height: 24px;
+        }
     </style>
 </head>
-<body class="bg-grey" id="topAnchor" gtools_scp_screen_capture_injected="true">
+<body id="topAnchor" gtools_scp_screen_capture_injected="true">
 <!--[if lt IE 8]>
 <div class="browsehappy" role="dialog">
     当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="http://browsehappy.com/" target="_blank">升级你的浏览器</a>。
@@ -255,9 +373,9 @@
 <header id="header" class="header bg-white">
     <div class="navbar-container">
         <a href="<c:url value="/index/"/>${user.username} " class="navbar-logo">
-            <img src="<%=imgPath%>/static/logo.png" alt="##"/>
+            <img src="${theme.logoImg}" alt="##"/>
             <span class="text-muted">
-            <font style="vertical-align: inherit;">${theme.autherName}的博客</font>
+            <span style="vertical-align: inherit;">${theme.autherName}</span>
             </span>
         </a>
         <div class="navbar-menu">

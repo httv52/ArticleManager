@@ -104,7 +104,7 @@ public class PageController extends BaseController {
     @RequestMapping("/updateAdmin")
     public String updateAdmin(Model model, HttpSession session) {
         setNavNumber(model, 4, 1, session);
-        return "forward:/user/updateAdmin";
+        return "forward:/theme/admin/theme";
     }
 
     @RequestMapping("/publish")

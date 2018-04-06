@@ -58,8 +58,10 @@ $(function () {
         if ($checked == true) {
             $('#webuploader-container').removeClass('myHidden');
             $('#webuploader-container').show();
+            $('#allowPreview').val("1");
         } else {
             $('#webuploader-container').addClass('myHidden');
+            $('#allowPreview').val("0");
         }
     });
 
@@ -99,9 +101,9 @@ function changeCategoryId(categoryId) {
 function submitArticle(state) {
     var content;
     // var content = $('.myArticleType').val() == '0' ? mditor.value : '1';
-    if($('.myArticleType').val() == '0'){
+    if ($('.myArticleType').val() == '0') {
         content = mditor.value;
-    }else{
+    } else {
         var $iframeEle = document.getElementById('summernoteText').contentWindow;
         content = $iframeEle.$(".summernote").code()
     }
@@ -126,10 +128,21 @@ function submitArticle(state) {
     var params = $("#articleForm").serialize();
 
     if ($(".filelist .title").length > 0 && $("#previewImg").val() == '') {
-        alert("123");
-        hutao.questionAlert({
+        swal({
                 title: '确认发布',
-                text: '您的文章缩略图尚未上传，确认发布文章？'
+                text: '您的文章缩略图尚未上传，确认发布文章？',
+                type: 'warning',
+
+                showCancelButton: true,                //是否显示“取消”按钮。
+                cancelButtonText: "取消",            //按钮内容
+                cancelButtonColor: '#d33',
+
+                showConfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '确定',
+                closeOnConfirm: false,
+                closeOnCancel: true                //点击返回上一步操作
+
             }, function () {
                 saveArticle(url, params);
                 return;
@@ -145,27 +158,63 @@ function submitArticle(state) {
  * @param params
  */
 function saveArticle(url, params) {
+    hutao.showLoading();
+
     $.ajax({
         type: "POST",
         url: url,
         data: params,
         dataType: "json",
         success: function (result) {
-            if (result.success) {
-                hutao.successAlert({
-                    text: '文章保存成功'
-                }, function () {
-                    setTimeout(function () {
-                        window.location.href = '/article/admin/index';
-                    }, 500);
-                });
-            } else {
-                hutao.errorAlert(result.msg || '保存文章失败');
-            }
-
+            handlerResult(result, function () {
+                publish_success();
+            });
         },
         error: function (result) {
+            hutao.hideLoading();
             hutao.errorAlert(result.msg || '保存文章失败');
         }
     });
+}
+
+function publish_success() {
+    hutao.successAlert({
+        text: '文章保存成功'
+    }, function () {
+        setTimeout(function () {
+            hutao.hideLoading();
+            window.location.href = '/article/admin/articleManege';
+        }, 500);
+    });
+}
+
+function changeArticleImg(url, imgPath) {
+    var olgImg = $('#oldImg').val();
+    hutao.showLoadingEle("#articleImgEle");
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (result) {
+            handlerResult(result, function () {
+                $("#articleImg").attr("src", imgPath + result.data);
+                $('#previewImg').val(result.data);
+                $("#restoreArticleImg").show();
+                hutao.hideLoadingEle("#articleImgEle");
+            });
+        },
+        error: function (result) {
+            hutao.errorAlert(result.msg || '操作失败');
+            hutao.hideLoadingEle("#articleImg");
+        }
+    });
+}
+
+function restoreArticleImg(imgPath) {
+    hutao.showLoadingEle("#articleImgEle");
+    var olgImg = $('#oldImg').val();
+    $("#articleImg").attr("src", imgPath + olgImg);
+    $('#previewImg').val(olgImg);
+    $("#restoreArticleImg").hide();
+    hutao.hideLoadingEle("#articleImgEle");
 }

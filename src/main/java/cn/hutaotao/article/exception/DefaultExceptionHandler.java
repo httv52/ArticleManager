@@ -1,3 +1,4 @@
+/*
 package cn.hutaotao.article.exception;
 
 import cn.hutaotao.article.controller.BaseController;
@@ -18,7 +19,9 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         ModelAndView mv = new ModelAndView();
-            /*	使用response返回	*/
+            */
+/*	使用response返回	*//*
+
 //        response.setStatus(HttpStatus.OK.value()); //设置状态码
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value()); //设置状态码
 //        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE); //设置ContentType
@@ -34,4 +37,4 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
         ex.printStackTrace();
         return mv;
     }
-}
+}*/

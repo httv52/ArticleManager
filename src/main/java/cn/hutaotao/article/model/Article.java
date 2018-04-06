@@ -85,6 +85,8 @@ public class Article implements Serializable {
 
     private Integer allowsub;  //允许订阅 1-允许 0-不允许
 
+    private Integer allowPreview;  //允许预览图 1-允许 0-不允许
+
     private String content;  //文章内容
 
     private Integer wordNumber;  //文章字数
@@ -292,5 +294,13 @@ public class Article implements Serializable {
 
     public void setWordNumber(Integer wordNumber) {
         this.wordNumber = wordNumber;
+    }
+
+    public Integer getAllowPreview() {
+        return allowPreview;
+    }
+
+    public void setAllowPreview(Integer allowPreview) {
+        this.allowPreview = allowPreview;
     }
 }

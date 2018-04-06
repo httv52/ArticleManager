@@ -31,6 +31,9 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public void insertArticleTag(String[] myOldTagIds, String[] myNewTag, String aid, User user) {
+        //在做文章更新时，先删除旧标签
+        deletetArticle_Tag(aid);
+
         List<String> myNewTagIds = new ArrayList<>();
         Tag tag;
 
@@ -78,6 +81,15 @@ public class TagServiceImpl implements TagService {
                 insertArticle_Tag(customer);
             }
         }
+    }
+
+    /**
+     * 批量删除标签
+     *
+     * @param aid
+     */
+    private void deletetArticle_Tag(String aid) {
+        tagMapper.deletetArticle_Tag(aid);
     }
 
     @Override

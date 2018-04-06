@@ -274,22 +274,9 @@
                 success: function (result) {
                     $('#my_form #my_categoryId').val('');
                     $('#my_form #my_categoryName').val('');
-                    if (result && result.success) {
-                        hutao.successAlert({
-                            text: '分类保存成功',
-                            title: '分类保存成功'
-                        }, function () {
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 100);
-                            return;
-                        });
-                    } else {
-                        hutao.errorAlert({
-                            text: result.msg || '分类保存失败',
-                            title: '分类保存失败'
-                        });
-                    }
+                    handlerResult(result, function () {
+                        hutao.successAlertAndReload("分类保存成功");
+                    });
                 },
                 error: function (result) {
                     var msg;

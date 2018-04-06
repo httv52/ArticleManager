@@ -4,6 +4,7 @@ import cn.hutaotao.article.controller.BaseController;
 import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.Logs;
 import cn.hutaotao.article.model.User;
+import cn.hutaotao.article.model.custom.ResultBean;
 import cn.hutaotao.article.model.custom.UserCustom;
 import cn.hutaotao.article.service.LogsService;
 import cn.hutaotao.article.service.UserService;
@@ -12,6 +13,7 @@ import cn.hutaotao.article.utils.format.LogDataUtil;
 import cn.hutaotao.article.utils.mail.Mail;
 import cn.hutaotao.article.utils.mail.MailString;
 import cn.hutaotao.article.utils.mail.MailUtils;
+import cn.hutaotao.article.utils.other.IPUtil;
 import cn.hutaotao.article.utils.validati.ValidGroupLogin;
 import cn.hutaotao.article.utils.validati.ValidGroupRegister;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.Session;
@@ -60,16 +63,6 @@ public class UserController extends BaseController {
 
 
     /**
-     * 修改后台信息
-     *
-     * @return
-     */
-    @RequestMapping("updateAdmin")
-    public String updateAdmin() {
-        return "admin/theme_admin";
-    }
-
-    /**
      * 用户登录
      * <p>
      * 注意：
@@ -78,19 +71,19 @@ public class UserController extends BaseController {
      * 3.记录日志
      * 4.保存 session
      *
-     * @param userCustom
+     * @param user
      * @return
      */
     //TODO 待完成：记住密码，验证码
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@Validated(value = {ValidGroupLogin.class}) UserCustom userCustom, BindingResult bindingResult,
+    public String login(@Validated(value = {ValidGroupLogin.class}) UserCustom user, BindingResult bindingResult,
                         HttpServletRequest request, HttpSession session, Model model, RedirectAttributes redirectModel) {
         //校验数据
-        if (validatiData(bindingResult, model, userCustom, PAGE_CODE_LOGIN)) {
+        if (validatiData(bindingResult, model, user, PAGE_CODE_LOGIN)) {
             return "user/login";
         }
 
-        Integer error_count = cache.get(userCustom.getUsername() + "_" + LOGIN_ERROR_COUNT);
+        Integer error_count = cache.get(user.getUsername() + "_" + LOGIN_ERROR_COUNT);
 
 
         try {
@@ -104,34 +97,34 @@ public class UserController extends BaseController {
                 return "user/login";
             }
 
-            User sessionUser = userService.loginByUsernameAndPwd(userCustom, request);
+            User sessionUser = userService.loginByUsernameAndPwd(user, request);
 
             //判断 loged 是否初始化，若未，则初始化并记录日志
             long currentTime = System.currentTimeMillis();
-            userCustom.setUid(sessionUser.getUid());
+            user.setUid(sessionUser.getUid());
             if (null == sessionUser.getLogged()) {
                 sessionUser = userService.updateUserWithLogged(sessionUser, currentTime);
-                logsService.savaLogs(userCustom, request, Logs.INIT_LOG, LogDataUtil.userInitDate(userCustom), currentTime);//记录初始化日志
-                logsService.savaLogs(userCustom, request, Logs.LOGIN_LOG, LogDataUtil.userLogData(userCustom), System.currentTimeMillis());//记录日志
+                logsService.saveLogs(user, IPUtil.getIpAddr(request), Logs.INIT_LOG, LogDataUtil.userInitDate(user), currentTime);//记录初始化日志
+                logsService.saveLogs(user, IPUtil.getIpAddr(request), Logs.LOGIN_LOG, LogDataUtil.userLogData(user), System.currentTimeMillis());//记录日志
             } else {
-                logsService.savaLogs(userCustom, request, Logs.LOGIN_LOG, LogDataUtil.userLogData(userCustom), currentTime);//记录日志
+                logsService.saveLogs(user, IPUtil.getIpAddr(request), Logs.LOGIN_LOG, LogDataUtil.userLogData(user), currentTime);//记录日志
             }
 
-            cache.set(userCustom.getUsername() + "_" + LOGIN_ERROR_COUNT, 0);//清空登陆错误缓存
+            cache.set(user.getUsername() + "_" + LOGIN_ERROR_COUNT, 0);//清空登陆错误缓存
 
-            session.setAttribute(User.SESSION_USER_NAME, sessionUser);  //保存到session
+            session.setAttribute(cn.hutaotao.article.model.User.SESSION_USER_NAME, sessionUser);  //保存到session
 
         } catch (MyException e) {
             error_count += 1;
-            cache.set(userCustom.getUsername() + "_" + LOGIN_ERROR_COUNT, error_count, 10);//10 * 60
-            model.addAttribute("user", userCustom);
+            cache.set(user.getUsername() + "_" + LOGIN_ERROR_COUNT, error_count, 10);//10 * 60
+            model.addAttribute("user", user);
             model.addAttribute("pageCode", PAGE_CODE_LOGIN);
             model.addAttribute("operateCode", OPERATE_CODE_LOGIN_FAULT_FIELD);
             model.addAttribute("errorMsg", e.getMessage());
             e.getStackTrace();
             return "user/login";
         } catch (Exception e) {
-            LOGGER.error("用户名" + userCustom.getUsername() + REGIST_ERROR_MESSAGE, e.getMessage());
+            LOGGER.error("用户名" + user.getUsername() + REGIST_ERROR_MESSAGE, e.getMessage());
             e.printStackTrace();
             return show_404();
         }
@@ -165,7 +158,7 @@ public class UserController extends BaseController {
      * 邮箱激活
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(Model model, @Validated(value = {ValidGroupRegister.class}) User user, BindingResult bindingResult) {
+    public String register(Model model, @Validated(value = {ValidGroupRegister.class}) cn.hutaotao.article.model.User user, BindingResult bindingResult) {
         String inputPwd = user.getPassword();
         //校验数据
         if (validatiData(bindingResult, model, user, PAGE_CODE_REGISTER)) {
@@ -208,7 +201,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/activate/{code}")
     public String activate(@PathVariable String code, RedirectAttributes model) {
-        User user;
+        cn.hutaotao.article.model.User user;
         try {
             user = userService.activateUser(code);
         } catch (MyException e) {
@@ -231,10 +224,22 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/quit", method = RequestMethod.GET)
     public String quit(HttpSession session, Model model) {
-        session.removeAttribute(User.SESSION_USER_NAME);
+        session.removeAttribute(cn.hutaotao.article.model.User.SESSION_USER_NAME);
         model.addAttribute("operateCode", OPERATE_CODE_QUIT);
         model.addAttribute("pageCode", PAGE_CODE_LOGIN);
         return "user/login";
+    }
+
+    /**
+     * 修改密码
+     *
+     * @return
+     */
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultBean<cn.hutaotao.article.model.User> updatePassword(String oldPwd, String newPwd, HttpSession session) {
+        userService.updatePassword(oldPwd, newPwd, getLoginUserId(session));
+        return new ResultBean<>();
     }
 
 

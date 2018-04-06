@@ -19,6 +19,7 @@
         <result column="commens" property="commens" jdbcType="INTEGER"/>
         <result column="allowCommon" property="allowcommon" jdbcType="INTEGER"/>
         <result column="allowSub" property="allowsub" jdbcType="INTEGER"/>
+        <result column="allowPreview" property="allowPreview" jdbcType="INTEGER"/>
         <result column="word_number" property="wordNumber"/>
     </resultMap>
     <resultMap id="ResultMapWithBLOBs" type="Article" extends="BaseResultMap">
@@ -36,14 +37,59 @@
     <insert id="insertArticle" parameterType="Article">
         INSERT INTO article VALUES (
             #{aid}, #{title}, #{pageTitle}, #{content}, #{url}, #{previewimg}, #{created}, #{modified}, #{type},
-                    #{state}, #{views}, #{commens}, #{allowcommon}, #{allowsub}, #{user.uid}, #{category.categoryid},
-            #{wordNumber}
+                    #{state}, #{views}, #{commens}, #{allowcommon}, #{allowsub}, #{allowPreview}, #{user.uid},
+            #{category.categoryid}, #{wordNumber}
         )
     </insert>
     <update id="updateViews">
         UPDATE article
         SET views = views + 1
         WHERE aid = #{aid}
+    </update>
+    <update id="updateArticle" parameterType="Article">
+        update article
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="pageTitle != null">
+                pageTitle = #{pageTitle},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="url != null">
+                url = #{url},
+            </if>
+            <if test="previewimg != null">
+                previewimg = #{previewimg},
+            </if>
+            <if test="modified != null">
+                modified = #{modified},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="allowcommon != null">
+                allowcommon = #{allowcommon},
+            </if>
+            <if test="allowsub != null">
+                allowsub = #{allowsub},
+            </if>
+            <if test="allowPreview != null">
+                allowPreview = #{allowPreview},
+            </if>
+            <if test="category != null and category.categoryid != null">
+                categoryId = #{category.categoryid},
+            </if>
+            <if test="wordNumber != null">
+                word_number = #{wordNumber},
+            </if>
+        </set>
+        where aid = #{aid}
     </update>
 
     <select id="findArticleByUserPublished" resultMap="article_relation">
@@ -102,6 +148,7 @@
             u.word_number,
             u.resume,
             c.categoryName,
+            t.tagId,
             t.tagName
         FROM
             category c,

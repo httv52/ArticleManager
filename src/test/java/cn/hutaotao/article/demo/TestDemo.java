@@ -1,7 +1,5 @@
 package cn.hutaotao.article.demo;
 
-import cn.hutaotao.article.model.custom.UserCustom;
-import cn.hutaotao.article.utils.format.LogDataUtil;
 import org.junit.Test;
 
 /**

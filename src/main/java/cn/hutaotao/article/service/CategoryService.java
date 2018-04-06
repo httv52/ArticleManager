@@ -1,9 +1,7 @@
 package cn.hutaotao.article.service;
 
 import cn.hutaotao.article.model.Category;
-import cn.hutaotao.article.model.User;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -50,7 +48,7 @@ public interface CategoryService {
      * @param categoryId
      * @return
      */
-    String editCategory(String loginUserid, String catrgoryName, String categoryId);
+    void saveOrUpdateCategory(String loginUserid, String catrgoryName, String categoryId);
 
     void saveCategoryByName(String name, String uid);
 

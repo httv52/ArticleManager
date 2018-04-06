@@ -21,7 +21,7 @@
 
 <script src="<c:url value='/js/fuelux/fuelux.js'/>"></script>
 <%--H+的js--%>
-<script src="<c:url value='/js/content.js'/>" cache="false"></script>
+<script src="<c:url value='/js/content.js'/>"></script>
 
 <!-- layui -->
 <script src="<c:url value='/js/layer-v3.1.0/layer/layer.js'/>"></script>
@@ -29,8 +29,8 @@
 
 
 <%-- chat--%>
-<script src="<c:url value='/js/charts/easypiechart/jquery.easy-pie-chart.js'/>" cache="false"></script>
-<script src="<c:url value='/js/charts/sparkline/jquery.sparkline.min.js'/>" cache="false"></script>
+<script src="<c:url value='/js/charts/easypiechart/jquery.easy-pie-chart.js'/>"></script>
+<script src="<c:url value='/js/charts/sparkline/jquery.sparkline.min.js'/>"></script>
 
 </body>
 

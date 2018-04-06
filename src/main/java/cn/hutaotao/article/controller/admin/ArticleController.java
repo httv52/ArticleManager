@@ -1,31 +1,26 @@
 package cn.hutaotao.article.controller.admin;
 
 import cn.hutaotao.article.controller.BaseController;
+import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.*;
 import cn.hutaotao.article.model.custom.PageBean;
-import cn.hutaotao.article.model.custom.UserCustom;
+import cn.hutaotao.article.model.custom.ResultBean;
 import cn.hutaotao.article.service.ArticleService;
 import cn.hutaotao.article.service.CategoryService;
-import cn.hutaotao.article.service.LogsService;
 import cn.hutaotao.article.service.TagService;
-import cn.hutaotao.article.utils.code.UUIDUtil;
-import cn.hutaotao.article.utils.format.LogDataUtil;
+import cn.hutaotao.article.utils.format.ImgUtil;
+import cn.hutaotao.article.utils.other.IPUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.PrintWriter;
 import java.util.List;
 
 /**
- *
  * @author ht
  * @date 2017/9/25
  */
@@ -34,8 +29,6 @@ import java.util.List;
 public class ArticleController extends BaseController {
     @Autowired
     ArticleService articleService;
-    @Autowired
-    LogsService logsService;
     @Autowired
     TagService tagService;
     @Autowired
@@ -50,39 +43,17 @@ public class ArticleController extends BaseController {
      * @param categoryId 分类 id
      * @param article    文章详情
      * @param session    session
-     * @param out        ajax输出
      * @param request    request
      * @throws Exception
      */
     @RequestMapping(value = "/publish", method = RequestMethod.POST) //TODO 提交有问题
-    public void publish(String myOldTagId, String myNewTag, String categoryId, Article article,
-                        HttpSession session, PrintWriter out, HttpServletRequest request) throws Exception {
-        //生成文章 Id ---> 12位
-        String aid = UUIDUtil.getUUID_12();
-        article.setAid(aid);
+    @ResponseBody
+    public ResultBean<Article> publish(String myOldTagId, String myNewTag, String categoryId, Article article,
+                                       HttpSession session, HttpServletRequest request) {
 
-        // 先保存文章
-        articleService.insertArticle(article, categoryId, getLoginUser(session));
+        articleService.saveOrUpdateArticle(myOldTagId, myNewTag, categoryId, article, getLoginUser(session), IPUtil.getIpAddr(request));
 
-        // 保存标签
-        String[] myOldTagIds = null;
-        String[] myNewTags = null;
-        if (StringUtils.isNotBlank(myOldTagId)) {
-            myOldTagIds = myOldTagId.split(",");
-        }
-        if (StringUtils.isNotBlank(myNewTag)) {
-            myNewTags = myNewTag.split(",");
-        }
-        tagService.insertArticleTag(myOldTagIds, myNewTags, aid, getLoginUser(session));
-
-        UserCustom user = new UserCustom();
-        user.setUid(getLoginUserId(session));
-        user.setUsername(getLoginUser(session).getUsername());
-
-        logsService.savaLogs(user, request, Logs.SAVA_ARTI_LOG, LogDataUtil.publishArticle(user, article), System.currentTimeMillis());
-
-        String result = "{\"success\":true}";
-        out.print(result);
+        return new ResultBean<>();
     }
 
     @RequestMapping("/modify")
@@ -127,5 +98,52 @@ public class ArticleController extends BaseController {
         return "admin/articleManege";
     }
 
+    @RequestMapping(value = "/preUpdateArticle/{aid}", method = RequestMethod.GET)
+    public String preUpdateArticle(@PathVariable("aid") String aid, Model model, HttpSession session) {
+        Article article = articleService.findArticleById(aid);
+
+        if (!article.getUser().getUid().equalsIgnoreCase(getLoginUserId(session))) {
+            throw new MyException("无权限操作此文章");
+        }
+
+        String loginUserId = getLoginUserId(session);
+        List<Tag> tagList = tagService.findTagByUser(loginUserId);
+        List<Category> categoryList = categoryService.findCategoryByUser(loginUserId);
+
+
+        model.addAttribute("article", article);
+        model.addAttribute("tagList", tagList);
+        model.addAttribute("categoryList", categoryList);
+
+        return "admin/updateArticle";
+    }
+
+    @RequestMapping("/closeArticle/{aid}")
+    @ResponseBody
+    public ResultBean<Article> closeArticle(@PathVariable("aid") String aid, HttpSession session, HttpServletRequest request) {
+        articleService.updateCloseArticle(aid, getLoginUser(session), IPUtil.getIpAddr(request));
+        return new ResultBean<>();
+    }
+
+    @RequestMapping("/recoverArticle/{aid}")
+    @ResponseBody
+    public ResultBean<Article> recoverArticle(@PathVariable("aid") String aid, HttpSession session, HttpServletRequest request) {
+        articleService.updateRecoverArticle(aid, getLoginUser(session), IPUtil.getIpAddr(request));
+        return new ResultBean<>();
+    }
+
+    @RequestMapping("/openComment/{aid}")
+    @ResponseBody
+    public ResultBean<Article> openComment(@PathVariable("aid") String aid, HttpSession session) {
+        articleService.updateArticleComment(aid, getLoginUserId(session));
+        return new ResultBean<>();
+    }
+
+    @RequestMapping("/changeImg")
+    @ResponseBody
+    public ResultBean<String> changeImg() {
+        String imgSrc = ImgUtil.articleImg();
+        return new ResultBean<>(imgSrc);
+    }
 
 }

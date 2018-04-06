@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by ht on 2017/9/20.
  */
-public class UserCustom extends User {
+public class UserCustom extends cn.hutaotao.article.model.User {
 
     private String remeberPwd;
 

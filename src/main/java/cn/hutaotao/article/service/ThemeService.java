@@ -13,4 +13,26 @@ public interface ThemeService {
      * @return
      */
     Theme findSimpleThemeByUser(String uid);
+
+    /**
+     * 前台主题 - 基本设置
+     * @param logoImg
+     * @param autherName
+     * @param describe
+     * @param keyword
+     * @param loginUserId
+     * @return 返回主题
+     */
+    Theme updateBaseAdminTheme(String logoImg, String autherName, String describe, String keyword, String loginUserId);
+
+    /**
+     * 前台主题 - 连接设置
+     * @param homePage
+     * @param accountWeibo
+     * @param accountZhihu
+     * @param accountGithub
+     * @param loginUserId
+     * @return
+     */
+    Theme updateLinkAdminTheme(String homePage, String accountWeibo, String accountZhihu, String accountGithub, String loginUserId);
 }

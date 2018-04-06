@@ -21,7 +21,11 @@
                 </span>
                     <!-- 关注用户按钮 -->
                     <label class="label bg-info m-l-xs">作者</label>
-                    <label class="label bg-success m-l-xs">编辑</label>
+                    <c:if test="${sessionScope.loginUser.uid eq article.user.uid}">
+                        <a href="<c:url value='/article/preUpdateArticle/${article.aid}'/>">
+                            <label class="label bg-success m-l-xs" style="cursor: pointer;">编辑</label>
+                        </a>
+                    </c:if>
                     <!-- 文章数据信息 -->
                     <div class="meta">
                         <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
@@ -67,7 +71,7 @@
                     <c:forEach items="${article.tagList}" var="tag">
                         <a class="notebook" href="#">
                             <i class="fa fa-tag"></i>
-                            <span>${tag.tagname}</span>
+                            <span>${tag.tagname}　</span>
                         </a>
                     </c:forEach>
                 </c:otherwise>
@@ -81,7 +85,7 @@
     </article>
 
 
-    <div class="col-md-6 col-md-offset-3">
+    <div class="main-content page-comment" style="padding-top: 0px">
         <section class="panel clearfix bg-dark lter" style="border: 1px solid #e1e1e1;border-radius: 4px;">
             <div class="panel-body">
                 <a href="#" class="thumb pull-left m-r" style="padding-top: 5px">
@@ -109,119 +113,133 @@
 
     <article class="main-content page-comment">
         <div class="line line-dashed"></div>
-        <div id="myComment-list" class="myComment-list" style="padding-top: 50px">
-            <div class="text-center">
-                <form class="new-comment" style="position: relative;margin: 0 0 20px 48px;">
-                    <c:choose>
-                        <c:when test="${empty sessionScope.loginUser}">
-                            <a class="myAvatar">
-                                <img src="<c:url value="/images/avatar_default.jpg"/> ">
-                            </a>
-                            <div class="sign-container" style="text-align: center;">
-                                    <%--<a href="10" data-toggle="ajaxModal" class="btn btn-sm btn-default">登录</a>--%>
-                                <a href="<c:url value="/user/showLogin"/>"
-                                   class="btn btn-danger" style="margin: 11px 10px 0 0;">登录</a>
-                                <span style="font-size: 14px;vertical-align: -7px">后便可发表评论</span>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <a class="myAvatar">
-                                <img src="<c:url value='#'/>" class="commentHeadImg_white"
-                                     name="${sessionScope.loginUser.uid}" alt="头像">
-                            </a>
-                            <section class="paper">
-                                <textarea type="text" class="form-control scrollable" placeholder="写下你的评论..."
-                                          style="border: 1px solid #dcdcdc;padding-top: 1px;min-height: 120px;"></textarea>
-                            </section>
-                            <div class="write-function-block pull-right" style="padding-top: 5px">
-                                <a class="cancel">取消</a> 　<a class="btn btn-success">发送</a></div>
-                        </c:otherwise>
-                    </c:choose>
-                </form>
-            </div>
-        </div>
-    </article>
-
-
-    <div id="comments" class="clearfix" style="padding-top: 30px">
-        <c:if test="${empty commentList}">
+        <%--评论相关--%>
+        <c:if test='${article.allowcommon eq "0"}'>
             <div class="find-nothing text-center">
                 <img src="<c:url value="/images/oncontent.png"/>" width="20%">
-                <div>暂时没有评论哦~</div>
+                <div>作者已关闭评论~</div>
+                <c:if test="${sessionScope.loginUser.uid eq article.user.uid}">
+                    <a href="javascript:;" onclick="openArticleComment()" class="myCirBtn">开启评论</a>
+                </c:if>
             </div>
         </c:if>
-        <ol class="comment-list">
-            <c:forEach items="${commentList}" var="coms">
-                <li id="li-comment-${coms.id}" class="comment-body comment-parent comment-odd">
-                    <div id="comment-${coms.id}">
-                        <div class="comment-view" onclick="">
-                            <div class="comment-header">
-                                <img class="avatar"
-                                     src="https://secure.gravatar.com/avatar/f97e618f7fc7c5a5b1cb15b05a547090?s=80&amp;r=G&amp;d="
-                                     title="14541" width="80" height="80">
-                                <span class="comment-author">
+        <c:if test='${article.allowcommon eq "1"}'>
+            <div id="myComment-list" class="myComment-list" style="padding-top: 50px">
+                <div class="text-center">
+                    <form class="new-comment" style="position: relative;margin: 0 0 20px 48px;">
+                        <c:choose>
+                            <c:when test="${empty sessionScope.loginUser}">
+                                <a class="myAvatar">
+                                    <img src="<c:url value="/images/avatar_default.jpg"/> ">
+                                </a>
+                                <div class="sign-container" style="text-align: center;">
+                                        <%--<a href="10" data-toggle="ajaxModal" class="btn btn-sm btn-default">登录</a>--%>
+                                    <a href="<c:url value="/user/showLogin"/>"
+                                       class="btn btn-danger" style="margin: 11px 10px 0 0;">登录</a>
+                                    <span style="font-size: 14px;vertical-align: -7px">后便可发表评论</span>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="myAvatar">
+                                    <img src="<c:url value='#'/>" class="commentHeadImg_white"
+                                         name="${sessionScope.loginUser.uid}" alt="头像">
+                                </a>
+                                <section class="paper">
+                                <textarea type="text" class="form-control scrollable" placeholder="写下你的评论..."
+                                          style="border: 1px solid #dcdcdc;padding-top: 1px;min-height: 120px;"></textarea>
+                                </section>
+                                <div class="write-function-block pull-right" style="padding-top: 5px">
+                                    <a class="cancel">取消</a> 　<a class="btn btn-success">发送</a></div>
+                            </c:otherwise>
+                        </c:choose>
+                    </form>
+                </div>
+            </div>
+        </c:if>
+
+    </article>
+
+    <c:if test='${article.allowcommon eq "1"}'>
+        <div id="comments" class="clearfix" style="padding-top: 30px">
+            <c:if test="${empty commentList}">
+                <div class="find-nothing text-center">
+                    <img src="<c:url value="/images/oncontent.png"/>" width="20%">
+                    <div>暂时没有评论哦~</div>
+                </div>
+            </c:if>
+            <ol class="comment-list">
+                <c:forEach items="${commentList}" var="coms">
+                    <li id="li-comment-${coms.id}" class="comment-body comment-parent comment-odd">
+                        <div id="comment-${coms.id}">
+                            <div class="comment-view" onclick="">
+                                <div class="comment-header">
+                                    <img class="avatar"
+                                         src="https://secure.gravatar.com/avatar/f97e618f7fc7c5a5b1cb15b05a547090?s=80&amp;r=G&amp;d="
+                                         title="14541" width="80" height="80">
+                                    <span class="comment-author">
                                 <a href="" target="_blank" rel="external nofollow">${coms.user.username}</a>
                             </span>
-                            </div>
-                            <div class="comment-content">
-                                <span class="comment-author-at"></span>
-                                <p></p>
-                                <p>${coms.content}</p>
-                                <p></p>
-                            </div>
-                            <div class="comment-meta">
-                                <time class="comment-time">${coms.createdDateTimeView}</time>
-                                <span class="comment-reply">
+                                </div>
+                                <div class="comment-content">
+                                    <span class="comment-author-at"></span>
+                                    <p></p>
+                                    <p>${coms.content}</p>
+                                    <p></p>
+                                </div>
+                                <div class="comment-meta">
+                                    <time class="comment-time">${coms.createdDateTimeView}</time>
+                                    <span class="comment-reply">
                                 <a rel="nofollow" onclick="TaleComment.reply('${coms.id}');">回复</a>
                             </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <c:if test="${not empty coms.childList}">
-                        <div class="comment-children">
-                            <ol class="comment-list">
-                                <c:forEach items="${coms.childList}" var="child">
-                                    <li id="li-comment-${child.id}"
-                                        class="comment-body comment-child comment-level-odd comment-odd">
-                                        <div id="comment-${child.id}">
-                                            <div class="comment-view">
-                                                <div class="comment-header">
-                                                    <img class="avatar"
-                                                         src="https://secure.gravatar.com/avatar/f97e618f7fc7c5a5b1cb15b05a547090?s=80&amp;r=G&amp;d="
-                                                         title="44" width="80" height="80">
-                                                    <span class="comment-author comment-by-author">
+                        <c:if test="${not empty coms.childList}">
+                            <div class="comment-children">
+                                <ol class="comment-list">
+                                    <c:forEach items="${coms.childList}" var="child">
+                                        <li id="li-comment-${child.id}"
+                                            class="comment-body comment-child comment-level-odd comment-odd">
+                                            <div id="comment-${child.id}">
+                                                <div class="comment-view">
+                                                    <div class="comment-header">
+                                                        <img class="avatar"
+                                                             src="https://secure.gravatar.com/avatar/f97e618f7fc7c5a5b1cb15b05a547090?s=80&amp;r=G&amp;d="
+                                                             title="44" width="80" height="80">
+                                                        <span class="comment-author comment-by-author">
                                                     <a href="" rel="external nofollow">${child.user.username}</a>
                                                 </span>
-                                                </div>
-                                                <div class="comment-content">
-                                                    <p></p>
-                                                    <p>${child.content}</p>
-                                                    <p></p>
-                                                </div>
-                                                <div class="comment-meta">
-                                                    <time class="comment-time">${child.createdDateTimeView}</time>
-                                                    <span class="comment-reply">
+                                                    </div>
+                                                    <div class="comment-content">
+                                                        <p></p>
+                                                        <p>${child.content}</p>
+                                                        <p></p>
+                                                    </div>
+                                                    <div class="comment-meta">
+                                                        <time class="comment-time">${child.createdDateTimeView}</time>
+                                                        <span class="comment-reply">
                                             <a rel="nofollow" onclick="TaleComment.reply('${child.id}');">回复</a>
                                         </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                </c:forEach>
-                            </ol>
-                        </div>
-                    </c:if>
-                </li>
-            </c:forEach>
-        </ol>
+                                        </li>
+                                    </c:forEach>
+                                </ol>
+                            </div>
+                        </c:if>
+                    </li>
+                </c:forEach>
+            </ol>
 
 
-    </div>
-
+        </div>
+    </c:if>
 
     <%--二维码--%>
     <script src="<c:url value='/js/plugins/QR/qrcode.js'/>"></script>
     <script src="<c:url value='/js/plugins/QR/qart.min.js'/>"></script>
+
     <%
         String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
     %>
@@ -420,6 +438,37 @@
             clipboarddata = event.originalEvent.clipboardData;
         }
         clipboarddata.setData("text", textData);
+    }
+
+    $(function(){
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1;
+            var $numbering = $('<ul/>').addClass('pre-numbering');
+            $(this)
+                .addClass('has-numbering')
+                .parent()
+                .append($numbering);
+            for(i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+    });
+
+
+    var hutao = new $.hutao();
+    function openArticleComment() {
+        $.ajax({
+            type: "GET",
+            url: "<c:url value='/article/openComment/${article.aid}'/>",
+            success: function (result) {
+                handlerResult(result, function () {
+                    hutao.successAlertAndReload();
+                });
+            },
+            error: function (result) {
+                hutao.errorAlert(result.msg || '操作失败');
+            }
+        });
     }
 </script>
 

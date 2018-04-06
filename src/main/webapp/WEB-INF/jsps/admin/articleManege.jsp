@@ -153,8 +153,7 @@
                                             <c:forEach items="${articleList}" var="article">
                                                 <tr>
                                                     <td>
-                                                        <a href="<c:url value="/p/"/>${article.aid}"
-                                                           title="${article.title}">
+                                                        <a href="<c:url value="/p/"/>${article.aid}" target="_blank" title="${article.title}">
                                                         <span class="contentControl_2">
                                                                 ${article.title}
                                                         </span>
@@ -195,20 +194,22 @@
                                                     </td>
                                                     <td style="vertical-align:middle">
                                                         <c:if test="${article.state == 2}">
-                                                            <a href="" class="btn btn-dark btn-sm">
+                                                            <a href="javascript:;" class="btn btn-dark btn-sm" onclick="recoverArticle('${article.aid}')">
                                                                 <i class="fa fa-history"></i> 恢复
                                                             </a>
                                                         </c:if>
                                                         <c:if test="${article.state != 2}">
-                                                            <a href="" class="btn btn-success btn-sm">
+                                                            <a href="<c:url value='/article/preUpdateArticle/${article.aid}'/>"
+                                                               class="btn btn-success btn-sm">
                                                                 <i class="fa fa-edit"></i> 编辑
                                                             </a>
-                                                            <a href="" class="btn btn-danger btn-sm">
-                                                                <i class="fa fa-trash-o"></i> 删除
+                                                            <a href="javascript:;" class="btn btn-danger btn-sm" onclick="closeArticle('${article.aid}')">
+                                                                <i class="fa fa-trash-o"></i> 关闭
                                                             </a>
                                                             <c:if test="${article.state != 0}">
-                                                                <a href="<c:url value="/p/"/>${article.aid}" class="btn btn-warning btn-sm"
-                                                                   style="color: #686868 !important"  target="_blank">
+                                                                <a href="<c:url value="/p/"/>${article.aid}"
+                                                                   class="btn btn-warning btn-sm"
+                                                                   style="color: #686868 !important" target="_blank">
                                                                     <i class="fa fa-magic"></i> 预览
                                                                 </a>
                                                             </c:if>
@@ -243,8 +244,10 @@
 </section>
 <!-- /中间内容 -->
 
-<script src="<c:url value="/js/demo/articleManage.js"/> " cache="false"></script>
+
+<script src="<c:url value="/js/demo/articleManage.js"/> "></script>
 <script src="<c:url value="/js/plugins/footable/footable.all.min.js"/> "></script>
+
 <script>
     $(document).ready(function () {
         $('.footable').footable({
@@ -255,6 +258,87 @@
         });
     });
 
+    function closeArticle($articleId) {
+        swal({
+                title: '确认关闭文章？',
+                text: '关闭后可恢复文章',
+                type: 'warning',
+
+                showCancelButton: true,                //是否显示“取消”按钮。
+                cancelButtonText: "取消",            //按钮内容
+                cancelButtonColor: '#d33',
+
+                showConfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '确定',
+                closeOnConfirm: false,
+                closeOnCancel: true                //点击返回上一步操作
+            }, function () {
+                hutao.showLoading();
+
+                $.ajax({
+                    type: "POST",
+                    url: "<c:url value='/article/closeArticle/'/>" + $articleId,
+                    data: "{'aid',$articleId}",
+                    dataType: "json",
+                    success: function (result) {
+                        handlerResult(result, function () {
+                            close_success();
+                        });
+                    },
+                    error: function (result) {
+                        hutao.hideLoading();
+                        hutao.errorAlert(result.msg || '操作失败');
+                    }
+                });
+            }
+        );
+    }
+
+    function close_success() {
+        hutao.successAlertAndReload("文章关闭成功");
+    }
+
+    function recoverArticle($articleId) {
+        swal({
+                title: '确认恢复文章？',
+                text: '确认恢复文章？',
+                type: 'warning',
+
+                showCancelButton: true,                //是否显示“取消”按钮。
+                cancelButtonText: "取消",            //按钮内容
+                cancelButtonColor: '#d33',
+
+                showConfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '确定',
+                closeOnConfirm: false,
+                closeOnCancel: true                //点击返回上一步操作
+            }, function () {
+                hutao.showLoading();
+
+                $.ajax({
+                    type: "POST",
+                    url: "<c:url value='/article/recoverArticle/'/>" + $articleId,
+                    data: "{'aid',$articleId}",
+                    dataType: "json",
+                    success: function (result) {
+                        handlerResult(result, function () {
+                            recover_success();
+                        });
+                    },
+                    error: function (result) {
+                        hutao.hideLoading();
+                        hutao.errorAlert(result.msg || '操作失败');
+                    }
+                });
+            }
+        );
+    }
+
+    function recover_success() {
+        hutao.successAlertAndReload("文章恢复成功");
+    }
 </script>
 
 <%--导入底部文件--%>

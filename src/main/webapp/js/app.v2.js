@@ -4541,7 +4541,7 @@ Date.now = Date.now || function () {
                 return;
             }
             ;
-            $item = $('<li class="label bg-success inputSeletePill"><input type="hidden" name="$myOldTagId" value="' + $myOldTagId + '" />' + $text + '</li> ');
+            $item = $('<li class="label bg-success inputSeletePill"><input type="hidden" name="myOldTagId" value="' + $myOldTagId + '" />' + $text + '</li> ');
             $item.insertBefore($input);
             $input.val('');
             $pills.trigger('change', $item);

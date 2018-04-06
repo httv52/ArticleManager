@@ -72,4 +72,32 @@ public interface ArticleService {
      * @param aid
      */
     void updateViews(String aid);
+
+    /**
+     * 保存或更新文章
+     * @param myOldTagId
+     * @param myNewTag
+     * @param categoryId
+     * @param article
+     * @param sessionUser
+     * @param ipAddr
+     */
+    void saveOrUpdateArticle(String myOldTagId, String myNewTag, String categoryId, Article article, User sessionUser, String ipAddr);
+
+    /**
+     * 关闭文章
+     * @param aid
+     * @param loginUser
+     * @param ipAddr
+     */
+    void updateCloseArticle(String aid, User loginUser, String ipAddr);
+
+    void updateRecoverArticle(String aid, User loginUser, String ipAddr);
+
+    /**
+     * 打开文章评论
+     * @param aid
+     * @param loginUserId
+     */
+    void updateArticleComment(String aid, String loginUserId);
 }

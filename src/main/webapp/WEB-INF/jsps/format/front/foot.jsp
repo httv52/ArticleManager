@@ -59,7 +59,7 @@
             <div class="col-md-3">
                 <div class="meta-copyright-info">
                     <a href="#" class="info-logo">
-                        <img src="<%=imgPath%>/static/logo.png" alt="#" style="max-height: 63px">
+                        <img src="${theme.logoImg}" alt="#" style="max-height: 63px">
                     </a>
                     <div class="info-text">
                         <p>探索未知以分享<br/>记录已知以备忘
@@ -75,9 +75,10 @@
 <%--导入头像文件--%>
 <%@include file="/WEB-INF/jsps/format/admin/headImg.jsp" %>
 
-<script src="//cdn.bootcss.com/headroom/0.9.1/headroom.min.js"></script>
-<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
-<!-- <script src="//cdn.bootcss.com/instantclick/3.0.1/instantclick.min.js"></script> -->
+<script src="<c:url value='/js/myjs/headroom.min.js'/>"></script>
+<script src="<c:url value='/js/myjs/highlight.min.js'/>"></script>
+<script src="<c:url value='/js/myjs/instantclick.min.js'/>"></script>
+
 <script type="text/javascript">
     <c:if test="${article.type==0}">
     var postDirectory = new Headroom(document.getElementById("directory-content"), {

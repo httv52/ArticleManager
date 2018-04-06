@@ -7,6 +7,7 @@ import cn.hutaotao.article.service.LogsService;
 import cn.hutaotao.article.service.UserService;
 import cn.hutaotao.article.utils.code.UUIDUtil;
 import cn.hutaotao.article.utils.format.MyMD5Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -156,5 +157,38 @@ public class UserServiceImpl implements UserService {
         user = updateUserWithState(user);
 
         return user;
+    }
+
+    @Override
+    public User updateUserInfo(String screenName, String email, String loginUserId) {
+        if (StringUtils.isBlank(screenName) || StringUtils.isBlank(email)) {
+            throw new MyException("信息不能为空");
+        }
+
+        User user = new User();
+        user.setUid(loginUserId);
+        user.setScreenName(screenName);
+        user.setEmail(email);
+        userMapper.updateByPrimaryKeySelective(user);
+        return findUserById(user.getUid());
+    }
+
+    @Override
+    public void updatePassword(String oldPwd, String newPwd, String loginUserId) {
+        if (StringUtils.isBlank(oldPwd) || StringUtils.isBlank(newPwd)) {
+            throw new MyException("密码不能为空");
+        }
+
+        User user = findUserById(loginUserId);
+        //若对比错误，抛出异常
+        if (!user.getPassword().equalsIgnoreCase(MyMD5Utils.getMD5(oldPwd))) { //忽略md5大小写
+            throw new MyException("密码错误,请重填");
+        }
+
+        User newUser = new User();
+        newUser.setUid(user.getUid());
+        newUser.setPassword(MyMD5Utils.getMD5(newPwd));
+
+        userMapper.updateByPrimaryKeySelective(newUser);
     }
 }

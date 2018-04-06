@@ -34,6 +34,10 @@
         DELETE FROM tag
         WHERE tagId = #{tagId}
     </delete>
+    <delete id="deletetArticle_Tag">
+        DELETE FROM article_tag_tbl
+        WHERE aid = #{aid}
+    </delete>
 
     <select id="findTagByUser" resultType="Tag" parameterType="String">
         SELECT

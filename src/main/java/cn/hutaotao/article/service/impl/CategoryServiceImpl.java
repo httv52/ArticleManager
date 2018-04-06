@@ -57,21 +57,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public String editCategory(String loginUserid, String catrgoryName, String categoryId) {
-        try {
-            if (!StringUtils.isNotBlank(catrgoryName)) {
-                throw new MyException("分类名不能为空");
-            }
+    public void saveOrUpdateCategory(String loginUserid, String catrgoryName, String categoryId) {
+        if (!StringUtils.isNotBlank(catrgoryName)) {
+            throw new MyException("分类名不能为空");
+        }
 
-            if (!StringUtils.isNotBlank(categoryId)) {
-                saveCategoryByName(catrgoryName, loginUserid);
-                return "{\"success\":true}";
-            }
+        if (StringUtils.isNotBlank(categoryId)) {
             updateCategoryById(categoryId, catrgoryName);
-
-            return "{\"success\":true}";
-        } catch (Exception e) {
-            throw new MyException("分类保存失败：" + e.getMessage());
+        } else {
+            saveCategoryByName(catrgoryName, loginUserid);
         }
     }
 

@@ -1,16 +1,16 @@
 package cn.hutaotao.article.controller.admin;
 
 import cn.hutaotao.article.controller.BaseController;
-import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.Category;
 import cn.hutaotao.article.model.Tag;
+import cn.hutaotao.article.model.custom.ResultBean;
 import cn.hutaotao.article.service.CategoryService;
 import cn.hutaotao.article.service.TagService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,14 +40,11 @@ public class CategoryController extends BaseController {
     }
 
     @RequestMapping("/save")
-    public void saveOrUpdateCategory(HttpSession session, HttpServletRequest request, PrintWriter out) {
-        String catrgoryName = request.getParameter("categoryName");
-        String categoryId = request.getParameter("categoryId");
+    @ResponseBody
+    public ResultBean<Category> saveOrUpdateCategory(HttpSession session, String categoryName, String categoryId) {
+        categoryService.saveOrUpdateCategory(getLoginUserId(session), categoryName, categoryId);
 
-        String loginUserid = getLoginUserId(session);
-        String result = categoryService.editCategory(loginUserid, catrgoryName, categoryId);
-
-        out.print(result);
+        return new ResultBean<>();
     }
 
     @RequestMapping("/delete")

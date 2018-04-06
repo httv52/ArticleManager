@@ -8,37 +8,45 @@
 <form action="<c:url value="/index/${user.username}"/>" id="index_form" method="post">
     <input type="hidden" name="pageNow" value="1" id="my_pageNow">
 
-    <div class="index-page row wrapper" style="transform: none;overflow: auto;background-color: #f7f7f7">
+    <div class="index-page row wrapper" style="transform: none;overflow: auto;">
         <div class="col-lg-9 col-xs-12 contentSidebar">
             <div class="main-content clearfix theiaStickySidebar">
                 <div class="post-lists">
                     <div class="post-lists-body">
-                        <%--#for(article : articles.list)--%>
-                        <c:forEach items="${articleList}" var="a">
-                            <div class="post-list-item">
-                                <div class="post-list-item-container">
-                                    <div class="item-thumb bg-deepgrey"
-                                         style="background-image:url(<%=imgPath%>${a.previewimg});">
-                                    </div>
-                                    <a href="<c:url value="/p/${a.aid}"/>">
-                                        <div class="item-desc">
-                                            <p class="contentControl_6">${a.contentView}</p>
-                                        </div>
-                                    </a>
-                                    <div class="item-slant reverse-slant bg-deepgrey"></div>
-                                    <div class="item-slant"></div>
-                                    <div class="item-label">
-                                        <div class="item-title contentControl_2">
-                                            <a href="<c:url value="/p/${a.aid}"/>">${a.title} </a>
-                                        </div>
-                                        <div class="item-meta clearfix">
-                                            <div class="item-meta-ico"
-                                                 style="background: url(<%=imgPath%>${a.category.img}) no-repeat;background-size:38px 40px;"></div>
-                                            <div class="item-meta-cat">
-                                                <a href="<c:url value="/categ/"/>${user.uid}/${a.category.categoryid}">${a.category.categoryname}</a>
+
+                        <c:choose>
+                            <c:when test="${empty articleList}">
+                                <div class="find-nothing text-center" style="padding-top: 110px">
+                                    <img src="<c:url value="/images/oncontent.png"/>" width="20%">
+                                    <p style="color: #919191;padding-top: 5px">没有属于自己的文章哦~</p>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach items="${articleList}" var="a">
+                                    <div class="post-list-item">
+                                        <div class="post-list-item-container">
+                                            <div class="item-thumb bg-deepgrey"
+                                                 style="background-image:url(<%=imgPath%>${a.previewimg});">
                                             </div>
-                                            <span class="pull-left"
-                                                  style="padding-top: 12px;color: #5f5f5f!important;font-size: 12px">
+                                            <a href="<c:url value="/p/${a.aid}"/>">
+                                                <div class="item-desc">
+                                                    <p class="contentControl_6">${a.contentView}</p>
+                                                </div>
+                                            </a>
+                                            <div class="item-slant reverse-slant bg-deepgrey"></div>
+                                            <div class="item-slant"></div>
+                                            <div class="item-label">
+                                                <div class="item-title contentControl_2">
+                                                    <a href="<c:url value="/p/${a.aid}"/>">${a.title} </a>
+                                                </div>
+                                                <div class="item-meta clearfix">
+                                                    <div class="item-meta-ico"
+                                                         style="background: url(<%=imgPath%>${a.category.img}) no-repeat;background-size:38px 40px;"></div>
+                                                    <div class="item-meta-cat">
+                                                        <a href="<c:url value="/categ/"/>${user.uid}/${a.category.categoryid}">${a.category.categoryname}</a>
+                                                    </div>
+                                                    <span class="pull-left"
+                                                          style="padding-top: 12px;color: #5f5f5f!important;font-size: 12px">
                                     <span data-toggle="tooltip" data-placement="top" title="${a.modifiedDateView}">
                                         <i class="fa fa-clock-o"></i>
                                         <span class="dateTimeStamp">
@@ -48,13 +56,14 @@
                                     <span><i class="fa fa-eye"></i> ${a.views}</span>&nbsp;
                                     <span><i class="fa fa-comment-o"></i> ${a.commens}</span>&nbsp;
                                 </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </c:forEach>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
 
-                        <%--#end--%>
                     </div>
                 </div>
             </div>
@@ -83,7 +92,7 @@
                        data-toggle="tooltip" data-placement="top" title="Twitter">
                         <i class="fa fa-twitter"></i>
                     </a>
-                    <a href="https://www.zhihu.com/${theme.accountZhihu}" class="btn btn-rounded btn-icon"
+                    <a href="https://www.zhihu.com/people/${theme.accountZhihu}" class="btn btn-rounded btn-icon"
                        data-toggle="tooltip" data-placement="top" title="知乎" target="_blank"
                        style="background-color: #0f88eb;color: #fff;">
                         知
@@ -92,7 +101,7 @@
                        title="RSS">
                         <i class="fa fa-rss"></i>
                     </a>
-                    <a href="http://weibo.com/${theme.accountWeibo}" class="btn btn-rounded btn-danger btn-icon"
+                    <a href="http://weibo.com/u/${theme.accountWeibo}" class="btn btn-rounded btn-danger btn-icon"
                        data-toggle="tooltip" data-placement="top" title="微博" target="_blank">
                         <i class="fa fa-weibo"></i>
                     </a>
@@ -105,13 +114,32 @@
                 <h5 class="font-semibold">分类 / 标签</h5>
                 <div class="line line-dashed"></div>
                 <ul class="list-unstyled">
-                    <c:forEach items="${categoryList}" var="c">
-                        <li>
-                            <a href="<c:url value="/categ/"/>${user.uid}/${c.categoryid}" class="dk">
-                                <span class="badge pull-right">${fn:length(c.articleList)}</span> ${c.categoryname}
-                            </a>
-                        </li>
-                        <li class="line"></li>
+                    <c:forEach items="${categoryList}" var="ca" varStatus="status">
+                                    <span class="btn-group m-b-10" style="padding-top: 7px">
+                                        <span class="dropdown" style="padding: 11px 0px">
+                                            <a
+                                                    <c:if test="${status.count%6==0}">
+                                                        class="btn btn-info"
+                                                    </c:if>
+                                                <c:if test="${status.count%6==1}">
+                                                    class="btn btn-success"
+                                                </c:if>
+                                                <c:if test="${status.count%6==2}">
+                                                    class="btn btn-danger"
+                                                </c:if>
+                                                <c:if test="${status.count%6==3}">
+                                                    class="btn btn-warning"
+                                                </c:if>
+                                                <c:if test="${status.count%6==4}">
+                                                    class="btn btn-default"
+                                                </c:if>
+                                                <c:if test="${status.count%6==5}">
+                                                    class="btn btn-dark"
+                                                </c:if>
+                                            >${ca.categoryname} (${fn:length(ca.articleList)})
+                                            </a>
+                                        </span>
+                                    </span>
                     </c:forEach>
                 </ul>
                 <div class="tags m-b-lg">
@@ -123,7 +151,18 @@
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <c:forEach items="${tagList}" var="tag" varStatus="status">
+                            <c:if test="${!empty tagList}">
+                                <ul class="tag-list" style="padding: 0">
+                                    <c:forEach items="${tagList}" var="tag">
+                                        <li id="tag_${tag.tagid}">
+                                            <a href="javascript:;" >
+                                                <i class="fa fa-tag"></i> ${tag.tagname} (${fn:length(tag.articleList)})
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </c:if>
+                            <%--<c:forEach items="${tagList}" var="tag" varStatus="status">
                                 <span class="btn-group m-b-10" style="padding-top: 7px">
                                     <span class="dropdown" style="padding: 11px 0px">
                                         <a
@@ -149,7 +188,7 @@
                                         </a>
                                     </span>
                                 </span>
-                            </c:forEach>
+                            </c:forEach>--%>
                         </c:otherwise>
                     </c:choose>
                 </div>

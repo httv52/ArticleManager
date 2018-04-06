@@ -34,16 +34,21 @@
     <link rel="stylesheet" href="<c:url value='/css/plugins/toastr/toastr.min.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/plugins/sweetalert/sweetalert.css'/>" type="text/css"/>
 
+    <link rel="stylesheet" href="<c:url value='/js/plugins/buzyload/app.min.css'/>" type="text/css"/>
+
+    <script src="<c:url value='/js/jquery.min.js'/>"></script>
     <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
     <script src="<c:url value='/js/app.v2.js'/>"></script>
 
-    <script src="<c:url value='/js/jquery.min.js'/>"></script>
     <script src="<c:url value='/js/plugins/toastr/toastr.min.js'/>"></script>
     <script src="<c:url value='/js/plugins/sweetalert/sweetalert.min.js'/>"></script>
     <script src="<c:url value='/js/demo/myBase.js'/>"></script>
 
     <script src="<c:url value='/js/iden/identicon.js'/>"></script>
     <script src="<c:url value='/js/iden/pnglib.js'/>"></script>
+
+    <script src="<c:url value='/js/plugins/buzyload/app.min.js'/>"></script>
+
 
     <!--[if lt IE 9]>
     <script src="<c:url value='/js/ie/html5shiv.js'/>" cache="false"></script>
@@ -354,6 +359,23 @@
             width: 195px;
             height: 195px;
             margin: 0 auto;
+        }
+
+        #tale-loading {
+            position: fixed;
+            _position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120px;
+            height: 120px;
+            overflow: hidden;
+            background: url(/images/loading.gif) no-repeat;
+            z-index: 10;
+            display: none;
+        }
+
+        #md-container .split{
+            height: 520px !important;
         }
 
     </style>

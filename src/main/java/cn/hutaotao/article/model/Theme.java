@@ -78,7 +78,7 @@ public class Theme extends ThemeKey {
     }
 
     public String getAccountWeibo() {
-        return "u/" + accountWeibo;
+        return accountWeibo;
     }
 
     public void setAccountWeibo(String accountWeibo) {
@@ -86,7 +86,7 @@ public class Theme extends ThemeKey {
     }
 
     public String getAccountZhihu() {
-        return "people/" + accountZhihu;
+        return accountZhihu;
     }
 
     public void setAccountZhihu(String accountZhihu) {
