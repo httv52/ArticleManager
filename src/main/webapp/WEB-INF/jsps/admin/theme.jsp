@@ -207,7 +207,8 @@
             var qrType = 'threshold';
         }
 
-        var imagePath = '<c:url value="/images/QR.jpg"/> ';
+        <%--var imagePath = '<c:url value="/images/QR.jpg"/> ';--%>
+        var imagePath = '<%=imgPath%>/static/QR.jpg';
 
         var self = this;
 

@@ -162,15 +162,15 @@ $.hutao.prototype.questionAlert = function (options, callback) {
     options.type = 'warning';
     options.title = options.title || '确定要删除吗？';
     options.text = options.text || '确定要删除吗？';
-    options.showCancelButton= true;              //是否显示“取消”按钮。
-    options.cancelButtonText= "取消";            //按钮内容
-    options.cancelButtonColor= '#d33';
+    options.showCancelButton = true;              //是否显示“取消”按钮。
+    options.cancelButtonText = "取消";            //按钮内容
+    options.cancelButtonColor = '#d33';
 
-    options.showConfirmButton= true;
-    options.confirmButtonColor= '#3085d6';
-    options.confirmButtonText= '确定';
-    options.closeOnConfirm= false;
-    options.closeOnCancel= true ;           //点击返回上一步操作
+    options.showConfirmButton = true;
+    options.confirmButtonColor = '#3085d6';
+    options.confirmButtonText = '确定';
+    options.closeOnConfirm = false;
+    options.closeOnCancel = true;           //点击返回上一步操作
     this.baseAlert(options, callback);
 };
 
@@ -195,7 +195,7 @@ $.hutao.prototype.baseAlert = function (options, callback) {
             title: options.title,
             text: options.text,
             type: options.type,
-        
+
             showCloseButton: options.showCloseButton,
             showCancelButton: options.showCancelButton,
             showLoaderOnConfirm: options.showLoaderOnConfirm || false,
@@ -314,7 +314,7 @@ $.hutao.prototype.showLoading = function () {
     if ($('#content').length == 0) {
         $('body').append('<div id="content"></div>');
     }
-    $("#content").busyLoad("show",{
+    $("#content").busyLoad("show", {
         text: "操作中 ...",
         textPosition: "bottom",
         background: "rgba(46, 62, 78, 0.79)",
@@ -336,7 +336,7 @@ $.hutao.prototype.hideLoading = function () {
  * 显示动画
  */
 $.hutao.prototype.showLoadingEle = function ($ele) {
-    $($ele).busyLoad("show",{
+    $($ele).busyLoad("show", {
         background: "rgba(46, 62, 78, 0.79)",
     });
 };
