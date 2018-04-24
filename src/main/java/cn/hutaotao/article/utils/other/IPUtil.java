@@ -50,4 +50,14 @@ public class IPUtil {
             return realIp;
         }
     }
+
+    /**
+     * 获取项目地址
+     *
+     * @param request
+     */
+    public static String getApplicationAddress(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" +
+                request.getServerPort() + request.getContextPath();
+    }
 }

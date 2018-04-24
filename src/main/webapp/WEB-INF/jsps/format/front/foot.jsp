@@ -77,7 +77,7 @@
 
 <script src="<c:url value='/js/myjs/headroom.min.js'/>"></script>
 <script src="<c:url value='/js/myjs/highlight.min.js'/>"></script>
-<script src="<c:url value='/js/myjs/instantclick.min.js'/>"></script>
+<%--<script src="<c:url value='/js/myjs/instantclick.min.js'/>"></script>--%>
 
 <script type="text/javascript">
     <c:if test="${article.type==0}">

@@ -2,6 +2,8 @@ package cn.hutaotao.article.controller.admin;
 
 import cn.hutaotao.article.controller.BaseController;
 import cn.hutaotao.article.model.*;
+import cn.hutaotao.article.model.custom.CountBean;
+import cn.hutaotao.article.model.custom.CountInfoBean;
 import cn.hutaotao.article.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,11 +56,21 @@ public class PageController extends BaseController {
         List<Comment> commentList = commentService.findCommentByUserPrimary(loginUserId, LIMIT_NUMBER);
         List<Logs> logsList = logsService.findAll(loginUserId, LIMIT_LOG);
 
+        CountBean countBean = new CountBean();
+        List<CountInfoBean> countInfoBeanList = logsService.findLogsInfo(loginUserId);
+        countBean.setCountList(countInfoBeanList);
+
+        CountBean countBean2 = new CountBean();
+        List<CountInfoBean> countInfoBeanList2 = logsService.findCategoryInfo(loginUserId);
+        countBean2.setCountList(countInfoBeanList2);
+
         model.addAttribute("articleList", articleList);
         model.addAttribute("articleCount", articleCount);
         model.addAttribute("fileCount", fileCount);
         model.addAttribute("commentList", commentList);
         model.addAttribute("logsList", logsList);
+        model.addAttribute("countBean", countBean);
+        model.addAttribute("countBean2", countBean2);
 
         setNavNumber(model, 1, -1, session);
         return "admin/index";

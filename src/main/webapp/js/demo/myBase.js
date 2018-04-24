@@ -110,28 +110,34 @@ $.hutao.prototype.infoContent = function (msg) {
     toastr.info(msg);
 }
 
-/*复杂弹窗*/
+// -------简单弹窗结束-------
+// -------简单弹窗结束-------
+// -------简单弹窗结束-------
+
+
+// -------复杂弹窗-------
+// -------复杂弹窗-------
+// -------复杂弹窗-------
 /**
  * 成功弹框
- * @param options
+ * @param options   弹窗参数
+ * @param callback  回调函数
  */
 $.hutao.prototype.successAlert = function (options, callback) {
-    options = options.length ? {text: options} : ( options || {} );
+    options = options.length ? {text: options} : (options || {});
     options.title = options.title || '操作成功';
-    options.text = options.text;
     options.showCancelButton = false;
     options.showCloseButton = false;
     options.type = 'success';
-    this.baseAlert(options, callback);
+    hutao.baseAlert(options, callback);
 };
 
 /**
  * 弹出成功，并在700毫秒后刷新页面
- * @param text
+ * @param text  成功提示
  */
 $.hutao.prototype.successAlertAndReload = function (text) {
-    this.successAlert({
-        title: '操作成功',
+    hutao.successAlert({
         text: text
     }, function () {
         setTimeout(function () {
@@ -142,30 +148,29 @@ $.hutao.prototype.successAlertAndReload = function (text) {
 
 /**
  * 警告弹框
- * @param options
+ * @param options   弹窗参数
  */
 $.hutao.prototype.warningAlert = function (options) {
-    options = options.length ? {text: options} : ( options || {} );
-    options.title = options.title || '警告信息';
-    options.text = options.text;
+    options = options.length ? {text: options} : (options || {});
+    options.title = options.title || '确认完成操作';
     options.timer = 3000;
     options.type = 'warning';
-    this.baseAlert(options);
+    hutao.baseAlert(options);
 };
 
 /**
  * 询问确认弹框，这里会传入函数进来
- * @param options
+ * @param options   弹窗参数
+ * @param callback  回调函数
  */
 $.hutao.prototype.questionAlert = function (options, callback) {
     options = options || {};
     options.type = 'warning';
-    options.title = options.title || '确定要删除吗？';
-    options.text = options.text || '确定要删除吗？';
+    options.title = options.title || '确认完成操作';
+    options.text = options.text || '确认完成操作';
     options.showCancelButton = true;              //是否显示“取消”按钮。
     options.cancelButtonText = "取消";            //按钮内容
     options.cancelButtonColor = '#d33';
-
     options.showConfirmButton = true;
     options.confirmButtonColor = '#3085d6';
     options.confirmButtonText = '确定';
@@ -176,26 +181,25 @@ $.hutao.prototype.questionAlert = function (options, callback) {
 
 /**
  * 错误提示
- * @param options
+ * @param options   弹窗参数
  */
 $.hutao.prototype.errorAlert = function (options) {
-    options = options.length ? {text: options} : ( options || {} );
-    options.title = options.title || '错误信息';
-    options.text = options.text;
+    options = options.length ? {text: options} : (options || {});
+    options.title = options.title || '操作失败';
     options.type = 'error';
-    this.baseAlert(options);
+    hutao.baseAlert(options);
 };
 
 /**
  * 公共弹框
- * @param options
+ * @param options   弹窗参数
+ * @param callback  回调函数
  */
 $.hutao.prototype.baseAlert = function (options, callback) {
     swal({
             title: options.title,
             text: options.text,
             type: options.type,
-
             showCloseButton: options.showCloseButton,
             showCancelButton: options.showCancelButton,
             showLoaderOnConfirm: options.showLoaderOnConfirm || false,
@@ -206,11 +210,15 @@ $.hutao.prototype.baseAlert = function (options, callback) {
         }, callback
     );
 };
+// -------复杂弹窗结束-------
+// -------复杂弹窗结束-------
+// -------复杂弹窗结束-------
+
 
 /**
  * 转换时间戳
- * @param dateTimeStamp
- * @returns {*}
+ * @param dateTimeStamp 时间毫秒值
+ * @returns {*} 时间戳
  */
 function getDateDiff(dateTimeStamp) {
     var result;
@@ -285,10 +293,10 @@ function changeHeadImg_white($imgEle, $useId) {
     $($imgEle).attr("src", 'data:image/svg+xml;base64,' + data + '');
 };
 
-function handlerResult(result, fn) {
+function handlerResult(result, callback) {
     // 成功执行操作，失败提示原因
     if (result.code === 0) {
-        fn();
+        callback();
     }
     // 没有登陆异常，重定向到登陆页面
     else if (result.code === -1) {
@@ -305,30 +313,39 @@ function handlerResult(result, fn) {
         // 不应该出现的异常，应该重点关注
         hutao.errorAlert(result.msg);
     }
+    hutao.hideLoading();
 }
 
 /**
  * 显示动画
+ * @param options   动画参数
  */
-$.hutao.prototype.showLoading = function () {
-    if ($('#content').length == 0) {
-        $('body').append('<div id="content"></div>');
-    }
-    $("#content").busyLoad("show", {
-        text: "操作中 ...",
-        textPosition: "bottom",
-        background: "rgba(46, 62, 78, 0.79)",
-        maxSize: "70px",
-        minSize: "50px",
-        fontSize: "2rem"
+$.hutao.prototype.showLoading = function (options) {
+    options.ele = options.ele || 'body';    //默认锁全屏
+    options.background = options.background || "rgba(46, 62, 78, 0.79)";  //背景色默认半透明暗黑色 绿色：rgba(0, 51, 101, 0.83) 蓝色：76, 175, 80, 0.73
+    options.text = options.text || '操作中';      //提示文字
+    options.textPosition = options.textPosition || 'bottom';  //文字方向
+    options.maxSize = options.maxSize || '';
+    options.minSize = options.minSize || '';
+    options.fontSize = options.fontSize || '';  //文字字体大小 例如2rem
+    options.spinner = options.spinner || '';    //四个方块：cube-grid  圆：circles 正方形：cube 对称:cubes 三圆：circle-line 条形：accordion 涟漪：pulsar
+    $(options.ele).busyLoad("show", {
+        text: options.text,
+        spinner: options.spinner,
+        textPosition: options.textPosition,
+        background: options.background,
+        maxSize: options.maxSize,
+        minSize: options.minSize,
+        fontSize: options.fontSize
     });
 };
 
 /**
  * 隐藏动画
+ * @param $ele  关闭元素
  */
-$.hutao.prototype.hideLoading = function () {
-    $("#content").busyLoad("hide");
+$.hutao.prototype.hideLoading = function ($ele) {
+    $($ele || 'body').busyLoad("hide");
 };
 
 
@@ -348,6 +365,48 @@ $.hutao.prototype.hideLoadingEle = function ($ele) {
     $($ele).busyLoad("hide");
 };
 
+
+/**
+ * 弹出一个窗口
+ * @param options   参数
+ */
+$.hutao.prototype.openWindow = function (options) {
+    options.title = options.title || '弹窗';
+    options.shadeClose = options.shadeClose || true;//点击遮罩关闭层
+    options.area = options.area || ['900px', '450px'];
+    layer.open({
+        type: 2,
+        title: options.title,
+        maxmin: true,
+        shadeClose: options.shadeClose,
+        area: options.area,  //大小
+        // fixed: false,
+        content: options.content
+    });
+}
+
+/**
+ * 全局post函数
+ *
+ * @param options   POST 参数
+ */
+$.hutao.prototype.post = function (options) {
+    $.ajax({
+        type: options.type || 'POST',
+        url: options.url,
+        data: options.data || {},
+        async: options.async || true,
+        dataType: 'json',//data传递的是一个json类型的值，而不是字符串，且必须标明dataType的类型，否则会出现400错误或者其他错误。
+        success: function (result) {
+            options.success && options.success(result);
+            hutao.hideLoading(options.ele);
+        },
+        error: function () {
+            hutao.hideLoading(options.ele);
+            hutao.errorAlert("网络异常");
+        }
+    });
+};
 
 
 

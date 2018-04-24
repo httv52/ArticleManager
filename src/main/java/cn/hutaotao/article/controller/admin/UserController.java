@@ -2,20 +2,18 @@ package cn.hutaotao.article.controller.admin;
 
 import cn.hutaotao.article.controller.BaseController;
 import cn.hutaotao.article.exception.MyException;
-import cn.hutaotao.article.model.Logs;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.model.custom.ResultBean;
 import cn.hutaotao.article.model.custom.UserCustom;
-import cn.hutaotao.article.service.LogsService;
 import cn.hutaotao.article.service.UserService;
 import cn.hutaotao.article.utils.code.UUIDUtil;
-import cn.hutaotao.article.utils.format.LogDataUtil;
 import cn.hutaotao.article.utils.mail.Mail;
 import cn.hutaotao.article.utils.mail.MailString;
 import cn.hutaotao.article.utils.mail.MailUtils;
 import cn.hutaotao.article.utils.other.IPUtil;
 import cn.hutaotao.article.utils.validati.ValidGroupLogin;
 import cn.hutaotao.article.utils.validati.ValidGroupRegister;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,14 +38,8 @@ import java.util.Properties;
 @Controller
 @RequestMapping("/user")
 public class UserController extends BaseController {
-    private final UserService userService;
-    private final LogsService logsService;
-
     @Autowired
-    public UserController(UserService userService, LogsService logsService) {
-        this.userService = userService;
-        this.logsService = logsService;
-    }
+    private UserService userService;
 
     /**
      * 去往 Login页面
@@ -56,7 +48,10 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping("showLogin")
-    public String showLogin(Model model) {
+    public String showLogin(Model model, HttpSession session) {
+        if (session.getAttribute(User.SESSION_USER_NAME) != null && StringUtils.isNotBlank(getLoginUserId(session))) {
+            return "user/continue";
+        }
         model.addAttribute("pageCode", PAGE_CODE_LOGIN);
         return "user/login";
     }
@@ -64,7 +59,6 @@ public class UserController extends BaseController {
 
     /**
      * 用户登录
-     * <p>
      * 注意：
      * 1.传递数据 (获取ip)
      * 2.service 逻辑判断  判断是否错误超过三次 若是，十分钟后再登录
@@ -76,68 +70,15 @@ public class UserController extends BaseController {
      */
     //TODO 待完成：记住密码，验证码
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@Validated(value = {ValidGroupLogin.class}) UserCustom user, BindingResult bindingResult,
-                        HttpServletRequest request, HttpSession session, Model model, RedirectAttributes redirectModel) {
-        //校验数据
-        if (validatiData(bindingResult, model, user, PAGE_CODE_LOGIN)) {
-            return "user/login";
-        }
-
-        Integer error_count = cache.get(user.getUsername() + "_" + LOGIN_ERROR_COUNT);
-
-
-        try {
-            error_count = null == error_count ? 0 : error_count;  //判断error_count是否为空
-
-
-            if (null != error_count && error_count >= 3) {//错误超过三次
-                model.addAttribute("pageCode", PAGE_CODE_LOGIN);
-                model.addAttribute("operateCode", OPERATE_CODE_LOGIN_FAULT_CACHE);
-                model.addAttribute("errorMsg", "登录失败-失败次数超过限制,请10分钟后再登陆");
-                return "user/login";
-            }
-
-            User sessionUser = userService.loginByUsernameAndPwd(user, request);
-
-            //判断 loged 是否初始化，若未，则初始化并记录日志
-            long currentTime = System.currentTimeMillis();
-            user.setUid(sessionUser.getUid());
-            if (null == sessionUser.getLogged()) {
-                sessionUser = userService.updateUserWithLogged(sessionUser, currentTime);
-                logsService.saveLogs(user, IPUtil.getIpAddr(request), Logs.INIT_LOG, LogDataUtil.userInitDate(user), currentTime);//记录初始化日志
-                logsService.saveLogs(user, IPUtil.getIpAddr(request), Logs.LOGIN_LOG, LogDataUtil.userLogData(user), System.currentTimeMillis());//记录日志
-            } else {
-                logsService.saveLogs(user, IPUtil.getIpAddr(request), Logs.LOGIN_LOG, LogDataUtil.userLogData(user), currentTime);//记录日志
-            }
-
-            cache.set(user.getUsername() + "_" + LOGIN_ERROR_COUNT, 0);//清空登陆错误缓存
-
-            session.setAttribute(cn.hutaotao.article.model.User.SESSION_USER_NAME, sessionUser);  //保存到session
-
-        } catch (MyException e) {
-            error_count += 1;
-            cache.set(user.getUsername() + "_" + LOGIN_ERROR_COUNT, error_count, 10);//10 * 60
-            model.addAttribute("user", user);
-            model.addAttribute("pageCode", PAGE_CODE_LOGIN);
-            model.addAttribute("operateCode", OPERATE_CODE_LOGIN_FAULT_FIELD);
-            model.addAttribute("errorMsg", e.getMessage());
-            e.getStackTrace();
-            return "user/login";
-        } catch (Exception e) {
-            LOGGER.error("用户名" + user.getUsername() + REGIST_ERROR_MESSAGE, e.getMessage());
-            e.printStackTrace();
-            return show_404();
-        }
-
-        redirectModel.addFlashAttribute("operateCode", OPERATE_CODE_LOGIN_SUCCESS);
-        return "redirect:/admin/index";
+    @ResponseBody
+    public ResultBean login(@Validated(value = {ValidGroupLogin.class}) UserCustom user, BindingResult bindingResult,
+                            HttpServletRequest request, HttpSession session) {
+        userService.updateLogin(user, bindingResult, session, IPUtil.getIpAddr(request));
+        return new ResultBean();
     }
 
     /**
      * 去往 Register 页面
-     *
-     * @param model
-     * @return
      */
     @RequestMapping(value = "/showRegister", method = RequestMethod.GET)
     public String showRegister(Model model) {
@@ -148,17 +89,17 @@ public class UserController extends BaseController {
     /**
      * 用户注册
      *
+     * @Validated 用于校验，放在 pojo前
+     * BindingResult用于存放错误消息，放在 @Validated 之后
+     * 邮箱激活
      * @param model
      * @param user
      * @param bindingResult
      * @return
-     * @Validated用于校验，放在 pojo前
-     * BindingResult用于存放错误消息，放在 @Validated 之后
-     * <p>
-     * 邮箱激活
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(Model model, @Validated(value = {ValidGroupRegister.class}) cn.hutaotao.article.model.User user, BindingResult bindingResult) {
+    public String register(Model model, @Validated(value = {ValidGroupRegister.class}) User user,
+                           BindingResult bindingResult, HttpServletRequest request) {
         String inputPwd = user.getPassword();
         //校验数据
         if (validatiData(bindingResult, model, user, PAGE_CODE_REGISTER)) {
@@ -171,7 +112,7 @@ public class UserController extends BaseController {
         try {
             user.setActivateCode(activateCode);
 
-            userService.registerUser(user); //判断是否已被注册
+            userService.updateRegisterUser(user); //判断是否已被注册
         } catch (MyException e) {
             LOGGER.warn("用户名" + user.getUsername() + REGIST_ERROR_MESSAGE, e);
 
@@ -188,8 +129,9 @@ public class UserController extends BaseController {
         model.addAttribute("operateCode", OPERATE_CODE_REGISTER_SUCCESS);
         model.addAttribute("pageCode", PAGE_CODE_LOGIN);
 
+        String basePath = IPUtil.getApplicationAddress(request);
         //发送邮件
-        sendEmail(activateCode);
+        sendEmail(activateCode, user.getEmail(), basePath);
 
         return "user/login";
     }
@@ -201,14 +143,14 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/activate/{code}")
     public String activate(@PathVariable String code, RedirectAttributes model) {
-        cn.hutaotao.article.model.User user;
+        User user;
         try {
-            user = userService.activateUser(code);
+            user = userService.updateActivateUser(code);
         } catch (MyException e) {
             LOGGER.warn(code + ":激活失败 ---->" + e.getMessage(), e);
             model.addFlashAttribute("operateCode", OPERATE_CODE_REGISTER_ACTIV_FAULT);
             model.addFlashAttribute("errorMsg", e.getMessage());
-            return "redirect:/user/showLogin.do";
+            return "redirect:/user/showRegister";
         }
         user.setPassword("");
         model.addFlashAttribute("operateCode", OPERATE_CODE_REGISTER_ACTIV_SUCCESS);
@@ -223,11 +165,10 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/quit", method = RequestMethod.GET)
-    public String quit(HttpSession session, Model model) {
-        session.removeAttribute(cn.hutaotao.article.model.User.SESSION_USER_NAME);
-        model.addAttribute("operateCode", OPERATE_CODE_QUIT);
-        model.addAttribute("pageCode", PAGE_CODE_LOGIN);
-        return "user/login";
+    @ResponseBody
+    public ResultBean quit(HttpSession session) {
+        session.removeAttribute(User.SESSION_USER_NAME);
+        return new ResultBean();
     }
 
     /**
@@ -237,9 +178,9 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
     @ResponseBody
-    public ResultBean<cn.hutaotao.article.model.User> updatePassword(String oldPwd, String newPwd, HttpSession session) {
+    public ResultBean updatePassword(String oldPwd, String newPwd, HttpSession session) {
         userService.updatePassword(oldPwd, newPwd, getLoginUserId(session));
-        return new ResultBean<>();
+        return new ResultBean();
     }
 
 
@@ -252,10 +193,10 @@ public class UserController extends BaseController {
     /**
      * 发邮件
      *
-     * @param activateCode
+     * @param activateCode 激活码
+     * @param email        收件人
      */
-    private void sendEmail(String activateCode) {
-
+    public void sendEmail(String activateCode, String email, String basePath) {
         Properties pro = new Properties();
         try {
             pro.load(this.getClass().getClassLoader().getResourceAsStream("mail/email_template.properties"));
@@ -270,20 +211,19 @@ public class UserController extends BaseController {
         Session session = MailUtils.createSession(host, name, pwd);
 
         String from = pro.getProperty("from");
-        String to = "413193089@qq.com";
         String subject = "用户激活　|　文章管理系统";
         String content = "<div style=\"text-align: center;background-color: #2e3e4e;height:100vh;overflow:auto\">\n" +
                 "    <img width=\"6%\" src=\"http://localhost:8080/article/images/logo.png\">\n" +
-                "    <a href=\"http://localhost:8080/article/rest/user/activate/{0}\"\n" +
+                "    <a href=\"" + basePath + "/user/activate/{0}\"\n" +
                 "       style=\"text-decoration:none;color: #adbece;font-size: 20px;\n" +
                 "    line-height: 50px;font-family: 'Microsoft YaHei UI'\"><h3>点击激活邮件</h3></a><br>\n" +
                 "    <div style=\"color: #8e8e8e\">\n" +
-                "        若邮件链接被屏蔽，请复制以下地址前往浏览器激活<br><br>http://localhost:8080/article/rest/user/activate/{0}\n" +
+                "        若邮件链接被屏蔽，请复制以下地址前往浏览器激活<br><br>" + basePath + "/user/activate/{0}\n" +
                 "    </div>\n" +
                 "</div>";
         content = MessageFormat.format(content, activateCode);//替换{0}
 
-        Mail mail = new Mail(from, to, subject, content);
+        Mail mail = new Mail(from, email, subject, content);
 
         try {
             MailUtils.send(session, mail);

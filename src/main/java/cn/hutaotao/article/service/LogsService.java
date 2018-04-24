@@ -2,6 +2,7 @@ package cn.hutaotao.article.service;
 
 import cn.hutaotao.article.model.Logs;
 import cn.hutaotao.article.model.User;
+import cn.hutaotao.article.model.custom.CountInfoBean;
 
 import java.util.List;
 
@@ -27,4 +28,18 @@ public interface LogsService {
      * @return
      */
     List<Logs> findAll(String loginUserId, Integer limit);
+
+    /**
+     * 查询日志统计信息
+     * @param uid
+     * @return
+     */
+    List<CountInfoBean> findLogsInfo(String uid);
+
+    /**
+     * 查询分类统计信息
+     * @param uid
+     * @return
+     */
+    List<CountInfoBean> findCategoryInfo(String uid);
 }

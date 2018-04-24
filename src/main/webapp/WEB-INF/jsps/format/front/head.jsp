@@ -24,16 +24,20 @@
             <%--<link rel="icon" href="<c:url value='/images/favicon.ico'/>" type="image/x-icon"/>--%>
         <%--</c:otherwise>--%>
     <%--</c:choose>--%>
+    <link rel="stylesheet" href="<c:url value="/css/semantic/semantic.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/css/semantic/main.css"/>">
     <link href="<c:url value="/css/demo/xcode.min.css"/> " rel="stylesheet">
 
     <link rel="stylesheet" href="<c:url value='/css/plugins/sweetalert/sweetalert.css'/>" type="text/css"/>
 
-    <script src="<c:url value="/js/jquery.min.js"/> "></script>
     <link rel="stylesheet" href="<c:url value='/css/plugins/toastr/toastr.min.css'/>" type="text/css"/>
     <link href="<c:url value="/css/app.v2.css"/> " rel="stylesheet">
     <link href="<c:url value="/js/tale/style.min.css"/> " rel="stylesheet">
     <link href="<c:url value="/css/a.css"/>" rel="stylesheet">
+    <link href="<c:url value="/js/pacejs/pace.css"/>" rel="stylesheet">
 
+
+    <script src="<c:url value="/js/jquery.min.js"/> "></script>
     <script src="<c:url value='/js/plugins/sweetalert/sweetalert.min.js'/>"></script>
 
     <script src="<c:url value='/js/plugins/toastr/toastr.min.js'/>"></script>
@@ -41,6 +45,8 @@
     <script src="<c:url value='/js/iden/identicon.js'/>"></script>
     <script src="<c:url value='/js/iden/pnglib.js'/>"></script>
     <script src="<c:url value="/js/demo/myBase.js"/> "></script>
+
+    <script data-pace-options='{ "ajax": false }' src="<c:url value="/js/pacejs/pace.js"/>"></script>
 
     <link rel="icon" href="<c:url value='/images/favicon.ico'/>" type="image/x-icon"/>
 
@@ -283,8 +289,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 20px;
-            padding: 6px 5px 6px 0;
+            width: 25px;
+            padding: 6px 3px 6px 0;
             border-right: 1px solid #C3CCD0;
             border-radius: 3px 0 0 3px;
             background-color: #2b313c;
@@ -362,6 +368,14 @@
             height: 40px;
             line-height: 24px;
         }
+
+        .label ,.ui.label{
+            font-weight:normal;
+        }
+
+        .page-page {
+            padding: 80px 25px 20px;
+        }
     </style>
 </head>
 <body id="topAnchor" gtools_scp_screen_capture_injected="true">
@@ -373,7 +387,14 @@
 <header id="header" class="header bg-white">
     <div class="navbar-container">
         <a href="<c:url value="/index/"/>${user.username} " class="navbar-logo">
-            <img src="${theme.logoImg}" alt="##"/>
+            <c:choose>
+                <c:when test="${empty theme.logoImg}">
+                    <img src="${theme.logoImg}" alt="博客LOGO"/>
+                </c:when>
+                <c:otherwise>
+                    <img src="${theme.logoImg}" alt="博客LOGO"/>
+                </c:otherwise>
+            </c:choose>
             <span class="text-muted">
             <span style="vertical-align: inherit;">${theme.autherName}</span>
             </span>
@@ -385,7 +406,7 @@
         </div>
         <div class="navbar-search" onclick="">
             <span class="icon-search"></span>
-            <form role="search" onsubmit="return false;" style="padding-right: 170px">
+            <form role="search" onsubmit="return false;" style="padding-right: 180px">
                 <span class="search-box">
                     <input type="text" id="search-inp" class="input" placeholder="搜索..." maxlength="30"
                            autocomplete="off">
@@ -415,23 +436,16 @@
                             <a href="" data-no-instant><i class="fa fa-plane"></i>　重新登录</a>
                         </li>
                         <li>
-
                             <a href="<c:url value="/user/quit"/>" data-no-instant><i class="fa fa-sign-out"></i>　退出</a>
                         </li>
                     </ul>
                 </div>
             </c:when>
             <c:otherwise>
-                <div class="m-t-sm" style="margin-top: 1px;display: inline-block;">
-                    <a href="<c:url value="/user/showLogin"/> " class="btn btn-link btn-sm" target="_blank">
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">登录</font></font>
-                    </a>
-                    <a href="<c:url value="/user/showRegister"/>" class="btn btn-sm btn-success m-l" target="_blank">
-                        <strong><font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">注册</font></font>
-                        </strong>
-                    </a>
+                <div class="mini ui buttons" style="margin-top: 7px;">
+                    <a class="ui yellow button" href="<c:url value="/user/showLogin"/>" target="_blank">登录</a>
+                    <div class="or"></div>
+                    <a class="ui positive button" href="<c:url value="/user/showRegister"/>" target="_blank">注册</a>
                 </div>
             </c:otherwise>
         </c:choose>

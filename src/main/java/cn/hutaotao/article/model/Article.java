@@ -284,8 +284,8 @@ public class Article implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
-        this.contentView = ArticleUtil.htmlToText(ArticleUtil.mdToHtml(content));
-        this.contentHTMLView = ArticleUtil.articleToHtml(content);
+        this.contentView = ArticleUtil.htmlToText(content, ArticleUtil.VIEW_TYPE_HAS_LEN);
+        this.contentHTMLView = ArticleUtil.articleToHtml(content, ArticleUtil.VIEW_TYPE_HAS_LEN);
     }
 
     public Integer getWordNumber() {

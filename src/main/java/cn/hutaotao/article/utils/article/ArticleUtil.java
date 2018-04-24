@@ -7,6 +7,7 @@ import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,10 @@ import java.util.List;
  * Created by ht on 2017/10/9.
  */
 public class ArticleUtil {
-    public static final int ARTICLE_VIEW_LEN = 175;
+    private static final int ARTICLE_VIEW_LEN = 175;
+    public static final int VIEW_TYPE_HAS_LEN = 1;
+    public static final int VIEW_TYPE_NO_LEN = 0;
+
 
     /**
      * 这种格式的字符转换为emoji表情
@@ -33,10 +37,10 @@ public class ArticleUtil {
      * @param value
      * @return
      */
-    public static String articleToHtml(String value) {
+    public static String articleToHtml(String value, int type) {
         if (StringUtils.isNotBlank(value)) {
             value = value.replace("<!--more-->", "\r\n");
-            return mdToHtml(value);
+            return mdToHtml(value, type);
         }
         return "";
     }
@@ -47,13 +51,13 @@ public class ArticleUtil {
      * @param markdown
      * @return
      */
-    public static String mdToHtml(String markdown) {
+    public static String mdToHtml(String markdown, int type) {
         if (StringUtils.isBlank(markdown)) {
             return "";
         }
 
         int pos = markdown.indexOf("<!--more-->");
-        if (pos != -1) {
+        if (pos != -1 && type == VIEW_TYPE_HAS_LEN) {
             markdown = markdown.substring(0, pos);
         }
 
@@ -84,26 +88,38 @@ public class ArticleUtil {
      */
     public static String getHtmlText(String html) {
         if (StringUtils.isNotBlank(html)) {
-            return html.replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
+            String value = HtmlUtils.htmlUnescape(html);
+            value = value.replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
+            value = ArticleUtil.Html2Text(HtmlUtils.htmlUnescape(value));
+            return value;
         }
         return "";
     }
 
-    public static String htmlToText(String html) {
+    public static String htmlToText(String html, int type) {
         if (StringUtils.isNotBlank(html)) {
             int pos = html.indexOf("<!--more-->");
             if (pos != -1) {
-                html = html.substring(0, pos);
-                return getHtmlText(mdToHtml(html));
+                if (type == VIEW_TYPE_HAS_LEN) {
+                    html = html.substring(0, pos);
+                }
+                return getHtmlText(mdToHtml(html, type));
             } else {
-                html = getHtmlText(mdToHtml(html));
-                if (html.length() > ARTICLE_VIEW_LEN) {
+                html = getHtmlText(mdToHtml(html, type));
+                if (html.length() > ARTICLE_VIEW_LEN && type == VIEW_TYPE_HAS_LEN) {
                     return html.substring(0, ARTICLE_VIEW_LEN);
                 }
                 return html;
             }
         }
         return "";
+    }
+
+    //从html中提取纯文本
+    public static String Html2Text(String inputString) {
+        String txtcontent = inputString.replaceAll("</?[^>]+>", ""); //剔出<html>的标签
+        txtcontent = txtcontent.replaceAll("<a>\\s*|\t|\r|\n</a>", "");//去除字符串中的空格,回车,换行符,制表符
+        return txtcontent;
     }
 
 }

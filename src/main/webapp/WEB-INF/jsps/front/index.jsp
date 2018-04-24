@@ -4,6 +4,7 @@
 
 <%--导入头文件--%>
 <%@include file="/WEB-INF/jsps/format/front/head.jsp" %>
+<link rel="stylesheet" href="<c:url value="/css/semantic/semantic.min.css"/>">
 
 <form action="<c:url value="/index/${user.username}"/>" id="index_form" method="post">
     <input type="hidden" name="pageNow" value="1" id="my_pageNow">
@@ -118,9 +119,9 @@
                                     <span class="btn-group m-b-10" style="padding-top: 7px">
                                         <span class="dropdown" style="padding: 11px 0px">
                                             <a
-                                                    <c:if test="${status.count%6==0}">
-                                                        class="btn btn-info"
-                                                    </c:if>
+                                                <c:if test="${status.count%6==0}">
+                                                    class="btn btn-info"
+                                                </c:if>
                                                 <c:if test="${status.count%6==1}">
                                                     class="btn btn-success"
                                                 </c:if>
@@ -142,56 +143,30 @@
                                     </span>
                     </c:forEach>
                 </ul>
-                <div class="tags m-b-lg">
-                    <c:choose>
-                        <c:when test="${empty tagList}">
-                            <div class="find-nothing text-center">
-                                <img src="<c:url value="/images/oncontent.png"/>" width="20%">
-                                <p style="color: #919191;padding-top: 5px">没有属于自己的标签哦~</p>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <c:if test="${!empty tagList}">
-                                <ul class="tag-list" style="padding: 0">
-                                    <c:forEach items="${tagList}" var="tag">
-                                        <li id="tag_${tag.tagid}">
-                                            <a href="javascript:;" >
-                                                <i class="fa fa-tag"></i> ${tag.tagname} (${fn:length(tag.articleList)})
-                                            </a>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </c:if>
-                            <%--<c:forEach items="${tagList}" var="tag" varStatus="status">
-                                <span class="btn-group m-b-10" style="padding-top: 7px">
-                                    <span class="dropdown" style="padding: 11px 0px">
-                                        <a
-                                                <c:if test="${status.count%6==0}">
-                                                    class="btn btn-info"
-                                                </c:if>
-                                            <c:if test="${status.count%6==1}">
-                                                class="btn btn-success"
-                                            </c:if>
-                                            <c:if test="${status.count%6==2}">
-                                                class="btn btn-danger"
-                                            </c:if>
-                                            <c:if test="${status.count%6==3}">
-                                                class="btn btn-warning"
-                                            </c:if>
-                                            <c:if test="${status.count%6==4}">
-                                                class="btn btn-default"
-                                            </c:if>
-                                            <c:if test="${status.count%6==5}">
-                                                class="btn btn-dark"
-                                            </c:if>
-                                        >${tag.tagname} (${fn:length(tag.articleList)})
-                                        </a>
-                                    </span>
-                                </span>
-                            </c:forEach>--%>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                <c:choose>
+                    <c:when test="${empty tagList}">
+                        <div class="find-nothing text-center">
+                            <img src="<c:url value="/images/oncontent.png"/>" width="20%">
+                            <p style="color: #919191;padding-top: 5px">没有属于自己的标签哦~</p>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${!empty tagList}">
+                            <ul class="tag-list" style="padding: 0">
+                                <c:forEach items="${tagList}" var="tag">
+                                    <a class="ui tag label" href="#" style="margin-bottom: 4px">
+                                        <span>${tag.tagname} (${fn:length(tag.articleList)})</span>
+                                    </a>
+                                    <%--<li id="tag_${tag.tagid}">--%>
+                                        <%--<a href="javascript:;" >--%>
+                                            <%--<i class="fa fa-tag"></i> ${tag.tagname} --%>
+                                        <%--</a>--%>
+                                    <%--</li>--%>
+                                </c:forEach>
+                            </ul>
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
 

@@ -44,7 +44,7 @@
         <if test="type!=null">
             AND file_type = #{type}
         </if>
-        ORDER BY created
+        ORDER BY created desc
         LIMIT #{pageNow}, #{pageSize}
     </select>
 

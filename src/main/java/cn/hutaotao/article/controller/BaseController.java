@@ -1,6 +1,5 @@
 package cn.hutaotao.article.controller;
 
-import cn.hutaotao.article.controller.admin.UserController;
 import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.utils.cache.MapCache;

@@ -13,7 +13,11 @@
     <link rel="stylesheet" href="css/landing.css" type="text/css" cache="false">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
 
+    <link rel="stylesheet" href="<c:url value="/css/semantic/semantic.min.css"/>">
+    <link href="<c:url value="/js/pacejs/pace.css"/>" rel="stylesheet">
+
     <script src="<c:url value="/js/jquery.min.js"/> "></script>
+    <script data-pace-options='{ "ajax": false }' src="<c:url value="/js/pacejs/pace.js"/>"></script>
 
     <!--[if lt IE 9]>
     <script src="js/ie/html5shiv.js" cache="false"></script>
@@ -104,20 +108,11 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <li>
-                            <div class="m-t-sm" style="margin-top: 7px;">
-                                <a href="<c:url value="/user/showLogin"/> " class="btn btn-link btn-sm" target="_blank">
-                                    <font style="vertical-align: inherit;">
-                                        <font style="vertical-align: inherit;">登录</font></font>
-                                </a>
-                                <a href="<c:url value="/user/showRegister"/>" class="btn btn-sm btn-success m-l"
-                                   target="_blank">
-                                    <strong><font style="vertical-align: inherit;">
-                                        <font style="vertical-align: inherit;">注册</font></font>
-                                    </strong>
-                                </a>
-                            </div>
-                        </li>
+                        <div class="mini ui buttons" style="margin-top: 9px;">
+                            <a class="ui yellow button" href="<c:url value="/user/showLogin"/>" target="_blank">登录</a>
+                            <div class="or"></div>
+                            <a class="ui positive button" href="<c:url value="/user/showRegister"/>" target="_blank">注册</a>
+                        </div>
                     </c:otherwise>
                 </c:choose>
             </ul>

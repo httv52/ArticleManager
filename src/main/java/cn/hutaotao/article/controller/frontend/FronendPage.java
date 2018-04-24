@@ -3,6 +3,8 @@ package cn.hutaotao.article.controller.frontend;
 import cn.hutaotao.article.model.*;
 import cn.hutaotao.article.model.custom.PageBean;
 import cn.hutaotao.article.service.*;
+import cn.hutaotao.article.utils.article.ArticleUtil;
+import cn.hutaotao.article.utils.article.WordUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -52,6 +55,9 @@ public class FronendPage {
         article.setViews(article.getViews() + 1);
         String uid = article.getUser().getUid();
 
+        String value = ArticleUtil.htmlToText(article.getContent(), ArticleUtil.VIEW_TYPE_NO_LEN);
+        List keywords = WordUtil.getKeyWords(value);
+
         Theme theme = themeService.findSimpleThemeByUser(uid);
         model.addAttribute("theme", theme);
 
@@ -64,6 +70,7 @@ public class FronendPage {
         List<Comment> commentList = commentService.findCommentWithChild(aid, LIMIT_NUMBER);
 
         model.addAttribute("article", article);
+        model.addAttribute("keywords", keywords);
         model.addAttribute("articleNumber", articleNumber);
         model.addAttribute("commonnNumber", commonnNumber);
         model.addAttribute("user", article.getUser());

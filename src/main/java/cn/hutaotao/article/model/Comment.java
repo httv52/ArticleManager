@@ -28,6 +28,8 @@ public class Comment {
 
     private String parent;
 
+    private String pid;
+
     /*视图值*/
     private String createdDateView;
     private String createdDateTimeView;
@@ -122,4 +124,12 @@ public class Comment {
         this.parent = parent == null ? null : parent.trim();
     }
 
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
 }

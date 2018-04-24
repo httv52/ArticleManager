@@ -3,6 +3,7 @@ package cn.hutaotao.article.service.impl;
 import cn.hutaotao.article.dao.LogsMapper;
 import cn.hutaotao.article.model.Logs;
 import cn.hutaotao.article.model.User;
+import cn.hutaotao.article.model.custom.CountInfoBean;
 import cn.hutaotao.article.model.custom.UserCustom;
 import cn.hutaotao.article.service.LogsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.List;
 @Service
 public class LogsServiceImpl implements LogsService {
     @Autowired
-    LogsMapper logsMapper;
+    private LogsMapper logsMapper;
 
     @Override
     public void saveLogs(User user, String ipAddr, String logAction, String data, long currentTime) {
@@ -33,5 +34,15 @@ public class LogsServiceImpl implements LogsService {
     @Override
     public List<Logs> findAll(String loginUserId, Integer limit) {
         return logsMapper.findAllLogs(loginUserId, limit);
+    }
+
+    @Override
+    public List<CountInfoBean> findLogsInfo(String uid) {
+        return logsMapper.findLogsInfo(uid);
+    }
+
+    @Override
+    public List<CountInfoBean> findCategoryInfo(String uid) {
+        return logsMapper.findCategoryInfo(uid);
     }
 }

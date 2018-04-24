@@ -32,13 +32,13 @@
                         <span class="publish-time" data-toggle="tooltip" data-placement="bottom"
                               title="最后编辑于 ${article.modifiedDateTimeView}">
                         <i class="fa fa-clock-o"></i> ${article.createdDateTimeView}
-                        </span>　
+                        </span>
                         <span class="views" data-toggle="tooltip" data-placement="bottom" title="浏览数">
                             <i class="fa fa-eye"></i> ${article.views}
-                        </span>　
+                        </span>
                         <span class="commens" data-toggle="tooltip" data-placement="bottom" title="评论数">
                             <i class="fa fa-comment-o"></i> ${article.commens}
-                        </span>　
+                        </span>
                         <span data-toggle="tooltip" data-placement="bottom" title="字数">
                             <i class="fa fa-file-text-o"></i> ${article.wordNumber}
                         </span>　
@@ -61,6 +61,41 @@
         </div>
 
         <div class="show-foot" style="margin: 40px 0px 0px;">
+            <div style="font-size: 12px; color: #9b9b9b;">
+                <span>关键词：</span>
+                <c:forEach items="${keywords}" var="k" varStatus="status">
+                    <c:if test="${status.count%10==0}">
+                        <a class="ui redli label">${k}</a>
+                    </c:if>
+                    <c:if test="${status.count%10==1}">
+                        <a class="ui greenli label">${k}</a>
+                    </c:if>
+                    <c:if test="${status.count%10==2}">
+                        <a class="ui yellowli label">${k}</a>
+                    </c:if>
+                    <c:if test="${status.count%10==3}">
+                        <a class="ui blueli label">${k}</a>
+                    </c:if>
+                    <c:if test="${status.count%10==4}">
+                        <a class="ui darkli label">${k}</a>
+                    </c:if>
+                    <c:if test="${status.count%10==5}">
+                        <a class="ui greenli2 label">${k}</a>
+                    </c:if>
+                    <c:if test="${status.count%10==6}">
+                        <a class="ui pinkli label">${k}</a>
+                    </c:if>
+                    <c:if test="${status.count%10==7}">
+                        <a class="ui lightbrownli label">${k}</a>
+                    </c:if>
+                    <c:if test="${status.count%10==8}">
+                        <a class="ui darkorangeli label">${k}</a>
+                    </c:if>
+                    <c:if test="${status.count%10==9}">
+                        <a class="ui darkpurpleli label">${k}</a>
+                    </c:if>
+                </c:forEach>
+            </div>
             <c:choose>
                 <c:when test="${empty article.tagList}">
                     <a class="notebook" href="#">
@@ -68,6 +103,7 @@
                     </a>
                 </c:when>
                 <c:otherwise>
+                    <span class="notebook">标签：</span>
                     <c:forEach items="${article.tagList}" var="tag">
                         <a class="notebook" href="#">
                             <i class="fa fa-tag"></i>
@@ -76,14 +112,17 @@
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
-            <div class="copyright" data-toggle="tooltip" data-placement="top"
-                 title="商业转载请联系作者获得授权，非商业转载请注明出处，并标注作者。" style="float: right; margin-top: 5px;font-size: 12px;
+
+            <div class="copyright">
+                <div data-toggle="tooltip" data-placement="top"
+                     title="商业转载请联系作者获得授权，非商业转载请注明出处，并标注作者。" style="float: right; margin-top: 5px;font-size: 12px;
                  line-height: 1.7; color: #9b9b9b;">
-                © 著作权归${article.user.username}所有。
+                    © 著作权归${article.user.username}所有。
+                </div>
             </div>
         </div>
-    </article>
 
+    </article>
 
     <div class="main-content page-comment" style="padding-top: 0px">
         <section class="panel clearfix bg-dark lter" style="border: 1px solid #e1e1e1;border-radius: 4px;">
@@ -97,6 +136,7 @@
                         写了 ${article.user.wordNumber} 字，发表了 ${articleNumber} 篇文章，评论了 ${commonnNumber} 次
                     </small>
                     <div class="line"></div>
+
                     <small class="block text-muted">
                         <i class="fa fa-quote-left fa-fw fa-1x"></i> ${article.user.resume}
                     </small>

@@ -20,7 +20,6 @@ $.extend({
 $.tale.prototype.alertOk = function (options) {
     options = options.length ? {text:options} : ( options || {} );
     options.title = options.title || '操作成功';
-    options.text = options.text;
     options.showCancelButton = false;
     options.showCloseButton = false;
     options.type = 'success';
@@ -46,7 +45,6 @@ $.tale.prototype.alertOkAndReload = function (text) {
 $.tale.prototype.alertWarn = function (options) {
     options = options.length ? {text:options} : ( options || {} );
     options.title = options.title || '警告信息';
-    options.text = options.text;
     options.timer = 3000;
     options.type = 'warning';
     this.baseAlert(options);
@@ -59,7 +57,6 @@ $.tale.prototype.alertWarn = function (options) {
 $.tale.prototype.alertConfirm = function (options) {
     options = options || {};
     options.title = options.title || '确定要删除吗？';
-    options.text = options.text;
     options.showCancelButton = true;
     options.type = 'question';
     this.baseAlert(options);
@@ -72,31 +69,29 @@ $.tale.prototype.alertConfirm = function (options) {
 $.tale.prototype.alertError = function (options) {
     options = options.length ? {text:options} : ( options || {} );
     options.title = options.title || '错误信息';
-    options.text = options.text;
     options.type = 'error';
     this.baseAlert(options);
 };
 
 /**
  * 公共弹框
- * @param options
+ * @param options   弹窗参数
+ * @param callback  回调函数
  */
-$.tale.prototype.baseAlert = function (options) {
+$.hutao.prototype.baseAlert = function (options, callback) {
     swal({
-        title: options.title,
-        text: options.text,
-        type: options.type,
-        timer: options.timer || 9999,
-        showCloseButton: options.showCloseButton,
-        showCancelButton: options.showCancelButton,
-        showLoaderOnConfirm: options.showLoaderOnConfirm || false,
-        confirmButtonColor: options.confirmButtonColor || '#3085d6',
-        cancelButtonColor: options.cancelButtonColor || '#d33',
-        confirmButtonText: options.confirmButtonText || '确定',
-        cancelButtonText: options.cancelButtonText || '取消'
-    }).then(function (e) {
-        options.then && options.then(e);
-    }).catch(swal.noop);
+            title: options.title,
+            text: options.text,
+            type: options.type,
+            showCloseButton: options.showCloseButton,
+            showCancelButton: options.showCancelButton,
+            showLoaderOnConfirm: options.showLoaderOnConfirm || false,
+            confirmButtonColor: options.confirmButtonColor || '#3085d6',
+            cancelButtonColor: options.cancelButtonColor || '#d33',
+            confirmButtonText: options.confirmButtonText || '确定',
+            cancelButtonText: options.cancelButtonText || '取消'
+        }, callback
+    );
 };
 
 /**

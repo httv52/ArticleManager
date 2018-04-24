@@ -8,6 +8,7 @@
         <result column="ip" property="ip" jdbcType="VARCHAR"/>
         <result column="state" property="state" jdbcType="INTEGER"/>
         <result column="parent" property="parent" jdbcType="VARCHAR"/>
+        <result column="pid" property="pid" jdbcType="VARCHAR"/>
     </resultMap>
     <resultMap id="commentRelation" type="Comment" extends="BaseResultMap">
         <association property="user" column="uid" select="cn.hutaotao.article.dao.UserMapper.lazyLoadUser"/>
@@ -16,7 +17,8 @@
         </association>
     </resultMap>
     <resultMap id="commentWithChild" type="Comment" extends="commentRelation">
-        <collection property="childList" ofType="Comment" resultMap="commentRelation"/>
+        <!--<collection property="childList" ofType="Comment" resultMap="commentRelation"/>-->
+        <collection property="childList" column="id" select="demo"/>
     </resultMap>
 
     <select id="findCommentCountByUserPrimary" parameterType="String" resultType="Integer">
@@ -45,17 +47,18 @@
     </select>
 
     <select id="findCommentWithChild" resultMap="commentWithChild">
-        SELECT
-            c1.*,
-            c2.*
-        FROM
-            `comment` c1
-            LEFT JOIN `comment` c2 ON c2.parent = c1.id
-        WHERE
-            c1.parent = '0'
-            AND c1.aid = #{aid}
-            AND c1.state = 1
-        LIMIT 0, #{limit};
+        SELECT *
+        FROM `comment` c1
+        WHERE c1.parent = '0' AND c1.aid = #{aid} AND c1.state = 1
+        ORDER BY created
+    </select>
+
+    <select id="demo" resultMap="commentRelation">
+        SELECT *
+        FROM comment
+        WHERE pid = #{id}
+              AND state = 1
+        ORDER BY created
     </select>
 
 </mapper>

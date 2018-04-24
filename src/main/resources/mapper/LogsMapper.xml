@@ -29,6 +29,48 @@
         from logs
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="findLogsInfo" resultType="cn.hutaotao.article.model.custom.CountInfoBean">
+        SELECT
+            FROM_UNIXTIME(l.creatrd / 1000, '%Y-%m-%d ') name,
+            count(*)                                     value,
+            (
+                SELECT count(a.ip)
+                FROM
+                    (
+                        SELECT DISTINCT
+                            FROM_UNIXTIME(l.creatrd / 1000, '%Y-%m-%d ') time,
+                            ip
+                        FROM
+                            LOGS l
+                    ) a
+                WHERE
+                    a.time = name
+                GROUP BY
+                    a.time
+            )                                            note
+        FROM
+            `logs` l
+        WHERE l.uid = #{uid} AND
+              FROM_UNIXTIME(l.creatrd / 1000, '%Y-%m-%d ') BETWEEN date_sub(now(), INTERVAL 6 MONTH) AND now()
+        GROUP BY
+            FROM_UNIXTIME(l.creatrd / 1000, '%Y-%m-%d ')
+        ORDER BY
+            name
+        LIMIT 0,
+            50
+    </select>
+    <select id="findCategoryInfo" resultType="cn.hutaotao.article.model.custom.CountInfoBean">
+        SELECT
+            c.categoryName name,
+            count(*) value
+        FROM
+            article a
+            LEFT JOIN category c ON a.categoryId = c.categoryId
+        WHERE a.uid = #{uid}
+        GROUP BY
+            a.categoryId
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         DELETE FROM logs
         WHERE id = #{id,jdbcType=INTEGER}

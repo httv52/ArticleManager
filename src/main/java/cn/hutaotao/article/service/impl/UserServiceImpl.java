@@ -1,22 +1,32 @@
 package cn.hutaotao.article.service.impl;
 
 import cn.hutaotao.article.dao.UserMapper;
+import cn.hutaotao.article.exception.CheckException;
 import cn.hutaotao.article.exception.MyException;
+import cn.hutaotao.article.model.Logs;
 import cn.hutaotao.article.model.User;
+import cn.hutaotao.article.model.custom.UserCustom;
 import cn.hutaotao.article.service.LogsService;
 import cn.hutaotao.article.service.UserService;
+import cn.hutaotao.article.utils.cache.MapCache;
 import cn.hutaotao.article.utils.code.UUIDUtil;
+import cn.hutaotao.article.utils.format.LogDataUtil;
 import cn.hutaotao.article.utils.format.MyMD5Utils;
+import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by ht on 2017/9/18.
  */
 @Service
+@Log4j
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
@@ -78,7 +88,7 @@ public class UserServiceImpl implements UserService {
      * @param user
      */
     @Override
-    public void registerUser(User user) throws MyException {
+    public void updateRegisterUser(User user) throws MyException {
         //首先判断用户名是否已被注册
         //若已被注册，抛出异常
         if (findUserByUsername(user.getUsername()) != null) {
@@ -109,10 +119,9 @@ public class UserServiceImpl implements UserService {
      * 判断 loged 是否初始化，若为，则初始化
      *
      * @param user
-     * @param request
      */
     @Override
-    public User loginByUsernameAndPwd(User user, HttpServletRequest request) {
+    public User selectLoginByUsernameAndPwd(User user) {
         User tempUser = userMapper.selectByUsername(user.getUsername());
         //若未查出，抛出异常
         if (null == tempUser) {
@@ -120,7 +129,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (tempUser.getState() == 0) {
-            throw new MyException("你尚未激活，请前往邮箱 " + tempUser.getEmail() + " 激活。");
+            throw new CheckException("你尚未激活，请前往邮箱 " + tempUser.getEmail() + " 激活。");
         }
 
         String md5_dbPwd = tempUser.getPassword();  //数据库密码加密
@@ -144,7 +153,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public User activateUser(String code) {
+    public User updateActivateUser(String code) {
         User user = userMapper.selectByActivateCode(code);
         if (null == user) {
             throw new MyException("激活码不存在");
@@ -190,5 +199,68 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(MyMD5Utils.getMD5(newPwd));
 
         userMapper.updateByPrimaryKeySelective(newUser);
+    }
+
+
+    /**
+     * 登陆错误次数的缓存
+     */
+    protected MapCache cache = MapCache.single();
+    /**
+     * 登陆错误次数
+     */
+    protected static final String LOGIN_ERROR_COUNT = "login_error_count";
+
+    @Override
+    public void updateLogin(UserCustom user, BindingResult bindingResult, HttpSession session, String ipAddr) {
+        //校验数据
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errorList = bindingResult.getAllErrors();
+            String error_msg = "";
+            for (ObjectError objectError : errorList) {
+                error_msg = objectError.getDefaultMessage();
+            }
+            throw new CheckException(error_msg);
+        }
+
+        Integer error_count = cache.get(user.getUsername() + "_" + LOGIN_ERROR_COUNT);
+
+        try {
+            //判断error_count是否为空
+            error_count = null == error_count ? 0 : error_count;
+
+
+            if (error_count >= 3) {//错误超过三次
+                throw new CheckException("登录失败-失败次数超过限制,请10分钟后再登陆");
+            }
+
+            User sessionUser = selectLoginByUsernameAndPwd(user);
+
+            //判断 loged 是否初始化，若未，则初始化并记录日志
+            long currentTime = System.currentTimeMillis();
+            user.setUid(sessionUser.getUid());
+            if (null == sessionUser.getLogged()) {
+                sessionUser = updateUserWithLogged(sessionUser, currentTime);
+                //记录初始化日志
+                logsService.saveLogs(user, ipAddr, Logs.INIT_LOG, LogDataUtil.userInitDate(user), currentTime);
+                //记录日志
+                logsService.saveLogs(user, ipAddr, Logs.LOGIN_LOG, LogDataUtil.userLogData(user), System.currentTimeMillis());
+            } else {
+                //记录日志
+                logsService.saveLogs(user, ipAddr, Logs.LOGIN_LOG, LogDataUtil.userLogData(user), currentTime);
+            }
+
+            //清空登陆错误缓存
+            cache.set(user.getUsername() + "_" + LOGIN_ERROR_COUNT, 0);
+
+            //保存到session
+            session.setAttribute(cn.hutaotao.article.model.User.SESSION_USER_NAME, sessionUser);
+
+        } catch (MyException e) {
+            error_count += 1;
+            cache.set(user.getUsername() + "_" + LOGIN_ERROR_COUNT, error_count, 10);//10 * 60
+            log.error(e.getStackTrace());
+            throw new CheckException(e.getMessage());
+        }
     }
 }

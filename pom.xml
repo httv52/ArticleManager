@@ -7,6 +7,12 @@
     <version>1.0</version>
     <name>ArticleManager Maven Webapp</name>
     <url>http://maven.apache.org</url>
+    <properties>
+        <slf4j.version>1.7.2</slf4j.version>
+        <spring-version>4.2.5.RELEASE</spring-version>
+        <lucene.version>3.6.2</lucene.version>
+    </properties>
+
     <dependencies>
         <!--RSS输出-->
         <dependency>
@@ -298,12 +304,35 @@
             <version>2.5</version>
         </dependency>
 
-    </dependencies>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-memory</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-highlighter</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.janeluo/ikanalyzer -->
+        <!--<dependency>-->
+            <!--<groupId>org.wltea.ik-analyzer</groupId>-->
+            <!--<artifactId>ik-analyzer</artifactId>-->
+            <!--<version>3.2.8</version>-->
+        <!--</dependency>-->
 
-    <properties>
-        <slf4j.version>1.7.2</slf4j.version>
-        <spring-version>4.2.5.RELEASE</spring-version>
-    </properties>
+
+    </dependencies>
 
     <build>
         <finalName>ArticleManager</finalName>

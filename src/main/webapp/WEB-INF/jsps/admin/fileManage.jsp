@@ -121,7 +121,7 @@
                                                                 </div>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                <a href="#">
+                                                                <a href="javascript:openFile('${file.realName}','<%=imgPath%>${file.fileUrl}')">
                                                                     <span class="corner"></span>
                                                                     <div class="icon">
                                                                         <c:choose>
@@ -280,6 +280,7 @@
 
 <script src="<c:url value='/js/plugins/clipboard/clipboard.min.js'/>"></script>
 
+
 <script>
     var hutao = new $.hutao();
     $(document).ready(function () {
@@ -361,6 +362,14 @@
                 });
             }
         });
+    }
+
+    function openFile($name, $url) {
+        var index = hutao.openWindow({
+            title: $name,
+            content: $url
+        });
+        layer.full(index);
     }
 </script>
 

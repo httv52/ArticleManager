@@ -12,19 +12,14 @@ public class PageBean {
 
     private Integer totalPageCount; // 总的页数
 
-    @SuppressWarnings("unused")
     private Integer startPos; // 开始位置，从0开始
 
-    @SuppressWarnings("unused")
     private boolean hasFirst;// 是否有首页
 
-    @SuppressWarnings("unused")
     private boolean hasPre;// 是否有前一页
 
-    @SuppressWarnings("unused")
     private boolean hasNext;// 是否有下一页
 
-    @SuppressWarnings("unused")
     private boolean hasLast;// 是否有最后一页
 
 

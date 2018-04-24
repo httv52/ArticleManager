@@ -79,6 +79,27 @@
 
             <%--详情--%>
             <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-12">
+                        <section class="panel panel-warning">
+                            <header class="panel-heading font-bold">近6个月日志统计图</header>
+                            <div class="panel-body" style="height: 100%; margin: 0;background-color: #fef8ef">
+                                <div id="container" style="height: 350px; padding: 0px; "></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-12">
+                        <section class="panel panel-warning">
+                            <header class="panel-heading font-bold">文章分类统计</header>
+                            <div class="panel-body" style="height: 100%; margin: 0;background-color: #fef8ef">
+                                <div id="container2" style="height: 350px; padding: 0px; "></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
                 <%--文章和评论--%>
 
                 <%--最新文章--%>
@@ -397,6 +418,175 @@
 
 </section>
 <!-- /中间内容 -->
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script src="<c:url value='/js/echarts/vintage.js'/>"></script>
+
+<script type="text/javascript">
+    var arr = '<c:forEach items="${countBean.countList}" var="cl">${cl.name},</c:forEach>';
+    arr = arr.substring(0, arr.length - 1);
+    var count_name = arr.split(",");
+
+    arr = '<c:forEach items="${countBean.countList}" var="cl">${cl.value},</c:forEach>';
+    arr = arr.substring(0, arr.length - 1);
+    var count_value = arr.split(",");
+
+    arr = '<c:forEach items="${countBean.countList}" var="cl">${cl.note},</c:forEach>';
+    arr = arr.substring(0, arr.length - 1);
+    var count_note = arr.split(",");
+
+
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom, 'vintage');
+    var app = {};
+
+    option = null;
+    option = {
+        title: {
+//            text: '50天日志统计图'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data: ['日志量', 'IP数量']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '1%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [{
+            type: 'category',
+            boundaryGap: false,
+            data: count_name
+        }],
+        yAxis: [{
+            type: 'value'
+        }],
+        series: [
+            {
+                name: 'IP数量',
+                type: 'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                    }
+                },
+                areaStyle: {normal: {}},
+                data: count_note
+            },
+            {
+                name: '日志量',
+                type: 'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {normal: {}},
+                data: count_value
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+
+
+    /*第二个图*/
+    arr = '<c:forEach items="${countBean2.countList}" var="cl">${cl.name},</c:forEach>';
+    arr = arr.substring(0, arr.length - 1);
+    count_name = arr.split(",");
+
+    arr = '<c:forEach items="${countBean2.countList}" var="cl">${cl.value},</c:forEach>';
+    arr = arr.substring(0, arr.length - 1);
+    count_value = arr.split(",");
+
+    var jsonstr = "[]";
+    var series_data = eval('(' + jsonstr + ')');
+    for (var i = 0; i < count_value.length; i++) {
+        var jsonTemp = {
+            "value": count_value[i],
+            "name": count_name[i]
+        };
+        series_data.push(jsonTemp);
+    }
+    console.log(series_data);
+
+    var dom2 = document.getElementById("container2");
+    var myChart2 = echarts.init(dom2, 'vintage');
+    var app2 = {};
+    option = null;
+    option = {
+        title: {
+//            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            // x: 'center',
+            // y: 'bottom',
+//            orient: 'vertical',
+//            right: 'right',
+            x : 'center',
+            y : 'bottom',
+            data: count_name
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {
+                    show: true
+                },
+                // dataView: {
+                //     show: true,
+                //     readOnly: false
+                // },
+                magicType: {
+                    show: true,
+                    type: ['pie', 'funnel']
+                },
+                // restore: {
+                //     show: true
+                // },
+                saveAsImage: {
+                    show: true
+                }
+            }
+        },
+        calculable: true,
+        series: [{
+            name: '文章分类',
+            type: 'pie',
+            radius: [30, 110],
+            // center: ['75%', '50%'],
+//            roseType : 'radius',
+            roseType : 'area',
+            data: series_data
+        }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart2.setOption(option, true);
+    }
+</script>
 
 <%--导入底部文件--%>
 <%@include file="/WEB-INF/jsps/format/admin/foot.jsp" %>

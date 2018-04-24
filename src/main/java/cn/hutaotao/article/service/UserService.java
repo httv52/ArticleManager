@@ -2,8 +2,10 @@ package cn.hutaotao.article.service;
 
 import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.User;
+import cn.hutaotao.article.model.custom.UserCustom;
+import org.springframework.validation.BindingResult;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by ht on 2017/9/18.
@@ -47,7 +49,7 @@ public interface UserService {
      *
      * @param user
      */
-    void registerUser(User user) throws MyException;
+    void updateRegisterUser(User user) throws MyException;
 
     /**
      * 登录方法
@@ -58,9 +60,8 @@ public interface UserService {
      * 3.记录异常
      *
      * @param user
-     * @param request
      */
-    User loginByUsernameAndPwd(User user, HttpServletRequest request);
+    User selectLoginByUsernameAndPwd(User user);
 
     /**
      * 根据激活码激活用户
@@ -68,10 +69,11 @@ public interface UserService {
      * @param code
      * @return
      */
-    User activateUser(String code);
+    User updateActivateUser(String code);
 
     /**
      * 修改用户信息
+     *
      * @param screenName
      * @param email
      * @param loginUserId
@@ -82,4 +84,6 @@ public interface UserService {
      * 修改密码
      */
     void updatePassword(String oldPwd, String newPwd, String loginUserId);
+
+    void updateLogin(UserCustom user, BindingResult bindingResult, HttpSession session, String ipAddr);
 }

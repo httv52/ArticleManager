@@ -36,6 +36,8 @@
 
     <link rel="stylesheet" href="<c:url value='/js/plugins/buzyload/app.min.css'/>" type="text/css"/>
 
+    <%--<link href="<c:url value="/js/pacejs/pace.css"/>" rel="stylesheet">--%>
+
     <script src="<c:url value='/js/jquery.min.js'/>"></script>
     <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
     <script src="<c:url value='/js/app.v2.js'/>"></script>
@@ -48,6 +50,7 @@
     <script src="<c:url value='/js/iden/pnglib.js'/>"></script>
 
     <script src="<c:url value='/js/plugins/buzyload/app.min.js'/>"></script>
+    <%--<script data-pace-options='{ "ajax": false }' src="<c:url value="/js/pacejs/pace.js"/>"></script>--%>
 
 
     <!--[if lt IE 9]>
@@ -522,7 +525,7 @@
                     </li>
                     <li>
                         <%--TODO 退出--%>
-                        <a href="<c:url value='/user/quit'/> "><i class="fa fa-sign-out"></i>　退出</a>
+                        <a href="javascript:user_quit()"><i class="fa fa-sign-out"></i>　退出</a>
                     </li>
                 </ul>
             </li>
