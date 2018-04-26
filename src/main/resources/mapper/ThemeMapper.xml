@@ -32,6 +32,90 @@
         id, uid, logo_img, auther_name, keyword, describe, QR_type, QR_img, account_weibo,
         account_zhihu, account_github
     </sql>
+    <insert id="insert" parameterType="cn.hutaotao.article.model.Theme">
+        INSERT INTO theme (id, logo_img, auther_name, keyword, `describe`, QR_type, QR_img, homePage, account_weibo,
+                           account_zhihu, account_github, uid)
+        VALUES (#{id,jdbcType=VARCHAR}, #{logoImg,jdbcType=VARCHAR},
+                                        #{autherName,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR},
+                                        #{describe,jdbcType=VARCHAR},
+                                        #{qrType,jdbcType=INTEGER}, #{qrImg,jdbcType=VARCHAR}, #{homePage},
+                                        #{accountWeibo,jdbcType=VARCHAR},
+                                        #{accountZhihu,jdbcType=VARCHAR}, #{accountGithub,jdbcType=VARCHAR},
+                #{user.uid,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.hutaotao.article.model.Theme">
+        insert into theme
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="logoImg != null">
+                logo_img,
+            </if>
+            <if test="autherName != null">
+                auther_name,
+            </if>
+            <if test="keyword != null">
+                keyword,
+            </if>
+            <if test="describe != null">
+                describe,
+            </if>
+            <if test="qrType != null">
+                QR_type,
+            </if>
+            <if test="qrImg != null">
+                QR_img,
+            </if>
+            <if test="accountWeibo != null">
+                account_weibo,
+            </if>
+            <if test="accountZhihu != null">
+                account_zhihu,
+            </if>
+            <if test="accountGithub != null">
+                account_github,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="logoImg != null">
+                #{logoImg,jdbcType=VARCHAR},
+            </if>
+            <if test="autherName != null">
+                #{autherName,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword != null">
+                #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="describe != null">
+                #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="qrType != null">
+                #{qrType,jdbcType=INTEGER},
+            </if>
+            <if test="qrImg != null">
+                #{qrImg,jdbcType=VARCHAR},
+            </if>
+            <if test="accountWeibo != null">
+                #{accountWeibo,jdbcType=VARCHAR},
+            </if>
+            <if test="accountZhihu != null">
+                #{accountZhihu,jdbcType=VARCHAR},
+            </if>
+            <if test="accountGithub != null">
+                #{accountGithub,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
     <update id="updateBaseAdminTheme">
         UPDATE theme t
         SET t.logo_img    = #{logoImg},

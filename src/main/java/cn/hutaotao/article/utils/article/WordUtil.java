@@ -1,11 +1,5 @@
 package cn.hutaotao.article.utils.article;
 
-/**
- * Created by ht on 2018/4/23.
- *
- * @author ht
- */
-
 import cn.hutaotao.article.exception.MyException;
 import lombok.extern.log4j.Log4j;
 import org.apache.lucene.analysis.TokenStream;
@@ -26,13 +20,13 @@ import java.util.Map.Entry;
 public class WordUtil {
 
     /**
-     * 测试文章
+     * 默认取关键字个数
      */
-    static String keyWord = "";
+    public final static Integer DEFAULT_KEY_WOLD_LENGTH = 10;
     /**
-     * 获取关键字个数
+     * 不限制关键字个数
      */
-    private final static Integer NUM = 10;
+    public final static Integer MAX_KEY_WOLD_LENGTH = -1;
     /**
      * 截取关键字在几个单词以上的数量
      */
@@ -70,7 +64,7 @@ public class WordUtil {
      * @return
      */
     private static Map<String, Integer> list2Map(List<String> list) {
-        Map<String, Integer> map = new HashMap<String, Integer>();
+        Map<String, Integer> map = new HashMap<>();
         for (String key : list) {                      //循环获得的List集合
             if (list.contains(key)) {              //判断这个集合中是否存在该字符串
                 map.put(key, map.get(key) == null ? 1 : map.get(key) + 1);
@@ -80,25 +74,16 @@ public class WordUtil {
     }
 
     /**
-     * 提取关键字方法
+     * 提取关键字方法数组
      *
-     * @param article
-     * @param a
-     * @param n
-     * @return
+     * @param article 文章
+     * @param length  关键字最大数量
+     * @return 关键字方法数组
      * @throws IOException
      */
-    public static String[] getKeyWords(String article, Integer a, Integer n) {
+    public static String[] getKeyWordsArray(String article, Integer length) {
+        Map<String, Integer> map = getKeyWordsMap(article);
 
-        List<String> keyWordsList = null;            //调用提取单词方法
-        try {
-            keyWordsList = extract(article, a);
-        } catch (IOException e) {
-            log.error("提取关键字方法失败");
-            e.printStackTrace();
-            throw new MyException(e);
-        }
-        Map<String, Integer> map = list2Map(keyWordsList);      //list转map并计次数
         //使用Collections的比较方法进行对map中value的排序
         ArrayList<Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
@@ -106,10 +91,15 @@ public class WordUtil {
                 return (o2.getValue() - o1.getValue());
             }
         });
-        if (list.size() < n) n = list.size();                    //排序后的长度，以免获得到null的字符
-        String[] keyWords = new String[n];                    //设置将要输出的关键字数组空间
+
+        //排序后的长度，以免获得到null的字符
+        if (list.size() < length || length < 0) {
+            length = list.size();
+        }
+
+        String[] keyWords = new String[length];                    //设置将要输出的关键字数组空间
         for (int i = 0; i < list.size(); i++) {                  //循环排序后的数组
-            if (i < n) {                                       //判断个数
+            if (i < length) {                                       //判断个数
                 keyWords[i] = list.get(i).getKey();           //设置关键字进入数组
             }
         }
@@ -121,15 +111,28 @@ public class WordUtil {
      * @return
      * @throws IOException
      */
-    public static List<String> getKeyWords(String article) {
-        return Arrays.asList(getKeyWords(article, QUANTITY, NUM));
+    public static List<String> getKeyWords(String article, int length) {
+        return Arrays.asList(getKeyWordsArray(article, length));
+    }
+
+    public static Map<String, Integer> getKeyWordsMap(String article) {
+        List<String> keyWordsList;            //调用提取单词方法
+        try {
+            keyWordsList = extract(article, QUANTITY);
+        } catch (IOException e) {
+            log.error("提取关键字方法失败");
+            e.printStackTrace();
+            throw new MyException(e);
+        }
+
+        return list2Map(keyWordsList);
     }
 
     public static void main(String[] args) {
-
-        List keywords = getKeyWords(keyWord);
-        for (int i = 0; i < keywords.size(); i++) {
-            System.out.println(keywords.get(i));
+        String keyWord = "";
+        List keywords = getKeyWords(keyWord, -1);
+        for (Object keyword : keywords) {
+            System.out.println(keyword);
         }
     }
 }

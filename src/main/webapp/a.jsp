@@ -1,192 +1,151 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en" class="app">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Notebook | Web Application</title>
-    <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <link rel="stylesheet" href="css/app.v2.css" type="text/css" />
-    <link rel="stylesheet" href="css/landing.css" type="text/css" cache="false" />
-    <!--[if lt IE 9]> <script src="js/ie/html5shiv.js" cache="false"></script> <script src="js/ie/respond.min.js" cache="false"></script> <script src="js/ie/excanvas.js" cache="false"></script> <![endif]-->
+    <script src="https://cdn.bootcss.com/echarts/3.7.0/echarts.simple.js"></script>
+    <script src="<c:url value='/js/echarts/echarts-wordcloud.js'/> "></script>
+
+    <style>
+        html,body,#main,#bg,#bg img{
+            height:800px;
+            width:800px;
+            margin:0;
+        }
+
+    </style>
 </head>
 <body>
-<!-- header -->
-<header id="header" class="navbar navbar-fixed-top bg-white box-shadow b-b b-light" data-spy="affix" data-offset-top="1">
-    <div class="container">
-        <div class="navbar-header"> <a href="#" class="navbar-brand"><img src="images/logo.png" class="m-r-sm"><span class="text-muted">Notebook</span></a>
-            <button class="btn btn-link visible-xs" type="button" data-toggle="collapse" data-target=".navbar-collapse"> <i class="fa fa-bars"></i> </button>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active"> <a href="landing.html">Home</a> </li>
-                <li> <a href="features.html">Features</a> </li>
-                <li> <a href="price.html">Plans & Pricing</a> </li>
-                <li> <a href="blog.html">Blog</a> </li>
-                <li>
-                    <div class="m-t-sm"><a href="signin.html" class="btn btn-link btn-sm">Sign in</a> <a href="signup.html" class="btn btn-sm btn-success m-l"><strong>Sign up</strong></a></div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</header>
-<!-- / header -->
-<section id="content">
-    <div class="bg-primary dk">
-        <div class="text-center wrapper">
-            <div class="m-t-xl m-b-xl">
-                <div class="text-uc h1 font-bold inline">
-                    <div class="pull-left m-r-sm text-white">Web Application <span class="font-thin text-muted">Built</span></div>
-                    <div class="carousel slide carousel-fade inline auto aside text-left pull-left pull-none-xs" data-interval="2000">
-                        <div class="carousel-inner">
-                            <div class="item active text-warning"> Easier </div>
-                            <div class="item text-dark"> Faster </div>
-                            <div class="item"> Funny </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="h4 text-muted m-t-sm">Modern, Clean & Flat User Interface Kit Made with Love & Passion</div>
-            </div>
-            <p class="text-center m-b-xl"> <a href="" target="_blank" class="btn btn-lg btn-dark m-sm">Download it</a> <a href="index.html" target="_blank" class="btn btn-lg btn-warning b-white bg-empty m-sm">Live Preview</a> </p>
-        </div>
-        <div class="padder">
-            <div class="hbox">
-                <aside class="col-md-3 v-bottom text-right">
-                    <div class="hidden-sm hidden-xs">
-                        <section class="panel bg-dark inline m-b-n-lg m-r-n-lg aside-sm no-border device phone animated fadeInLeftBig">
-                            <header class="panel-heading text-center"> <i class="fa fa-minus fa-2x m-b-n-xs block"></i> </header>
-                            <div>
-                                <div class="m-l-xs m-r-xs"> <img src="images/phone-2_1.png" class="img-full" > </div>
-                            </div>
-                        </section>
-                    </div>
-                </aside>
-                <aside class="col-sm-10 col-md-6">
-                    <section class="panel bg-dark m-b-n-lg no-border device animated fadeInUp">
-                        <header class="panel-heading text-left"> <i class="fa fa-circle fa-fw"></i> <i class="fa fa-circle fa-fw"></i> <i class="fa fa-circle fa-fw"></i> </header>
-                        <img src="images/main_1.png" class="img-full" > </section>
-                </aside>
-                <aside class="col-md-3 v-bottom">
-                    <div class="hidden-sm hidden-xs">
-                        <section class="panel bg-light m-b-n-lg m-l-n-lg aside no-border device phone animated fadeInRightBig">
-                            <header class="panel-heading text-center"> <i class="fa fa-minus fa-2x text-white m-b-n-xs block"></i> </header>
-                            <div class="">
-                                <div class="m-l-xs m-r-xs"> <img src="images/phone-1_1.png" class="img-full" > </div>
-                            </div>
-                        </section>
-                    </div>
-                </aside>
-            </div>
-        </div>
-        <div class="dker pos-rlt">
-            <div class="container wrapper">
-                <div class="m-t-lg m-b-lg text-center"> For your faster and easier web development. </div>
-            </div>
-        </div>
-    </div>
-    <div id="about">
-        <div class="container">
-            <div class="m-t-xl m-b-xl text-center wrapper">
-                <h3>Responsive web application and admin dashboard template</h3>
-                <p class="text-muted">This web based app template give you much power to build your great application.</p>
-            </div>
-            <div class="row m-t-xl m-b-xl text-center">
-                <div class="col-sm-4" data-ride="animated" data-animation="fadeInLeft" data-delay="300">
-                    <p class="h3 m-b-lg"> <i class="fa fa-lightbulb-o fa-3x text-info"></i> </p>
-                    <div class="">
-                        <h4 class="m-t-none">Web Application</h4>
-                        <p class="text-muted m-t-lg">Many mobile app widgets and components, it's fully responsive, it can run on all the size of the screens. Start work on your great idea today!</p>
-                    </div>
-                </div>
-                <div class="col-sm-4" data-ride="animated" data-animation="fadeInLeft" data-delay="600">
-                    <p class="h3 m-b-lg"> <i class="fa fa-signal fa-3x text-info"></i> </p>
-                    <div class="">
-                        <h4 class="m-t-none">Admin Dashboard</h4>
-                        <p class="text-muted m-t-lg">It also can be used as admin dashboard, it has tables, charts and other useful components for system management, graph data shows and analysis.</p>
-                    </div>
-                </div>
-                <div class="col-sm-4" data-ride="animated" data-animation="fadeInLeft" data-delay="900">
-                    <p class="h3 m-b-lg"> <i class="fa fa-rocket fa-3x text-info"></i> </p>
-                    <div class="">
-                        <h4 class="m-t-none">App Landing</h4>
-                        <p class="text-muted m-t-lg">This template also have a front end site that for your application landing, It have the features introduction, blog section, and a price table included.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="m-t-xl m-b-xl text-center wrapper">
-                <p class="h5">You can use it to build your <span class="text-primary">Content manage system</span>, <span class="text-primary">Travel app</span>, <span class="text-primary">Medical app</span>... </p>
-            </div>
-        </div>
-    </div>
-    <div id="responsive" class="bg-dark">
-        <div class="text-center">
-            <div class="container">
-                <div class="m-t-xl m-b-xl wrapper">
-                    <h3 class="text-white">Your application will works no matter where you are</h3>
-                    <p>You can use your application at anywhere in the world. <br>
-                        This template works on <span class="text-primary text-ul">mobile device</span> too.</p>
-                </div>
-                <div class="row m-t-xl m-b-xl">
-                    <div class="col-sm-4 wrapper-xl" data-ride="animated" data-animation="fadeInLeft" data-delay="300">
-                        <p class="text-center h2 m-b-lg m-t-lg"> <span class="fa-stack fa-2x"> <i class="fa fa-circle fa-stack-2x text-dark"></i> <i class="fa fa-mobile fa-stack-1x text-muted"></i> </span> </p>
-                        <p>Mobile</p>
-                    </div>
-                    <div class="col-sm-4 wrapper-xl" data-ride="animated" data-animation="fadeInLeft" data-delay="600">
-                        <p class="text-center h1 m-b-lg"> <span class="fa-stack fa-2x"> <i class="fa fa-circle fa-stack-2x text-dark"></i> <i class="fa fa-tablet fa-stack-1x text-muted"></i> </span> </p>
-                        <p>Tablet</p>
-                    </div>
-                    <div class="col-sm-4 wrapper-xl" data-ride="animated" data-animation="fadeInLeft" data-delay="900">
-                        <p class="text-center h2 m-b-lg m-t-lg"> <span class="fa-stack fa-2x"> <i class="fa fa-circle fa-stack-2x text-dark"></i> <i class="fa fa-desktop fa-stack-1x text-muted text-md"></i> </span> </p>
-                        <p>Desktop</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="newsletter" class="bg-white clearfix wrapper-lg">
-        <div class="container text-center m-t-xl m-b-xl" data-ride="animated" data-animation="fadeIn">
-            <h2>Newsletter</h2>
-            <p>Do not want to miss anything? Subscribe to our newsletter box</p>
-            <form class="form-inline m-t-xl m-b-xl">
-                <div class="form-group">
-                    <input class="form-control input-lg" placeholder="Your email" data-ride="animated" data-animation="fadeInLeftBig" data-delay="300">
-                </div>
-                <button type="submit" class="btn btn-default btn-lg" data-ride="animated" data-animation="fadeInRightBig" data-delay="600">Subscribe</button>
-            </form>
-        </div>
-    </div>
-</section>
-<!-- footer -->
-<footer id="footer">
-    <div class="bg-primary text-center">
-        <div class="container wrapper">
-            <div class="m-t-xl m-b"> For your faster and easier web development. <a href="" target="_blank" class="btn btn-lg btn-dark b-white bg-empty m-sm">Download it</a> <a href="index.html" target="_blank" class="btn btn-lg btn-warning b-white bg-empty m-sm">Live Preview</a> </div>
-        </div>
-        <i class="fa fa-caret-down fa-4x text-primary m-b-n-lg block"></i> </div>
-    <div class="bg-dark dker wrapper">
-        <div class="container text-center m-t-lg">
-            <div class="row m-t-xl m-b-xl">
-                <div class="col-sm-4" data-ride="animated" data-animation="fadeInLeft" data-delay="300"> <i class="fa fa-map-marker fa-3x icon-muted"></i>
-                    <h5 class="text-uc m-b m-t-lg">Find Us</h5>
-                    <p class="text-sm">23 soe Midlokls <br>
-                        120002 Loki — UNITED KINGDOM </p>
-                </div>
-                <div class="col-sm-4" data-ride="animated" data-animation="fadeInUp" data-delay="600"> <i class="fa fa-envelope-o fa-3x icon-muted"></i>
-                    <h5 class="text-uc m-b m-t-lg">Mail Us</h5>
-                    <p class="text-sm"><a href="mailto:hey@example.com">info@example.com</a></p>
-                </div>
-                <div class="col-sm-4" data-ride="animated" data-animation="fadeInRight" data-delay="900"> <i class="fa fa-globe fa-3x icon-muted"></i>
-                    <h5 class="text-uc m-b m-t-lg">Join Us</h5>
-                    <p class="text-sm">Send your resume to <br>
-                        <a href="mailto:hey@example.com">recruit@example.com</a></p>
-                </div>
-            </div>
-            <div class="m-t-xl m-b-xl">
-                <p> <a href="#" class="btn btn-icon btn-rounded btn-facebook bg-empty m-sm"><i class="fa fa-facebook"></i></a> <a href="#" class="btn btn-icon btn-rounded btn-twitter bg-empty m-sm"><i class="fa fa-twitter"></i></a> <a href="#" class="btn btn-icon btn-rounded btn-gplus bg-empty m-sm"><i class="fa fa-google-plus"></i></a> </p>
-                <p> <a href="#content" data-jump="true" class="btn btn-icon btn-rounded btn-dark b-dark bg-empty m-sm text-muted"><i class="fa fa-angle-up"></i></a> </p>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- / footer --> <script src="js/app.v2.js"></script> <!-- Bootstrap --> <!-- App --> <script src="js/appear/jquery.appear.js" cache="false"></script> <script src="js/scroll/smoothscroll.js" cache="false"></script> <script src="js/landing.js" cache="false"></script>
+<div id="bg" style="position:absolute;top:0;left:0;">
+    <img src="CodeSamaLogoP.png" style="opacity:0.0"></img>
+</div>
+
+<div id="main" style="position:absolute;top:0;left:0;"></div>
+
+<script>
+    var myChart = echarts.init(document.getElementById("main"));
+    var maskImage = new Image();
+    maskImage.src = 'CodeSamaLogoP.png';
+
+    var option = {
+        tooltip: {},
+        series: [{
+            type: 'wordCloud',
+            gridSize: 2,
+            sizeRange: [15, 45],
+            rotationRange: [-60, 60],
+            rotationStep: 1,
+            width: '100%',
+            height: '100%',
+            shape: 'pentagon',
+            maskImage: maskImage,
+            drawOutOfBound: false,
+            textStyle: {
+                normal: {
+                    color: function () {
+                        return 'rgb(' + [
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160)
+                        ].join(',') + ')';
+                    }
+                },
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            data: [
+                {name: '代码君', value: 1700},
+                {name: 'CodeSama', value: 1700},
+
+                {name: '山里一泼猴', value: 1650},
+                {name: '隔壁街老王', value: 1600},
+                {name: 'MrChinino', value: 1550},
+
+                {name: 'ChYFx_Christer', value: 1500},
+                {name: '这里有蜘蛛°', value: 1450},
+                {name: '盒饭工作室', value: 1400},
+                {name: 'SuperPaxxs', value: 1350},
+
+
+                {name: '求大佬关注', value: 1000},
+                {name: '求大佬辣条', value: 1000},
+                {name: '求大佬灯笼', value: 1000},
+                {name: '求大佬亿元', value: 1000},
+                {name: '求大佬喵娘', value: 1000},
+                {name: '求大佬B坷垃', value: 1000},
+                {name: '求大佬节奏风暴', value: 1000},
+                {name: '求大佬小电视', value: 1000},
+                {name: '求大佬小爆竹', value: 1000},
+
+                {name: '求大佬点赞', value: 1000},
+                {name: '求大佬转发', value: 1000},
+                {name: '求大佬收藏', value: 1000},
+                {name: '求大佬硬币', value: 1000},
+                {name: '祝大佬开心', value: 1000},
+                {name: '祝大佬健康', value: 1000},
+                {name: '祝大佬顺利', value: 1000},
+                {name: '祝大佬长寿', value: 1000},
+                {name: '祝大佬发财', value: 1000},
+                {name: '祝大佬逢考必过', value: 1000},
+                {name: '新年好！', value: 1000},
+                {name: '过年啦！', value: 1000},
+                {name: '哔哩哔哩', value: 1000},
+                {name: 'Bilibli', value: 1000},
+                {name: '小电视', value: 1000},
+                {name: '22娘', value: 1000},
+                {name: '33娘', value: 1000},
+                {name: '233', value: 1000},
+                {name: '666', value: 1000},
+                {name: '346623', value: 1000},
+                {name: '直播姬', value: 1000},
+                {name: '咸鱼撸码', value: 1000},
+                {name: '撸码追梦', value: 1000},
+                {name: '咸鱼翻身', value: 1000},
+                {name: '咸鱼突刺', value: 1000},
+                {name: '咕咕咕', value: 1000},
+                {name: '串门', value: 1000},
+                {name: '同桌加油', value: 1000},
+                {name: '感谢投喂', value: 1000},
+                {name: '碎碎念', value: 1000},
+                {name: '字符云', value: 1000},
+                {name: '凑字数', value: 1000},
+                {name: '录视频', value: 1000},
+                {name: '开麦', value: 1000},
+                {name: '开色相头', value: 1000},
+                {name: '铜瓜子', value: 1000},
+                {name: '铁瓜子', value: 1000},
+                {name: '金瓜子', value: 1000},
+                {name: '银瓜子', value: 1000},
+                {name: '锡瓜子', value: 1000},
+                {name: 'HTML', value: 1000},
+                {name: 'CSS', value: 1000},
+                {name: 'Javascript', value: 1000},
+                {name: 'PHP', value: 1000},
+                {name: 'SQL', value: 1000},
+                {name: 'JSON', value: 1000},
+                {name: 'Bootstrap', value: 1000},
+                {name: 'Python', value: 1000},
+                {name: 'Crawler', value: 1000},
+                {name: 'Big', value: 1000},
+                {name: 'Data', value: 1000},
+                {name: 'Visualization', value: 1000},
+
+
+            ]
+        }]
+    };
+    maskImage.onload = function () {
+        option.series[0].maskImage;
+        myChart.setOption(option);
+    }
+
+</script>
+
+
 </body>
 </html>

@@ -29,8 +29,9 @@
             <%--主要数据--%>
             <div class="row">
                 <div class="col-md-6">
-                    <section class="panel panel-primary">
-                        <header class="panel-heading">
+                    <section class="panel panel-success">
+                        <header class="panel-heading"
+                                style="color: #ffffff;background-color: #8ec165;border-color: #8ec165;">
                             <h1 class="panel-title">分类列表</h1>
                         </header>
                         <div class="panel-body">
@@ -69,7 +70,7 @@
                                                 </a>
                                                 <ul class="dropdown-menu animated fadeInRight">
                                                     <li><a href="javascript:;"
-                                                           onclick="updateCateg('${categ.categoryid}',${categ.categoryname})">修改
+                                                           onclick="updateCateg('${categ.categoryid}','${categ.categoryname}')">修改
                                                     </a>
                                                     </li>
                                                     <li>
@@ -87,7 +88,8 @@
                     </section>
 
                     <div style="padding-left:0px">
-                        <div class="panel panel-default">
+                        <div class="panel panel-default"
+                             style="border: 1px solid #eee;border-left-width: 5px;border-left-color: #229e5c;border-radius: 3px;">
                             <div class="panel-body">
                                 <form id="my_form" class="form-inline" role="form">
                                     <input type="hidden" id="my_categoryId"/>
@@ -139,6 +141,12 @@
                                             <span class="caret"></span>
                                         </a>
                                         <ul class="dropdown-menu animated fadeInRight">
+                                            <li>
+                                                <a href="javascript:;"
+                                                   onclick="updateTag('${tag.tagid}','${tag.tagname}')">
+                                                    修改
+                                                </a>
+                                            </li>
                                             <li><a href="javascript:;" onclick="deleteTag('${tag.tagid}')"
                                                    class="del-category">删除</a></li>
                                         </ul>
@@ -148,6 +156,21 @@
                             </div>
                         </div>
                     </section>
+                    <div style="padding-left:0px">
+                        <div class="panel panel-default">
+                            <div class="panel-body"
+                                 style="border: 1px solid #eee;border-left-width: 5px;border-left-color: #1b809e;border-radius: 3px;">
+                                <form id="my_form_tag" class="form-inline" role="form">
+                                    <input type="hidden" id="my_tagId"/>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="my_tagName"
+                                               placeholder="请输入标签名称">
+                                    </div>
+                                    <button id="save-tag-btn" type="button" class="btn btn-info">保存标签</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -161,136 +184,162 @@
 
 <script>
     var hutao = new $.hutao();
-    function deleteCateg($id) {
 
-        if ($id == '') {
+    function deleteCateg($id) {
+        if ($id === '') {
             hutao.errorAlert({
                 text: '分类 id 为空',
                 title: '分类删除失败'
             });
             return;
         }
-        hutao.questionAlert({
-            title: '确认删除该标题？',
-            text: '您删除标题后，您的文章可能会受影响'
-        }, function () {
-            $.ajax({
-                url: '<c:url value="/category/delete"/>',
-                data: {categoryId: $id},
-                dataType: "json",
-                success: function (result) {
-                    if (result && result.success) {
-                        hutao.successAlert({
-                            text: '分类删除成功',
-                            title: '分类删除成功'
-                        }, function () {
-                            setTimeout(function () {
-                                $("#categ_" + $id).remove();
-                            }, 100);
-                            return;
-                        });
-                    } else {
-                        hutao.errorAlert({
-                            text: result.msg || '分类删除失败',
-                            title: '分类删除失败'
+
+        swal({
+                title: '确认删除该标题？',
+                text: '您删除标题后，您的文章可能会受影响',
+                type: "warning",
+                showCancelButton: true,              //是否显示“取消”按钮。
+                cancelButtonText: "取消",            //按钮内容
+                cancelButtonColor: '#d33',
+                showConfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '确定',
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+
+            function () {
+                hutao.post({
+                    url: '<c:url value="/category/delete/"/>' + $id,
+                    success: function (result) {
+                        handlerResult(result, function () {
+                            $("#categ_" + $id).remove();
+                            hutao.successAlert({
+                                text: '分类删除成功',
+                                title: '分类删除成功'
+                            });
                         });
                     }
-                },
-                error: function (result) {
-                    hutao.errorAlert({
-                        text: result.msg || '分类删除失败',
-                        title: '分类删除失败'
-                    });
-                }
+                });
             });
-            return;
-        });
-
     }
+
     function updateCateg($id, $name) {
         $('#my_form #my_categoryId').val($id);
         $('#my_form #my_categoryName').val($name);
-    }
-    function deleteTag($id) {
-        if ($id == '') {
-            hutao.errorAlert({
-                text: '标签 id 为空',
-                title: '标签删除失败'
-            });
-            return;
-        }
-        hutao.questionAlert({
-            title: '确认删除该标签？',
-            text: '您删除标签后，您的文章可能会受影响'
-        }, function () {
-            $.ajax({
-                url: '<c:url value="/tag/delete"/>',
-                data: {tagId: $id},
-                dataType: "json",
-                success: function (result) {
-                    if (result && result.success) {
-                        hutao.successAlert({
-                            text: '标签删除成功',
-                            title: '标签删除成功'
-                        }, function () {
-                            setTimeout(function () {
-                                $("#tag_" + $id).remove();
-                            }, 100);
-                            return;
-                        });
-                    } else {
-                        hutao.errorAlert({
-                            text: result.msg || '标签删除失败',
-                            title: '标签删除失败'
-                        });
-                    }
-                },
-                error: function (result) {
-                    hutao.errorAlert({
-                        text: result.msg || '标签删除失败',
-                        title: '标签删除失败'
-                    });
-                }
-            });
-            return;
-        });
     }
 
     $('#save-category-btn').click(function () {
         var categoryId = $('#my_form #my_categoryId').val();
         var categoryName = $('#my_form #my_categoryName').val();
-        if (categoryName == '') {
+        if (categoryName === '') {
             hutao.errorAlert({
                 text: '分类名称不能为空',
                 title: '分类保存失败'
             });
             return;
         }
-        if (categoryName && categoryName != '') {
-            $.ajax({
+        if (categoryName && categoryName !== '') {
+            hutao.post({
                 url: '<c:url value="/category/save"/>',
                 data: {categoryId: categoryId, categoryName: categoryName},
-                dataType: "json",
                 success: function (result) {
                     $('#my_form #my_categoryId').val('');
                     $('#my_form #my_categoryName').val('');
                     handlerResult(result, function () {
                         hutao.successAlertAndReload("分类保存成功");
-                    });
-                },
-                error: function (result) {
-                    var msg;
-                    if (!result.msg) {
-                        msg = "该分类已存在，请更换名称";
-                    }
-                    hutao.errorAlert({
-                        text: msg || '分类保存失败',
-                        title: '分类保存失败'
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
                     });
                 }
             });
         }
     });
+
+
+    function updateTag($id, $name) {
+        $('#my_form_tag #my_tagId').val($id);
+        $('#my_form_tag #my_tagName').val($name);
+    }
+
+    $('#save-tag-btn').click(function () {
+        var tagId = $('#my_form_tag #my_tagId').val();
+        var tagName = $('#my_form_tag #my_tagName').val();
+        if (tagName === '') {
+            hutao.errorAlert({
+                text: '标签名称不能为空',
+                title: '标签保存失败'
+            });
+            return;
+        }
+
+        var url;
+        var data;
+        if (tagId === '') {
+            url = '<c:url value="/tag/save"/>';
+            data = {tagName: tagName};
+        } else {
+            url = '<c:url value="/tag/update"/>';
+            data = {tagId: tagId, tagName: tagName};
+        }
+
+        if (tagName && tagName !== '') {
+            hutao.post({
+                url: url,
+                data: data,
+                success: function (result) {
+                    $('#my_form_tag #my_tagId').val('');
+                    $('#my_form_tag #my_tagName').val('');
+                    handlerResult(result, function () {
+                        hutao.successAlertAndReload("标签保存成功");
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
+                    });
+                }
+            });
+        }
+    });
+
+    function deleteTag($id) {
+        if ($id === '') {
+            hutao.errorAlert({
+                text: '标签 id 为空',
+                title: '标签删除失败'
+            });
+            return;
+        }
+
+        swal({
+                title: '确认删除该标签？',
+                text: '您删除标签后，您的文章可能会受影响',
+                type: "warning",
+                showCancelButton: true,              //是否显示“取消”按钮。
+                cancelButtonText: "取消",            //按钮内容
+                cancelButtonColor: '#d33',
+                showConfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '确定',
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+
+            function () {
+                hutao.post({
+                    url: '<c:url value="/tag/delete/"/>' + $id,
+                    success: function (result) {
+                        handlerResult(result, function () {
+                            $("#tag_" + $id).remove();
+                            hutao.successAlert({
+                                text: '标签删除成功',
+                                title: '标签删除成功'
+                            });
+                        });
+                    }
+                });
+            });
+    }
 </script>
 
 

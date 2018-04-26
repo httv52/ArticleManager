@@ -35,11 +35,6 @@
 <script>
     var hutao = new $.hutao();
 
-    function a() {
-        swal("删除！", "你的虚拟文件已经被删除。", "success");
-        // alert(1);
-    }
-
     function user_quit() {
         swal({
                 title: "确认退出登录？",
@@ -65,42 +60,14 @@
                     type: 'get',
                     url: '<c:url value="/user/quit"/>',
                     success: function (result) {
-                        handlerResult(result, post_success);
+                        handlerResult(result, ajax_success);
                     }
                 });
             });
-
-        // hutao.questionAlert({
-        //     title: '确认退出登录',
-        //     text: '确认退出登录'
-        // }, function () {
-        //     swal("删除！", "你的虚拟文件已经被删除。", "success");
-        // });
-
-        /*hutao.questionAlert({
-            title: '确认退出登录',
-            text: '确认退出登录'
-        }, function () {
-            alert(1);
-            hutao.showLoading({
-                spinner: 'accordion',
-                text: '退出中，请稍等',
-                fontSize: '2rem'
-            });
-
-            hutao.post({
-                type: 'get',
-                url: '//<c:url value="/user/quit"/>',
-                success: function (result) {
-                    handlerResult(result, post_success);
-                }
-            });
-        });*/
-
     }
 
 
-    function post_success() {
+    function ajax_success() {
         hutao.successAlert({
             title: "退出成功",
             text: "退出成功，即将跳转"

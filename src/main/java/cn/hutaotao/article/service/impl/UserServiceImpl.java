@@ -3,13 +3,16 @@ package cn.hutaotao.article.service.impl;
 import cn.hutaotao.article.dao.UserMapper;
 import cn.hutaotao.article.exception.CheckException;
 import cn.hutaotao.article.exception.MyException;
-import cn.hutaotao.article.model.Logs;
-import cn.hutaotao.article.model.User;
+import cn.hutaotao.article.model.*;
 import cn.hutaotao.article.model.custom.UserCustom;
+import cn.hutaotao.article.service.ArticleService;
 import cn.hutaotao.article.service.LogsService;
+import cn.hutaotao.article.service.ThemeService;
 import cn.hutaotao.article.service.UserService;
+import cn.hutaotao.article.utils.article.ArticleUtil;
 import cn.hutaotao.article.utils.cache.MapCache;
 import cn.hutaotao.article.utils.code.UUIDUtil;
+import cn.hutaotao.article.utils.format.ImgUtil;
 import cn.hutaotao.article.utils.format.LogDataUtil;
 import cn.hutaotao.article.utils.format.MyMD5Utils;
 import lombok.extern.log4j.Log4j;
@@ -32,6 +35,10 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     private LogsService logsService;
+    @Autowired
+    private ThemeService themeService;
+    @Autowired
+    private ArticleService articleService;
 
     @Override
     public User findUserById(String id) {
@@ -148,12 +155,14 @@ public class UserServiceImpl implements UserService {
      * 若激活码不存在，抛出异常
      * 若激活状态为1，说明已被激活，抛出异常
      * 否则激活用户，改变激活状态码
+     * <p>
+     * 插入初始化数据
      *
      * @param code
      * @return
      */
     @Override
-    public User updateActivateUser(String code) {
+    public User updateActivateUser(String code, String ipAddr) {
         User user = userMapper.selectByActivateCode(code);
         if (null == user) {
             throw new MyException("激活码不存在");
@@ -164,6 +173,46 @@ public class UserServiceImpl implements UserService {
         }
 
         user = updateUserWithState(user);
+
+        //插入主题
+        Theme theme = new Theme();
+        theme.setId(UUIDUtil.getUUID());
+        theme.setAutherName(user.getScreenName() + "的博客");
+        theme.setKeyword("博客");
+        theme.setDescribe(user.getScreenName() + "的博客");
+        theme.setQrType(1);
+        theme.setUser(user);
+        themeService.insertTheme(theme);
+
+        //插入初始化文章
+        Article article = new Article();
+        article.setTitle("我的第一篇文章");
+        article.setPageTitle("我的第一篇文章");
+        article.setContent("## Hello  World.\n" +
+                "\n" +
+                "> 第一篇文章总得写点儿什么?...\n" +
+                "\n" +
+                "----------\n" +
+                "\n" +
+                "\n" +
+                "<!--more-->\n" +
+                "\n" +
+                "```js\n" +
+                "public static void main(String[] args){\n" +
+                "    System.out.println(\"Hello World.\");\n" +
+                "}\n" +
+                "```\n");
+        article.setPreviewimg(ImgUtil.articleImg());
+        article.setAllowcommon(1);
+        article.setAllowPreview(1);
+        article.setAllowsub(1);
+        article.setType(0);
+        article.setState(1);
+        Category category = new Category();
+        category.setCategoryid(Category.DEFAULT_THEME);
+        article.setCategory(category);
+
+        articleService.saveOrUpdateArticle(null, null, Category.DEFAULT_THEME, article, user, ipAddr);
 
         return user;
     }

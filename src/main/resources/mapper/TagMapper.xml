@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="cn.hutaotao.article.model.Tag">
         <id column="tagId" property="tagid" jdbcType="VARCHAR"/>
         <result column="tagName" property="tagname" jdbcType="VARCHAR"/>
+        <result column="enable" property="enable" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="tagRelation" type="Tag" extends="BaseResultMap">
@@ -20,8 +21,8 @@
     </resultMap>
 
     <insert id="insertTag" parameterType="Tag">
-        INSERT INTO tag (tagId, tagName, uid) VALUES (
-            #{tagid}, #{tagname}, #{user.uid}
+        INSERT INTO tag (tagId, tagName, uid, enable) VALUES (
+            #{tagid}, #{tagname}, #{user.uid}, 'Y'
         )
     </insert>
 
@@ -30,21 +31,26 @@
             #{id}, #{aid}, #{tagId}
         )
     </insert>
-    <delete id="deleteTagById">
-        DELETE FROM tag
+    <update id="updateTagById">
+        update tag
+        set tagName = #{tagname}
+        where tagid = #{tagid}
+    </update>
+    <update id="deleteTagById">
+        UPDATE tag
+        SET enable = 'N'
         WHERE tagId = #{tagId}
-    </delete>
+    </update>
+
     <delete id="deletetArticle_Tag">
         DELETE FROM article_tag_tbl
         WHERE aid = #{aid}
     </delete>
 
     <select id="findTagByUser" resultType="Tag" parameterType="String">
-        SELECT
-            tagId,
-            tagName
+        SELECT *
         FROM tag
-        WHERE uid = #{uid}
+        WHERE uid = #{uid} AND enable = 'Y'
     </select>
 
     <select id="findTagWithArticle" resultMap="tagWithArticle" parameterType="String">
@@ -53,8 +59,19 @@
             att.aid
         FROM tag t LEFT JOIN article_tag_tbl att
                 ON t.tagId = att.tagId
-        WHERE t.uid = #{uid}
+        WHERE t.uid = #{uid} AND enable = 'Y'
         ORDER BY indexes
+    </select>
+
+    <select id="findTagByName" resultType="cn.hutaotao.article.model.Tag">
+        SELECT *
+        FROM tag
+        WHERE tagName = #{tagName} AND enable = 'Y'
+    </select>
+    <select id="findTagById" resultType="cn.hutaotao.article.model.Tag">
+        SELECT *
+        FROM tag
+        WHERE tagId = #{tagId} AND enable = 'Y'
     </select>
 
 </mapper>

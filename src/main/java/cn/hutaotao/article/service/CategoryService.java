@@ -54,5 +54,5 @@ public interface CategoryService {
 
     void updateCategoryById(String id, String name);
 
-    String deleteCategoryById(String categoryId);
+    void deleteCategoryById(String categoryId);
 }

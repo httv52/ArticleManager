@@ -9,6 +9,7 @@ import cn.hutaotao.article.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -47,13 +48,12 @@ public class CategoryController extends BaseController {
         return new ResultBean<>();
     }
 
-    @RequestMapping("/delete")
-    public void deleteCategory(HttpServletRequest request, PrintWriter out) {
-        String categoryId = request.getParameter("categoryId");
+    @RequestMapping("/delete/{categoryId}")
+    @ResponseBody
+    public ResultBean deleteCategory(@PathVariable String categoryId) {
+        categoryService.deleteCategoryById(categoryId);
 
-        String result = categoryService.deleteCategoryById(categoryId);
-
-        out.print(result);
+        return new ResultBean();
     }
 
 }

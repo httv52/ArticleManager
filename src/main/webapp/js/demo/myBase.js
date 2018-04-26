@@ -408,6 +408,8 @@ $.hutao.prototype.post = function (options) {
     });
 };
 
+var hutao = new $.hutao();
+
 
 
 

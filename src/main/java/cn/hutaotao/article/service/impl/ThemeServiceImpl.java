@@ -30,4 +30,9 @@ public class ThemeServiceImpl implements ThemeService {
         themeMapper.updateLinkAdminTheme(homePage, accountWeibo, accountZhihu, accountGithub, loginUserId);
         return findSimpleThemeByUser(loginUserId);
     }
+
+    @Override
+    public void insertTheme(Theme theme) {
+        themeMapper.insert(theme);
+    }
 }

@@ -1,9 +1,8 @@
 package cn.hutaotao.article.service.impl;
 
 import cn.hutaotao.article.dao.TagMapper;
+import cn.hutaotao.article.exception.CheckException;
 import cn.hutaotao.article.exception.MyException;
-import cn.hutaotao.article.model.Article;
-import cn.hutaotao.article.model.Category;
 import cn.hutaotao.article.model.Tag;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.model.custom.ArticleTagCustomer;
@@ -25,12 +24,12 @@ public class TagServiceImpl implements TagService {
     TagMapper tagMapper;
 
     @Override
-    public void insertTag(Tag tag) {
+    public void insertTagByArticle(Tag tag) {
         tagMapper.insertTag(tag);
     }
 
     @Override
-    public void insertArticleTag(String[] myOldTagIds, String[] myNewTag, String aid, User user) {
+    public void insertArticleTagByArticle(String[] myOldTagIds, String[] myNewTag, String aid, User user) {
         //在做文章更新时，先删除旧标签
         deletetArticle_Tag(aid);
 
@@ -48,7 +47,7 @@ public class TagServiceImpl implements TagService {
                 tag.setTagname(myNewTag[i]);
                 tag.setUser(user);
 
-                insertTag(tag);  //添加标签
+                insertTagByArticle(tag);  //添加标签
 
                 myNewTagIds.add(newTagId);
             }
@@ -108,20 +107,39 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public String deleteTagById(String tagId) {
-        try {
-            if (!StringUtils.isNotBlank(tagId)) {
-                throw new MyException("标签 id 不能为空");
-            }
-            tagMapper.deleteTagById(tagId);
+    public void deleteTagById(String tagId) {
+        Tag tag = tagMapper.findTagById(tagId);
 
-            return "{\"success\":true}";
-        } catch (Exception e) {
-            String msg = "未知原因";
-            if (e instanceof MyException) {
-                msg = e.getMessage();
-            }
-            throw new MyException("分类删除失败：" + msg);
+        if (StringUtils.isBlank(tagId) || tag == null) {
+            throw new CheckException("标签 id 不存在");
         }
+        tagMapper.deleteTagById(tagId);
+    }
+
+    @Override
+    public void updateTagName(String tagId, String tagName) {
+        Tag tag = findTagByName(tagName);
+        if (tag != null) {
+            throw new CheckException("该标签已存在，请更改");
+        }
+
+        tag = tagMapper.findTagById(tagId);
+        tag.setTagname(tagName);
+
+        tagMapper.updateTagById(tag);
+    }
+
+    @Override
+    public void insertTag(Tag tag) {
+        Tag dbTag = findTagByName(tag.getTagname());
+        if (dbTag != null) {
+            throw new CheckException("该标签已存在，请更改");
+        }
+        tagMapper.insertTag(tag);
+    }
+
+    @Override
+    public Tag findTagByName(String tagName) {
+        return tagMapper.findTagByName(tagName);
     }
 }

@@ -11,6 +11,7 @@ import cn.hutaotao.article.model.custom.UserCustom;
 import cn.hutaotao.article.service.ArticleService;
 import cn.hutaotao.article.service.LogsService;
 import cn.hutaotao.article.service.TagService;
+import cn.hutaotao.article.utils.article.ArticleUtil;
 import cn.hutaotao.article.utils.code.UUIDUtil;
 import cn.hutaotao.article.utils.format.ImgUtil;
 import cn.hutaotao.article.utils.format.LogDataUtil;
@@ -45,7 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setModified(currentTime);
         article.setViews(0);
         article.setCommens(0);
-        article.setWordNumber(article.getContent().trim().length());
+        article.setWordNumber(ArticleUtil.htmlToText(article.getContent(), ArticleUtil.VIEW_TYPE_NO_LEN).trim().length());
         article.setUser(loginUser);
 
         Category category = new Category();
@@ -57,7 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
         userMapper.updateWordNumber(loginUser.getUid(), article.getWordNumber());
     }
 
-    private void updataArticle(Article article, String categoryId, cn.hutaotao.article.model.User sessionUser) {
+    private void updataArticle(Article article, String categoryId, User sessionUser) {
         if (StringUtils.isBlank(article.getPreviewimg())) {
             article.setPreviewimg(ImgUtil.articleImg());
         }
@@ -66,7 +67,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setModified(currentTime);
 
         //统计文字差
-        Integer oldWordNumber = article.getWordNumber();
+        Integer oldWordNumber = article.getWordNumber() == null ? 0 : article.getWordNumber();
         Integer newWordNumber = article.getContent().length();
         article.setWordNumber(newWordNumber);
 
@@ -116,7 +117,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void saveOrUpdateArticle(String myOldTagId, String myNewTag, String categoryId, Article article,
-                                    cn.hutaotao.article.model.User sessionUser, String ipAddr) {
+                                    User sessionUser, String ipAddr) {
         //修改标识，1表示做修改操作
         int updateFlag = 0;
         String aid = article.getAid();
@@ -145,7 +146,7 @@ public class ArticleServiceImpl implements ArticleService {
         if (StringUtils.isNotBlank(myNewTag)) {
             myNewTags = myNewTag.split(",");
         }
-        tagService.insertArticleTag(myOldTagIds, myNewTags, aid, sessionUser);
+        tagService.insertArticleTagByArticle(myOldTagIds, myNewTags, aid, sessionUser);
 
         UserCustom user = new UserCustom();
         user.setUid(sessionUser.getUid());
@@ -178,7 +179,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void updateRecoverArticle(String aid, cn.hutaotao.article.model.User loginUser, String ipAddr) {
+    public void updateRecoverArticle(String aid, User loginUser, String ipAddr) {
         Article article = findArticleById(aid);
 
         if (article == null || article.getState() != Article.ARTICLE_STATE_DALETE) {

@@ -4,7 +4,6 @@
 
 <%--导入头文件--%>
 <%@include file="/WEB-INF/jsps/format/front/head.jsp" %>
-<link rel="stylesheet" href="<c:url value="/css/semantic/semantic.min.css"/>">
 
 <form action="<c:url value="/index/${user.username}"/>" id="index_form" method="post">
     <input type="hidden" name="pageNow" value="1" id="my_pageNow">

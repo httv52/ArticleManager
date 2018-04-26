@@ -418,7 +418,7 @@
 
 </section>
 <!-- /中间内容 -->
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="<c:url value='/js/echarts/echarts.min.js'/>"></script>
 <script src="<c:url value='/js/echarts/vintage.js'/>"></script>
 
 <script type="text/javascript">

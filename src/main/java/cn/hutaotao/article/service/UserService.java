@@ -69,7 +69,7 @@ public interface UserService {
      * @param code
      * @return
      */
-    User updateActivateUser(String code);
+    User updateActivateUser(String code,String ipAddr);
 
     /**
      * 修改用户信息

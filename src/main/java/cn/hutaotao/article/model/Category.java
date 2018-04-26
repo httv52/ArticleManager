@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Category implements Serializable {
+    public static final String DEFAULT_THEME = "0";
+
     private String categoryid;
 
     private String categoryname;
 
     private String img;
+
+    private String enable;
 
     /*关联关系*/
     //多对一
@@ -63,5 +67,13 @@ public class Category implements Serializable {
 
     public Category(String categoryid) {
         this.categoryid = categoryid;
+    }
+
+    public String getEnable() {
+        return enable;
+    }
+
+    public void setEnable(String enable) {
+        this.enable = enable;
     }
 }

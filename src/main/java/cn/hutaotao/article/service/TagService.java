@@ -16,7 +16,7 @@ public interface TagService {
      *
      * @param tag
      */
-    void insertTag(Tag tag);
+    void insertTagByArticle(Tag tag);
 
     /**
      * 对文章和标签表进行维护
@@ -26,7 +26,7 @@ public interface TagService {
      * @param aid         文章 id
      * @param User        标签所属用户
      */
-    void insertArticleTag(String[] myOldTagIds, String[] myNewTag, String aid, User User);
+    void insertArticleTagByArticle(String[] myOldTagIds, String[] myNewTag, String aid, User User);
 
     /**
      * 维护 article-tag 表
@@ -57,5 +57,11 @@ public interface TagService {
      * @param tagId
      * @return json数据
      */
-    String deleteTagById(String tagId);
+    void deleteTagById(String tagId);
+
+    void updateTagName(String tagId, String tagName);
+
+    void insertTag(Tag tag);
+
+    Tag findTagByName(String tagName);
 }

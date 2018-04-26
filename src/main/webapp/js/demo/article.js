@@ -2,7 +2,7 @@ var mditor, htmlEditor;
 var hutao = new $.hutao();
 var attach_url = $('#attach_url').val();
 // // 每60秒自动保存一次草稿
-var refreshIntervalId = setInterval("autoSave()", 60 * 1000);
+// var refreshIntervalId = setInterval("autoSave()", 60 * 1000);
 
 
 $(function () {
@@ -12,7 +12,7 @@ $(function () {
 
     var type = $('.myArticleType').val();
 
-    if (type != '0') {
+    if (type !== '0') {
         // 富文本编辑器
         var this_ = $('#switch-btn');
         $('#md-container').hide();
@@ -117,11 +117,10 @@ function submitArticle(state) {
         return;
     }
     //若不添加缩略图，清空previewImg的值
-    if (!$("#hasPreviewImg").is(":checked") == true) {
+    if (!$("#hasPreviewImg").is(":checked") === true && $("#hasPreviewImg").length > 0) {
         $('#previewImg').val('');
     }
 
-    clearInterval(refreshIntervalId);
     $('#content-editor').val(content);
     $("#myArticleState").val(state);
     var url = $("#articleForm #ajax_url").val();
@@ -145,9 +144,9 @@ function submitArticle(state) {
 
             }, function () {
                 saveArticle(url, params);
-                return;
             }
         );
+        return;
     }
 
     saveArticle(url, params);
@@ -155,10 +154,11 @@ function submitArticle(state) {
 
 /**
  * 保存文章或草稿
+ * @param url
  * @param params
  */
 function saveArticle(url, params) {
-    hutao.showLoading();
+    hutao.showLoading({text: "发表中~~~"});
 
     $.ajax({
         type: "POST",
@@ -189,7 +189,7 @@ function publish_success() {
 }
 
 function changeArticleImg(url, imgPath) {
-    var olgImg = $('#oldImg').val();
+    $('#oldImg').val();
     hutao.showLoadingEle("#articleImgEle");
 
     $.ajax({

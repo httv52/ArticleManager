@@ -89,13 +89,13 @@ public class UserController extends BaseController {
     /**
      * 用户注册
      *
-     * @Validated 用于校验，放在 pojo前
-     * BindingResult用于存放错误消息，放在 @Validated 之后
-     * 邮箱激活
      * @param model
      * @param user
      * @param bindingResult
      * @return
+     * @Validated 用于校验，放在 pojo前
+     * BindingResult用于存放错误消息，放在 @Validated 之后
+     * 邮箱激活
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(Model model, @Validated(value = {ValidGroupRegister.class}) User user,
@@ -129,8 +129,8 @@ public class UserController extends BaseController {
         model.addAttribute("operateCode", OPERATE_CODE_REGISTER_SUCCESS);
         model.addAttribute("pageCode", PAGE_CODE_LOGIN);
 
-        String basePath = IPUtil.getApplicationAddress(request);
         //发送邮件
+        String basePath = IPUtil.getApplicationAddress(request);
         sendEmail(activateCode, user.getEmail(), basePath);
 
         return "user/login";
@@ -142,10 +142,10 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping("/activate/{code}")
-    public String activate(@PathVariable String code, RedirectAttributes model) {
+    public String activate(@PathVariable String code, RedirectAttributes model, HttpServletRequest request) {
         User user;
         try {
-            user = userService.updateActivateUser(code);
+            user = userService.updateActivateUser(code, IPUtil.getIpAddr(request));
         } catch (MyException e) {
             LOGGER.warn(code + ":激活失败 ---->" + e.getMessage(), e);
             model.addFlashAttribute("operateCode", OPERATE_CODE_REGISTER_ACTIV_FAULT);

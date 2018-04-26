@@ -14,4 +14,6 @@ public interface ThemeMapper {
     void updateLinkAdminTheme(@Param("homePage")String homePage, @Param("accountWeibo")String accountWeibo,
                               @Param("accountZhihu")String accountZhihu, @Param("accountGithub")String accountGithub,
                               @Param("uid")String loginUserId);
+
+    void insert(Theme theme);
 }

@@ -5,6 +5,7 @@
         <id column="categoryId" property="categoryid" jdbcType="VARCHAR"/>
         <result column="categoryName" property="categoryname" jdbcType="VARCHAR"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
+        <result column="enable" property="enable" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="categoryRelation" type="Category" extends="BaseResultMap">
@@ -29,10 +30,11 @@
         where categoryid = #{categoryid}
     </update>
 
-    <delete id="deleteCategoryById">
-        DELETE FROM category
+    <update id="deleteCategoryById">
+        UPDATE category
+        set enable = 'N'
         WHERE categoryId = #{id}
-    </delete>
+    </update>
 
     <select id="lazyLoadUser" resultType="Category" parameterType="String">
         SELECT
@@ -50,13 +52,13 @@
             u.username,
             u.screen_name
         FROM category c, user u
-        WHERE c.uid = u.uid AND categoryId = #{categoryId}
+        WHERE c.uid = u.uid AND categoryId = #{categoryId} AND enable = 'Y'
         ORDER BY c.indexes
     </select>
 
     <insert id="insertCategory" parameterType="Category">
-        INSERT INTO category (categoryId, categoryName, img, uid, indexes)
-        VALUES (#{categoryid}, #{categoryname}, #{img}, #{user.uid}, NULL)
+        INSERT INTO category (categoryId, categoryName, img, uid, indexes, enable)
+        VALUES (#{categoryid}, #{categoryname}, #{img}, #{user.uid}, NULL, 'Y')
     </insert>
 
     <select id="findCategoryByUser" resultType="Category" parameterType="String">
@@ -65,7 +67,7 @@
             categoryName,
             indexes
         FROM category
-        WHERE uid = #{uid}
+        WHERE uid = #{uid} AND enable = 'Y'
         ORDER BY indexes;
     </select>
 
@@ -75,20 +77,22 @@
             `category` c
             LEFT JOIN article a ON c.categoryId = a.categoryId
         WHERE
-            c.uid = #{uid}
-            OR (c.categoryId = '0'
-                AND a.uid = #{uid})
+            (c.uid = #{uid}
+             OR (c.categoryId = '0'
+                 AND a.uid = #{uid})
+            ) AND enable = 'Y'
         ORDER BY
             indexes;
     </select>
     <select id="findSimpleCategoryById" resultType="Category">
         SELECT *
         FROM category
-        WHERE categoryId = #{categoryId}
+        WHERE categoryId = #{categoryId} AND enable = 'Y'
     </select>
     <select id="findCategoryByName" resultType="Category" parameterType="String">
         SELECT categoryId
         FROM category
         WHERE categoryName = #{name}
+              AND enable = 'Y'
     </select>
 </mapper>

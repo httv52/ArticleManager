@@ -35,4 +35,6 @@ public interface ThemeService {
      * @return
      */
     Theme updateLinkAdminTheme(String homePage, String accountWeibo, String accountZhihu, String accountGithub, String loginUserId);
+
+    void insertTheme(Theme theme);
 }

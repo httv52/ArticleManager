@@ -15,7 +15,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <meta name="keywords" content="${theme.keyword}"/>
     <meta name="description" content="${theme.describe}"/>
-    <title>${theme.autherName}的博客</title>
+    <title>${theme.autherName}</title>
     <%--<c:choose>--%>
         <%--<c:when test="${not empty theme.logoImg}">--%>
             <%--<link rel="icon" href="<%=imgPath%>${theme.logoImg}" type="image/x-icon"/>--%>
@@ -24,6 +24,7 @@
             <%--<link rel="icon" href="<c:url value='/images/favicon.ico'/>" type="image/x-icon"/>--%>
         <%--</c:otherwise>--%>
     <%--</c:choose>--%>
+
     <link rel="stylesheet" href="<c:url value="/css/semantic/semantic.min.css"/>">
     <link rel="stylesheet" href="<c:url value="/css/semantic/main.css"/>">
     <link href="<c:url value="/css/demo/xcode.min.css"/> " rel="stylesheet">
@@ -376,6 +377,29 @@
         .page-page {
             padding: 80px 25px 20px;
         }
+
+        .header {
+            line-height: 50px;
+            height: 52px;
+        }
+
+        element.style {
+        }
+        .navbar-container {
+            padding-right: 36px;
+        }
+
+        .navbar-container {
+            height: 57px;
+        }
+
+        .navbar-search {
+            line-height: 50px;
+        }
+
+        .navbar-search form{
+            margin-top: -18px;
+        }
     </style>
 </head>
 <body id="topAnchor" gtools_scp_screen_capture_injected="true">
@@ -384,19 +408,19 @@
     当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="http://browsehappy.com/" target="_blank">升级你的浏览器</a>。
 </div>
 <![endif]-->
-<header id="header" class="header bg-white">
-    <div class="navbar-container">
+<header class="header bg-white" id="navbar-header">
+    <div class="navbar-container" >
         <a href="<c:url value="/index/"/>${user.username} " class="navbar-logo">
             <c:choose>
                 <c:when test="${empty theme.logoImg}">
-                    <img src="${theme.logoImg}" alt="博客LOGO"/>
+                    <img src="<c:url value='/images/logo.png'/>" alt="博客LOGO"/>
                 </c:when>
                 <c:otherwise>
                     <img src="${theme.logoImg}" alt="博客LOGO"/>
                 </c:otherwise>
             </c:choose>
             <span class="text-muted">
-            <span style="vertical-align: inherit;">${theme.autherName}</span>
+                <span style="vertical-align: inherit;">${theme.autherName}</span>
             </span>
         </a>
         <div class="navbar-menu">

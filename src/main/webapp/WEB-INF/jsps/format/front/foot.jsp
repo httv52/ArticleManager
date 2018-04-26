@@ -59,7 +59,14 @@
             <div class="col-md-3">
                 <div class="meta-copyright-info">
                     <a href="#" class="info-logo">
-                        <img src="${theme.logoImg}" alt="#" style="max-height: 63px">
+                        <c:choose>
+                            <c:when test="${empty theme.logoImg}">
+                                <img src="<c:url value='/images/logo.png'/>" alt="博客LOGO" style="max-height: 63px">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${theme.logoImg}" alt="博客LOGO" style="max-height: 63px">
+                            </c:otherwise>
+                        </c:choose>
                     </a>
                     <div class="info-text">
                         <p>探索未知以分享<br/>记录已知以备忘
@@ -78,21 +85,12 @@
 <script src="<c:url value='/js/myjs/headroom.min.js'/>"></script>
 <script src="<c:url value='/js/myjs/highlight.min.js'/>"></script>
 <%--<script src="<c:url value='/js/myjs/instantclick.min.js'/>"></script>--%>
+<%--<script src="//cdn.bootcss.com/headroom/0.9.1/headroom.min.js"></script>--%>
+<%--<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>--%>
+<!-- <script src="//cdn.bootcss.com/instantclick/3.0.1/instantclick.min.js"></script> -->
 
 <script type="text/javascript">
-    <c:if test="${article.type==0}">
-    var postDirectory = new Headroom(document.getElementById("directory-content"), {
-        tolerance: 0,
-        offset: 100,
-        classes: {
-            initial: "initial",
-            pinned: "pinned",
-            unpinned: "unpinned"
-        }
-    });
-
-    </c:if>
-    var header = new Headroom(document.getElementById("header"), {
+    var header = new Headroom(document.getElementById("navbar-header"), {
         tolerance: 10,
         offset: 80,
         classes: {
@@ -102,6 +100,7 @@
         }
     });
     header.init();
+
     $('#search-inp').keypress(function (e) {
         var key = e.which; //e.which是按键的值
         if (key == 13) {
@@ -113,12 +112,13 @@
     });
 </script>
 <script>
-    $(function () {
-        var blocks = document.querySelectorAll('pre code');
-        for (var i = 0; i < blocks.length; i++) {
-            hljs.highlightBlock(blocks[i]);
-        }
-    });
+    // $(function () {
+    //     var blocks = document.querySelectorAll('pre code');
+    //     for (var i = 0; i < blocks.length; i++) {
+    //         hljs.highlightBlock(blocks[i]);
+    //     }
+    // });
+
     //    InstantClick.on('change', function (isInitialLoad) {
     //        var blocks = document.querySelectorAll('pre code');
     //        for (var i = 0; i < blocks.length; i++) {

@@ -1,6 +1,7 @@
 package cn.hutaotao.article.service.impl;
 
 import cn.hutaotao.article.dao.CategoryMapper;
+import cn.hutaotao.article.exception.CheckException;
 import cn.hutaotao.article.exception.MyException;
 import cn.hutaotao.article.model.Category;
 import cn.hutaotao.article.model.User;
@@ -59,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void saveOrUpdateCategory(String loginUserid, String catrgoryName, String categoryId) {
         if (!StringUtils.isNotBlank(catrgoryName)) {
-            throw new MyException("分类名不能为空");
+            throw new CheckException("分类名不能为空");
         }
 
         if (StringUtils.isNotBlank(categoryId)) {
@@ -71,10 +72,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void saveCategoryByName(String name, String uid) {
-        Category category;
-        category = categoryMapper.findCategoryByName(name);
+        Category category = categoryMapper.findCategoryByName(name);
         if (category != null) {
-            throw new MyException("该分类已存在，请更改");
+            throw new CheckException("该分类已存在，请更改");
         }
 
         category = new Category();
@@ -89,7 +89,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void updateCategoryById(String id, String name) {
-        Category category = findCategoryById(id);
+        Category category = categoryMapper.findCategoryByName(name);
+        if (category != null) {
+            throw new CheckException("该分类已存在，请更改");
+        }
+
+        category = findCategoryById(id);
 
         category.setCategoryname(name);
 
@@ -97,20 +102,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public String deleteCategoryById(String categoryId) {
-        try {
-            if (!StringUtils.isNotBlank(categoryId)) {
-                throw new MyException("分类 id 不能为空");
-            }
-            categoryMapper.deleteCategoryById(categoryId);
-
-            return "{\"success\":true}";
-        } catch (Exception e) {
-            String msg = null;
-            if (e instanceof MyException) {
-                msg = e.getMessage();
-            }
-            throw new MyException("分类删除失败：" + msg);
+    public void deleteCategoryById(String categoryId) {
+        Category category = findCategoryById(categoryId);
+        if (StringUtils.isBlank(categoryId) || category == null) {
+            throw new CheckException("分类不存在");
         }
+        categoryMapper.deleteCategoryById(categoryId);
     }
 }

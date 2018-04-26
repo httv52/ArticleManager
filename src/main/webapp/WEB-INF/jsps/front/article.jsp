@@ -4,6 +4,28 @@
 
 <%--导入头文件--%>
 <%@include file="/WEB-INF/jsps/format/front/head.jsp" %>
+<style>
+    .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6{
+        font-weight: 700;
+        margin: 0 0 15px;
+        color: #2f2f2f;
+        line-height: 1.7;
+        text-rendering: optimizelegibility;
+    }
+
+    .post-content h1::before, .post-content h2::before, .post-content h3::before, .post-content h4::before, .post-content h5::before, .post-content h6::before {
+        content: '';
+    }
+
+    .post-content h1:hover::before, .post-content h2:hover::before, .post-content h3:hover::before, .post-content h4:hover::before, .post-content h5:hover::before, .post-content h6:hover::before {
+        font-weight: 600;
+        position: absolute;
+        top: 0;
+        left: -15px;
+        content: '#';
+        color: #eb5055;
+    }
+</style>
 
 
 <div class="myArticle" style="background-color: #fff;">
@@ -32,13 +54,13 @@
                         <span class="publish-time" data-toggle="tooltip" data-placement="bottom"
                               title="最后编辑于 ${article.modifiedDateTimeView}">
                         <i class="fa fa-clock-o"></i> ${article.createdDateTimeView}
-                        </span>
+                        </span>　
                         <span class="views" data-toggle="tooltip" data-placement="bottom" title="浏览数">
                             <i class="fa fa-eye"></i> ${article.views}
-                        </span>
+                        </span>　
                         <span class="commens" data-toggle="tooltip" data-placement="bottom" title="评论数">
                             <i class="fa fa-comment-o"></i> ${article.commens}
-                        </span>
+                        </span>　
                         <span data-toggle="tooltip" data-placement="bottom" title="字数">
                             <i class="fa fa-file-text-o"></i> ${article.wordNumber}
                         </span>　
@@ -58,11 +80,16 @@
             <c:if test="${article.type==1}">
                 ${article.content}
             </c:if>
+
+            <div class="ui horizontal divider" id="end" style="font-weight: 100;padding-top: 20px">结束</div>
         </div>
 
         <div class="show-foot" style="margin: 40px 0px 0px;">
             <div style="font-size: 12px; color: #9b9b9b;">
-                <span>关键词：</span>
+                <a data-toggle="tooltip" data-placement="top" title="点击查看关键词字符云"
+                   href="javascript:openChat('${article.aid}');">
+                    <span>关键词：</span>
+                </a>
                 <c:forEach items="${keywords}" var="k" varStatus="status">
                     <c:if test="${status.count%10==0}">
                         <a class="ui redli label">${k}</a>
@@ -145,8 +172,10 @@
         </section>
 
         <div class="text-center">
-            <div id="combine"></div>
-            <p style="margin: 0px">扫描二维码，分享该文章</p>
+            <div>
+                <div id="combine"></div>
+                <p style="margin: 0px">扫描二维码，分享该文章</p>
+            </div>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -313,10 +342,11 @@
 
 </div>
 
-
 <div id="directory-content" class="directory-content">
     <div id="directory"></div>
 </div>
+
+
 <script>
     //todo  添加起始
     $('#directory').html('');
@@ -330,8 +360,8 @@
                     node = childNodes[i];
                     if ((node.nodeType === 1 || node.nodeType === 9) &&
                         (!reg ||
-                        isReg && reg.test(node.tagName.toLowerCase()) ||
-                        isStr && node.tagName.toLowerCase() === reg)) {
+                            isReg && reg.test(node.tagName.toLowerCase()) ||
+                            isStr && node.tagName.toLowerCase() === reg)) {
                         result.push(node);
                     }
                 }
@@ -403,6 +433,13 @@
                     li.appendChild(link);
                     currentList.appendChild(li);
                 }
+                var $end = document.createElement('li');
+                link = document.createElement('a');
+                link.href = '#end';
+                link.innerHTML = "∞ 结束";
+                $end.appendChild(link);
+                root.appendChild($end);
+
                 directory.appendChild(root);
             };
         createPostDirectory(document.getElementById('post-content'), document.getElementById('directory'), true);
@@ -414,8 +451,10 @@
 <%--<script src="<c:url value="/js/plugins/sticky/ResizeSensor.min.js"/> "></script>--%>
 <%--<script src="<c:url value="/js/plugins/sticky/theia-sticky-sidebar.min.js"/> "></script>--%>
 
+<%--<script src="<c:url value='/js/myjs/highlight.min.js'/>"></script>--%>
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
 <script>
-    jQuery(document).ready(function () {
+    $(function () {
         <c:choose>
         <c:when test="${empty article.pageTitle}">
         $("title").html("${article.title} - ${article.user.screenName}");
@@ -425,13 +464,14 @@
         </c:otherwise>
         </c:choose>
 
-
+        // 换头像
         var $commentHeadImg_white = $(".myArticle").find(".commentHeadImg_white");
         $commentHeadImg_white.each(function () {
             var $hashId = $(this).attr("name");
             changeHeadImg_white($(this), $hashId);
         });
 
+        //换时间戳
         var $timeEle = $(".dateTimeStamp");
         $timeEle.each(function () {
             var $time = $(this).children(".temp").val();
@@ -449,7 +489,7 @@
         $("#index_form").submit();
     }
 
-
+    //复制监听
     document.body.oncopy = function (event) {
         event = event || window.event;
         var htmlDate = window.getSelection().getRangeAt(0);
@@ -457,7 +497,7 @@
             return;
         }
 
-        var hutao = new $.hutao();
+
         var url = document.location.href;
 
         var textData = window.getSelection().getRangeAt(0) +
@@ -480,22 +520,39 @@
         clipboarddata.setData("text", textData);
     }
 
-    $(function(){
-        $('pre code').each(function(){
+    $('#search-inp').keypress(function (e) {
+        var key = e.which; //e.which是按键的值
+        if (key == 13) {
+            var q = $(this).val();
+            if (q && q != '') {
+                window.location.href = '/search/' + q;
+            }
+        }
+    });
+    // $(function () {
+    var blocks = document.querySelectorAll('pre code');
+    for (var i = 0; i < blocks.length; i++) {
+        hljs.highlightBlock(blocks[i]);
+    }
+    // });
+
+    //添加代码序号
+    $(function () {
+        $('pre code').each(function () {
             var lines = $(this).text().split('\n').length - 1;
             var $numbering = $('<ul/>').addClass('pre-numbering');
             $(this)
                 .addClass('has-numbering')
                 .parent()
                 .append($numbering);
-            for(i=1;i<=lines;i++){
+            for (i = 1; i <= lines; i++) {
                 $numbering.append($('<li/>').text(i));
             }
         });
     });
 
 
-    var hutao = new $.hutao();
+
     function openArticleComment() {
         $.ajax({
             type: "GET",
@@ -508,6 +565,21 @@
             error: function (result) {
                 hutao.errorAlert(result.msg || '操作失败');
             }
+        });
+    }
+</script>
+
+<!-- layui -->
+<script src="<c:url value='/js/layer-v3.1.0/layer/layer.js'/>"></script>
+<script src="<c:url value='/js/layer-v3.1.0/layer/dist.js'/>"></script>
+<script>
+    // var hutao = new $.hutao();
+
+    function openChat($aid) {
+        hutao.openWindow({
+            title: '关键词字符云',
+            content: '<c:url value="/cloud/"/>' + $aid,
+            area: ['900px', '600px']
         });
     }
 </script>

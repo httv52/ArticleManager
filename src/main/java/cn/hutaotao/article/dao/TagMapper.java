@@ -20,4 +20,10 @@ public interface TagMapper {
     void deleteTagById(String tagId);
 
     void deletetArticle_Tag(@Param("aid") String aid);
+
+    Tag findTagByName(String tagName);
+
+    Tag findTagById(String tagId);
+
+    void updateTagById(Tag tag);
 }

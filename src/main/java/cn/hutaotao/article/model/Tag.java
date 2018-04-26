@@ -13,7 +13,9 @@ public class Tag implements Serializable {
     //多对一
     private User user;
     //多对多
-    List<Article> articleList = new ArrayList<>();
+    private List<Article> articleList = new ArrayList<>();
+
+    private String enable;
 
     public String getTagid() {
         return tagid;
@@ -45,5 +47,13 @@ public class Tag implements Serializable {
 
     public void setArticleList(List<Article> articleList) {
         this.articleList = articleList;
+    }
+
+    public String getEnable() {
+        return enable;
+    }
+
+    public void setEnable(String enable) {
+        this.enable = enable;
     }
 }

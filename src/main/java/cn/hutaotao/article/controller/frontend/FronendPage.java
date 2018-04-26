@@ -1,21 +1,21 @@
 package cn.hutaotao.article.controller.frontend;
 
 import cn.hutaotao.article.model.*;
+import cn.hutaotao.article.model.custom.NameValue;
 import cn.hutaotao.article.model.custom.PageBean;
+import cn.hutaotao.article.model.custom.ResultBean;
 import cn.hutaotao.article.service.*;
 import cn.hutaotao.article.utils.article.ArticleUtil;
 import cn.hutaotao.article.utils.article.WordUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.util.HtmlUtils;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ht on 2017/9/28.
@@ -56,7 +56,7 @@ public class FronendPage {
         String uid = article.getUser().getUid();
 
         String value = ArticleUtil.htmlToText(article.getContent(), ArticleUtil.VIEW_TYPE_NO_LEN);
-        List keywords = WordUtil.getKeyWords(value);
+        List keywords = WordUtil.getKeyWords(value, WordUtil.DEFAULT_KEY_WOLD_LENGTH);
 
         Theme theme = themeService.findSimpleThemeByUser(uid);
         model.addAttribute("theme", theme);
@@ -129,4 +129,29 @@ public class FronendPage {
         return "front/index";
     }
 
+    @RequestMapping("/cloud/{aid}")
+    public String cloud(@PathVariable String aid, Model model) {
+        model.addAttribute("aid", aid);
+        return "word_cloud";
+    }
+
+    @RequestMapping("/wordCloud/{aid}")
+    @ResponseBody
+    public ResultBean<List<NameValue>> wordCloud(@PathVariable String aid) {
+        Article article = articleService.findArticleById(aid);
+
+        String value = ArticleUtil.htmlToText(article.getContent(), ArticleUtil.VIEW_TYPE_NO_LEN);
+        Map<String, Integer> keywordsMap = WordUtil.getKeyWordsMap(value);
+
+        List<NameValue> wordCloud = new ArrayList<>();
+        NameValue nameValue;
+
+        for (Map.Entry<String, Integer> entry : keywordsMap.entrySet()) {
+            nameValue = new NameValue(entry.getKey(), String.valueOf(entry.getValue()));
+
+            wordCloud.add(nameValue);
+        }
+
+        return new ResultBean<>(wordCloud);
+    }
 }

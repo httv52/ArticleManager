@@ -236,7 +236,7 @@
 </section>
 
 <!-- /中间内容 -->
-<script src="<c:url value='/js/mditor/js/mditor.min.js'/>" cache="false"></script>
+<script src="<c:url value='/js/mditor/js/mditor.min.js'/>"></script>
 
 <!-- Web Uploader -->
 <script type="text/javascript">
@@ -249,10 +249,10 @@
      text: '文章保存成功'
      });*/
 </script>
-<script src="<c:url value='/js/plugins/webuploader/webuploader.js'/>" cache="false"></script>
-<script src="<c:url value='/js/demo/webuploader-demo.js'/>" cache="false"></script>
+<script src="<c:url value='/js/plugins/webuploader/webuploader.js'/>"></script>
+<script src="<c:url value='/js/demo/webuploader-demo.js'/>"></script>
 
-<script src="<c:url value='/js/demo/article.js'/>" cache="false"></script>
+<script src="<c:url value='/js/demo/article.js'/>"></script>
 
 
 <%--<script src="<c:url value='/js/tale/base.js'/>" cache="false"></script>--%>
