@@ -1,6 +1,6 @@
 package cn.hutaotao.article.utils.article;
 
-import cn.hutaotao.article.exception.MyException;
+import cn.hutaotao.article.utils.exception.MyException;
 import lombok.extern.log4j.Log4j;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;

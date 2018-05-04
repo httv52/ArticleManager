@@ -1,7 +1,7 @@
 package cn.hutaotao.article.service.impl;
 
 import cn.hutaotao.article.dao.FileMapper;
-import cn.hutaotao.article.exception.MyException;
+import cn.hutaotao.article.utils.exception.MyException;
 import cn.hutaotao.article.model.File;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.service.FileService;
@@ -27,7 +27,7 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
-    public String uploadFile(MultipartFile file, User sessionUser) throws Exception {
+    public String saveUploadFile(MultipartFile file, User sessionUser) throws Exception {
         if (sessionUser == null) {
             throw new MyException("登录状态已过期");
         }

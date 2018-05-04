@@ -1,6 +1,6 @@
 package cn.hutaotao.article.service;
 
-import cn.hutaotao.article.exception.MyException;
+import cn.hutaotao.article.utils.exception.MyException;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.model.custom.UserCustom;
 import org.springframework.validation.BindingResult;

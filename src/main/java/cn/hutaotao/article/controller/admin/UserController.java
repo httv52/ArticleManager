@@ -1,7 +1,7 @@
 package cn.hutaotao.article.controller.admin;
 
 import cn.hutaotao.article.controller.BaseController;
-import cn.hutaotao.article.exception.MyException;
+import cn.hutaotao.article.utils.exception.MyException;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.model.custom.ResultBean;
 import cn.hutaotao.article.model.custom.UserCustom;
@@ -68,7 +68,6 @@ public class UserController extends BaseController {
      * @param user
      * @return
      */
-    //TODO 待完成：记住密码，验证码
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public ResultBean login(@Validated(value = {ValidGroupLogin.class}) UserCustom user, BindingResult bindingResult,

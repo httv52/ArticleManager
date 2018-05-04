@@ -20,3 +20,9 @@ src/main/resources/temp/
 
 src/main/webapp/*.html
 /.settings/
+/src/main/webapp/a.html
+/src/main/webapp/d.html
+/src/main/webapp/c.html
+/src/main/webapp/b.html
+/src/main/webapp/a.jsp
+!/src/main/webapp/a.jsp

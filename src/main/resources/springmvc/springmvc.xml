@@ -83,7 +83,7 @@
           p:maxUploadSize="10240000"/>
 
     <!-- 配置拦截器 -->
-    <!--<bean id="exceptionHandler" class="cn.hutaotao.article.exception.DefaultExceptionHandler"/>-->
+    <!--<bean id="exceptionHandler" class="cn.hutaotao.article.utils.exception.DefaultExceptionHandler"/>-->
 
     <!-- 拦截器 -->
     <!--<mvc:interceptors>-->

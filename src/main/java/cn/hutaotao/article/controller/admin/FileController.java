@@ -1,7 +1,7 @@
 package cn.hutaotao.article.controller.admin;
 
 import cn.hutaotao.article.controller.BaseController;
-import cn.hutaotao.article.exception.MyException;
+import cn.hutaotao.article.utils.exception.MyException;
 import cn.hutaotao.article.model.File;
 import cn.hutaotao.article.model.custom.PageBean;
 import cn.hutaotao.article.service.FileService;
@@ -39,7 +39,7 @@ public class FileController extends BaseController {
     public void uploadFile(@RequestParam("file") MultipartFile file, PrintWriter out, HttpSession session) {
         try {
             String result = "";
-            result = fileService.uploadFile(file, getLoginUser(session));
+            result = fileService.saveUploadFile(file, getLoginUser(session));
             out.print(result);
         } catch (Exception e) {
             String msg = "文价上传失败，请重新上传";
@@ -62,7 +62,7 @@ public class FileController extends BaseController {
                 String uploadedFile = itr.next();
                 MultipartFile file = request.getFile(uploadedFile);
 
-                result = fileService.uploadFile(file, getLoginUser(session));
+                result = fileService.saveUploadFile(file, getLoginUser(session));
                 out.print(result);
             }
 

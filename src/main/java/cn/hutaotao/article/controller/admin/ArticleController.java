@@ -1,7 +1,7 @@
 package cn.hutaotao.article.controller.admin;
 
 import cn.hutaotao.article.controller.BaseController;
-import cn.hutaotao.article.exception.MyException;
+import cn.hutaotao.article.utils.exception.MyException;
 import cn.hutaotao.article.model.*;
 import cn.hutaotao.article.model.custom.PageBean;
 import cn.hutaotao.article.model.custom.ResultBean;

@@ -22,8 +22,23 @@
         position: absolute;
         top: 0;
         left: -15px;
-        content: '#';
+        content: '§ ';
         color: #eb5055;
+    }
+
+    .myArticle table{
+        width: 650px !important;
+        overflow: auto !important;
+        max-width: 940px !important;
+    }
+
+    footer #foot_dker_wrapper{
+        position: relative;
+        z-index: 1;
+    }
+
+    #directory a{
+        font-size: 14px;
     }
 </style>
 
@@ -42,10 +57,11 @@
                     <a href="/u/7b8915c7f203">${article.user.username}</a>
                 </span>
                     <!-- 关注用户按钮 -->
-                    <label class="label bg-info m-l-xs">作者</label>
+                    <label class="label bg-primary m-l-xs" data-toggle="tooltip" data-placement="top"
+                           title="作者：${article.user.screenName}"><i class="fa fa-user"> </i> 作者</label>
                     <c:if test="${sessionScope.loginUser.uid eq article.user.uid}">
                         <a href="<c:url value='/article/preUpdateArticle/${article.aid}'/>">
-                            <label class="label bg-success m-l-xs" style="cursor: pointer;">编辑</label>
+                            <label class="label bg-danger m-l-xs" style="cursor: pointer;"><i class="fa fa-pencil"> </i> 编辑</label>
                         </a>
                     </c:if>
                     <!-- 文章数据信息 -->
@@ -427,7 +443,11 @@
                     dirNum[dirNum.length - 1]++;
                     li = document.createElement('li');
                     link = document.createElement('a');
+                    link.title = (contentArr[i] + "");
                     link.href = '#' + titleId[i];
+                    if ((contentArr[i] + "").length > 16) {
+                        contentArr[i] = contentArr[i].substr(0, 15) + '...';
+                    }
                     link.innerHTML = !isDirNum ? contentArr[i] :
                         dirNum.join('.') + ' ' + contentArr[i];
                     li.appendChild(link);
@@ -518,6 +538,11 @@
             clipboarddata = event.originalEvent.clipboardData;
         }
         clipboarddata.setData("text", textData);
+
+        hutao.errorContent('本文著作权归作者 【${article.user.username}】 所有。\n'
+            + '商业转载请联系作者获得授权，非商业转载请注明出处：' + url + '\n'
+            + '作者个人主页：${article.user.screenName}-${theme.homePage}\n'
+            + '来源：${article.user.screenName}的博客');
     }
 
     $('#search-inp').keypress(function (e) {

@@ -1,5 +1,5 @@
 /*
-package cn.hutaotao.article.exception;
+package cn.hutaotao.article.utils.exception;
 
 import cn.hutaotao.article.controller.BaseController;
 import org.slf4j.Logger;

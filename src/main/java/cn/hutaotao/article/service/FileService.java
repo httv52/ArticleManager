@@ -10,7 +10,7 @@ import java.util.List;
  * Created by ht on 2017/9/26.
  */
 public interface FileService {
-    String uploadFile(MultipartFile file, User user) throws Exception;
+    String saveUploadFile(MultipartFile file, User user) throws Exception;
 
     void saveFile(File file);
 

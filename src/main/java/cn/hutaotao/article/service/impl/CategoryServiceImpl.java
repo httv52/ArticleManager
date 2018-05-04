@@ -1,8 +1,7 @@
 package cn.hutaotao.article.service.impl;
 
 import cn.hutaotao.article.dao.CategoryMapper;
-import cn.hutaotao.article.exception.CheckException;
-import cn.hutaotao.article.exception.MyException;
+import cn.hutaotao.article.utils.exception.CheckException;
 import cn.hutaotao.article.model.Category;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.service.CategoryService;

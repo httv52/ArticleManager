@@ -1,7 +1,6 @@
 package cn.hutaotao.article.controller;
 
-import cn.hutaotao.article.exception.MyException;
-import cn.hutaotao.article.exception.UnloginException;
+import cn.hutaotao.article.utils.exception.UnloginException;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.utils.cache.MapCache;
 import org.slf4j.Logger;

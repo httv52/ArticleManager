@@ -1,9 +1,8 @@
 package cn.hutaotao.article.utils.aop;
 
-import cn.hutaotao.article.exception.CheckException;
-import cn.hutaotao.article.exception.MyException;
-import cn.hutaotao.article.exception.NoPermissionException;
-import cn.hutaotao.article.exception.UnloginException;
+import cn.hutaotao.article.utils.exception.CheckException;
+import cn.hutaotao.article.utils.exception.NoPermissionException;
+import cn.hutaotao.article.utils.exception.UnloginException;
 import cn.hutaotao.article.model.custom.ResultBean;
 import lombok.extern.log4j.Log4j;
 import org.aspectj.lang.ProceedingJoinPoint;

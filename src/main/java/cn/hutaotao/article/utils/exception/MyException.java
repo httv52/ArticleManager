@@ -1,4 +1,4 @@
-package cn.hutaotao.article.exception;
+package cn.hutaotao.article.utils.exception;
 
 /**
  * 自定义异常

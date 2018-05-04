@@ -2,7 +2,7 @@ package cn.hutaotao.article.service.impl;
 
 import cn.hutaotao.article.dao.ArticleMapper;
 import cn.hutaotao.article.dao.UserMapper;
-import cn.hutaotao.article.exception.MyException;
+import cn.hutaotao.article.utils.exception.MyException;
 import cn.hutaotao.article.model.Article;
 import cn.hutaotao.article.model.Category;
 import cn.hutaotao.article.model.Logs;
