@@ -26,4 +26,6 @@ public interface CommentMapper {
     Integer findCommentWithMyself(String myId);
 
     List<Comment> findCommentWithChild(@Param("aid") String aid, @Param("limit") Integer limit);
+
+    void save(Comment comment);
 }

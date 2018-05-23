@@ -20,6 +20,9 @@
         <!--<collection property="childList" ofType="Comment" resultMap="commentRelation"/>-->
         <collection property="childList" column="id" select="demo"/>
     </resultMap>
+    <insert id="save">
+        insert into comment values (#{id},#{content},#{created},#{ip},#{state},#{pid},#{parent},#{article.aid},#{user.uid});
+    </insert>
 
     <select id="findCommentCountByUserPrimary" parameterType="String" resultType="Integer">
         SELECT COUNT(*)

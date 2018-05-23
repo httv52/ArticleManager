@@ -1,6 +1,7 @@
 package cn.hutaotao.article.service;
 
 import cn.hutaotao.article.model.Comment;
+import cn.hutaotao.article.model.User;
 
 import java.util.List;
 
@@ -34,4 +35,6 @@ public interface CommentService {
     Integer findCommentWithMyself(String loginUserId);
 
     List<Comment> findCommentWithChild(String aid, Integer limit);
+
+    void saveComment(User loginUser, Comment comment, String ipAddr);
 }

@@ -211,7 +211,8 @@
         <c:if test='${article.allowcommon eq "1"}'>
             <div id="myComment-list" class="myComment-list" style="padding-top: 50px">
                 <div class="text-center">
-                    <form class="new-comment" style="position: relative;margin: 0 0 20px 48px;">
+                    <form class="new-comment" style="position: relative;margin: 0 0 20px 48px;" id="comment_form">
+                        <input type="hidden" name="aid" value="${article.aid}">
                         <c:choose>
                             <c:when test="${empty sessionScope.loginUser}">
                                 <a class="myAvatar">
@@ -231,10 +232,10 @@
                                 </a>
                                 <section class="paper">
                                 <textarea type="text" class="form-control scrollable" placeholder="写下你的评论..."
-                                          style="border: 1px solid #dcdcdc;padding-top: 1px;min-height: 120px;"></textarea>
+                                          style="border: 1px solid #dcdcdc;padding-top: 1px;min-height: 120px;" name="content" id="comment_content"></textarea>
                                 </section>
                                 <div class="write-function-block pull-right" style="padding-top: 5px">
-                                    <a class="cancel">取消</a> 　<a class="btn btn-success">发送</a></div>
+                                    <a class="cancel">取消</a> 　<a class="btn btn-success" href="javascript:;" onclick="post_comment()">发送</a></div>
                             </c:otherwise>
                         </c:choose>
                     </form>
@@ -605,6 +606,21 @@
             title: '关键词字符云',
             content: '<c:url value="/cloud/"/>' + $aid,
             area: ['900px', '600px']
+        });
+    }
+
+    function post_comment() {
+        hutao.post({
+            url: '<c:url value="/comment/save"/>',
+            data: $("#comment_form").serialize(),
+            success: function (result) {
+                handlerResult(result, function () {
+                    hutao.successAlert("评论发布成功，即将跳转");
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+                });
+            }
         });
     }
 </script>
