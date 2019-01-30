@@ -3,6 +3,9 @@ package cn.hutaotao.article.utils.article;
 import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
 import org.commonmark.Extension;
+import org.commonmark.ext.autolink.AutolinkExtension;
+import org.commonmark.ext.gfm.strikethrough.Strikethrough;
+import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -10,6 +13,7 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -61,16 +65,20 @@ public class ArticleUtil {
             markdown = markdown.substring(0, pos);
         }
 
-        List<Extension> extensions = Arrays.asList(TablesExtension.create());
+        List<Extension> extensions = Arrays.asList(TablesExtension.create(), AutolinkExtension.create(), StrikethroughExtension.create());
+
         Parser parser = Parser.builder().extensions(extensions).build();
         Node document = parser.parse(markdown);
-        HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
+        HtmlRenderer renderer = HtmlRenderer.builder()
+                .extensions(extensions)
+                .softbreak("<br/>") //这样设置就可以实现回车一次就换行
+                .build();
         String content = renderer.render(document);
         content = emoji(content);
 
         // 支持网易云音乐输出
         if (content.contains("[mp3:")) {
-            content = content.replaceAll("\\[mp3:(\\d+)\\]", "<iframe frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" width=350 height=106 src=\"//music.163.com/outchain/player?type=2&id=$1&auto=0&height=88\"></iframe>");
+            content = content.replaceAll("\\[mp3:(\\d+)\\]", "<div><iframe frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" width=640 height=200 src=\"//music.163.com/outchain/player?type=2&id=$1&auto=0&height=100\"></iframe></div>");
         }
         // 支持gist代码输出
         if (content.contains("https://gist.github.com/")) {

@@ -269,7 +269,7 @@
                                 <div class="comment-content">
                                     <span class="comment-author-at"></span>
                                     <p></p>
-                                    <p>${coms.content}</p>
+                                    <p>${coms.contentHTMLView}</p>
                                     <p></p>
                                 </div>
                                 <div class="comment-meta">
@@ -298,7 +298,7 @@
                                                     </div>
                                                     <div class="comment-content">
                                                         <p></p>
-                                                        <p>${child.content}</p>
+                                                        <p>${child.contentHTMLView}</p>
                                                         <p></p>
                                                     </div>
                                                     <div class="comment-meta">

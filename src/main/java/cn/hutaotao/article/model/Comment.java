@@ -1,6 +1,7 @@
 package cn.hutaotao.article.model;
 
 import cn.hutaotao.article.utils.format.FormatUtil;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class Comment {
     /*视图值*/
     private String createdDateView;
     private String createdDateTimeView;
+    private String contentHTMLView;  //评论视图展示
 
     public String getCreatedDateView() {
         return createdDateView;
@@ -40,6 +42,10 @@ public class Comment {
 
     public String getCreatedDateTimeView() {
         return createdDateTimeView;
+    }
+
+    public String getContentHTMLView() {
+        return contentHTMLView;
     }
 
     /*关联关系*/
@@ -88,6 +94,7 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+        this.contentHTMLView = EmojiParser.parseToUnicode(this.content);
     }
 
     public Long getCreated() {

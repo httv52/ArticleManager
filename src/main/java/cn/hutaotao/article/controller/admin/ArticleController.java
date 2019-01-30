@@ -10,6 +10,7 @@ import cn.hutaotao.article.service.CategoryService;
 import cn.hutaotao.article.service.TagService;
 import cn.hutaotao.article.utils.format.ImgUtil;
 import cn.hutaotao.article.utils.other.IPUtil;
+import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -110,6 +111,8 @@ public class ArticleController extends BaseController {
         List<Tag> tagList = tagService.findTagByUser(loginUserId);
         List<Category> categoryList = categoryService.findCategoryByUser(loginUserId);
 
+        //文章Emoji转换
+        article.setContent(EmojiParser.parseToUnicode(article.getContent()));
 
         model.addAttribute("article", article);
         model.addAttribute("tagList", tagList);

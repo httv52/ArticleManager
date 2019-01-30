@@ -5,6 +5,7 @@ import cn.hutaotao.article.model.Comment;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.service.CommentService;
 import cn.hutaotao.article.utils.code.UUIDUtil;
+import com.vdurmont.emoji.EmojiParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setPid("0");
         comment.setUser(loginUser);
         comment.setIp(ipAddr);
+        comment.setContent(EmojiParser.parseToAliases(comment.getContent()));
         commentMapper.save(comment);
     }
 

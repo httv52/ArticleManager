@@ -59,11 +59,6 @@
         .clauseText a:hover {
             color: #48686e;
         }
-
-        .layui-layer-padding {
-            color: #1b1b1b;
-            font-family: "Microsoft YaHei UI";
-        }
     </style>
 
     <script>
@@ -102,7 +97,7 @@
 </head>
 
 <body onclick="click_change()">
-<section id="content" class="m-t-lg wrapper-md animated fadeInUp">
+<section class="m-t-lg wrapper-md animated fadeInUp">
 
     <%--登录界面--%>
     <div id="showLogin" <c:if test='${pageCode == 2}'>
@@ -430,7 +425,7 @@
         changeBg();
     }
 
-    var int=self.setInterval(" changeBg()",5000);
+    var int = self.setInterval(" changeBg()", 5000);
 
     var $clauseText = '<ul class="clauseText"> <li><a href="#" target="_blank">1. 用户名请保证在1-64个字符之间，显示名请在100字符以内</a></li> <li><a href="http://www.hutaotao.cn" target="_blank">2. 关注主页</a></li> <li><a href="#" target="_blank">3. 弹窗将在十秒后关闭</a></li> </ul>';
     var $registerTest = '<div class="text-center" style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">                <h4 >注册成功 | 文章管理系统</h4><br> <p>亲爱的用户：${user.screenName}</p> <p>欢迎来到文章管理系统，您的账号 ${user.username} 已经注册成功</p> <p>请及时前往邮箱，完成激活。</p><h6>窗口将在十秒后自动关闭</h6><br><div class="line line-dashed"></div></div>';

@@ -15,6 +15,7 @@ import cn.hutaotao.article.utils.article.ArticleUtil;
 import cn.hutaotao.article.utils.code.UUIDUtil;
 import cn.hutaotao.article.utils.format.ImgUtil;
 import cn.hutaotao.article.utils.format.LogDataUtil;
+import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -121,6 +122,9 @@ public class ArticleServiceImpl implements ArticleService {
         //修改标识，1表示做修改操作
         int updateFlag = 0;
         String aid = article.getAid();
+
+        //文章Emoji转换
+        article.setContent(EmojiParser.parseToAliases(article.getContent()));
 
         if (StringUtils.isNotBlank(aid)) {
             updateFlag = 1;

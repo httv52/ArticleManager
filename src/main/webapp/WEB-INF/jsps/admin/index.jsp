@@ -310,7 +310,7 @@
                                                         <div>
                                                             <a href="<c:url value="/p/"/>${comment.article.aid}#comment_${comment.id}">
                                                                 <span style="vertical-align: inherit;">
-                                                                    <span style="vertical-align: inherit;">${comment.content}</span>
+                                                                    <span style="vertical-align: inherit;">${comment.contentHTMLView}</span>
                                                                 </span>
                                                             </a>
                                                         </div>
