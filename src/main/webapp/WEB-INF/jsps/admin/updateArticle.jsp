@@ -243,6 +243,7 @@
     // 添加全局站点信息
     var BASE_URL = 'js/plugins/webuploader';
     var img_URL = '<c:url value="/file/uploadFile"/>';
+    var imgPath = '<%=imgPath%>';
 
     /*var hutao = new $.hutao();
      hutao.successAlert({

@@ -85,12 +85,12 @@ $(function () {
     });
 
     //粘贴图
-    $('#editor').on("paste", function (e) {
+    $('#md-container').off("paste").on("paste", function (e) {
 
         //判断图片类型的正则
         var isImage = (/.jpg$|.jpeg$|.png$|.gif$/i);
         var e = e || event;
-        var contentE = $('#content');
+        var contentE = $('.textarea');
         var img = null;
         //IE支持window.clipboardData,chrome支持e.originalEvent.clipboardData
         var clipboardData = e.originalEvent.clipboardData || window.clipboardData;
@@ -101,33 +101,31 @@ $(function () {
         for (var i = 0, length = clipboardData.items.length; i < length; i++) {
             var item = clipboardData.items[i];
             if (item.kind === 'file' && isImage.test(item.type)) {
-                alert(1);
-                /*img=item.getAsFile();
-                var url='/common/upload';
-                var formData=new FormData();
-                formData.append('file',img);
+                img = item.getAsFile();
+                var url = img_URL;
+                var formData = new FormData();
+                formData.append('file', img);
 
                 //上传图片
-                var xhr=new XMLHttpRequest();
+                var xhr = new XMLHttpRequest();
                 //上传结束
-                xhr.onload=function () {
-                    var data=JSON.parse(xhr.responseText);
-                    //console.log(data)
-                    if (data.code === 200) {
+                xhr.onload = function () {
+                    var data = JSON.parse(xhr.responseText);
+                    if (data.success) {
+                        hutao.successContent("复制的图片上传成功 ：" + imgPath + data.relativePath);
                         if (contentE.val().length === 0) {
-                            contentE.insertAtCousor("![image](" + data.detail + ")\r\n");
+                            contentE.insertAtCursor("![alt](" + imgPath + data.relativePath + ")\r\n");
                         } else {
-                            contentE.insertAtCousor("\r\n![image](" + data.detail + ")");
+                            contentE.insertAtCursor("\r\n![alt](" + imgPath + data.relativePath + ")\n");
                         }
-                        var currentPosition = contentE.getSelectionEnd();
-                        contentE.setSelection(currentPosition);
                     }
                 }
 
-                xhr.open('POST',url,true);
+                xhr.open('POST', url, true);
                 xhr.send(formData);
+
                 //当剪贴板里是图片时，禁止默认的粘贴
-                return false;*/
+                return false;
             }
         }
 
