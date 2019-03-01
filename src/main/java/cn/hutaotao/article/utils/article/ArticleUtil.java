@@ -7,8 +7,7 @@ import org.commonmark.Extension;
 import org.commonmark.ext.autolink.AutolinkExtension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
-import org.commonmark.node.FencedCodeBlock;
-import org.commonmark.node.Node;
+import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.NodeRenderer;
 import org.commonmark.renderer.html.*;
@@ -72,7 +71,9 @@ public class ArticleUtil {
         HtmlRenderer renderer = HtmlRenderer.builder()
                 .extensions(extensions)
                 .softbreak("<br/>") //这样设置就可以实现回车一次就换行
+                .nodeRendererFactory(IndentedCodeBlockNodeRenderer::new)
                 .nodeRendererFactory(FlowNodeProvider::new)
+                .attributeProviderFactory(context -> new ImageAttributeProvider())
                 .build();
 
         String content = renderer.render(document);
@@ -195,6 +196,41 @@ class FlowNodeProvider implements NodeRenderer {
             html.line();
         } else {
             new CoreHtmlNodeRenderer(context).visit(codeBlock);
+        }
+    }
+}
+
+class IndentedCodeBlockNodeRenderer implements NodeRenderer {
+
+    private final HtmlWriter html;
+
+    IndentedCodeBlockNodeRenderer(HtmlNodeRendererContext context) {
+        this.html = context.getWriter();
+    }
+
+    @Override
+    public Set<Class<? extends Node>> getNodeTypes() {
+        // Return the node types we want to use this renderer for.
+        return Collections.singleton(Block.class);
+    }
+
+    @Override
+    public void render(Node node) {
+        // We only handle one type as per getNodeTypes, so we can just cast it here.
+        ListBlock codeBlock = (ListBlock) node;
+        html.line();
+        html.tag("pre");
+        //html.text(codeBlock.);
+        html.tag("/pre");
+        html.line();
+    }
+}
+
+class ImageAttributeProvider implements AttributeProvider {
+    @Override
+    public void setAttributes(Node node, String tagName, Map<String, String> attributes) {
+        if (node instanceof Image) {
+            attributes.put("class", "border");
         }
     }
 }
