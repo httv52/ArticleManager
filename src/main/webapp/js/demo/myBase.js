@@ -23,7 +23,7 @@ $.hutao.prototype.errorContent = function (msg) {
         closeButton: true,
         debug: false,
         progressBar: true,
-        positionClass: "toast-top-center",
+        positionClass: "toast-bottom-right",
         onclick: null,
         showDuration: 400,
         hideDuration: 1000,
@@ -47,7 +47,7 @@ $.hutao.prototype.successContent = function (msg) {
         closeButton: true,
         debug: false,
         progressBar: true,
-        positionClass: "toast-top-center",
+        positionClass: "toast-bottom-right",
         onclick: null,
         showDuration: 400,
         hideDuration: 1000,
@@ -60,7 +60,7 @@ $.hutao.prototype.successContent = function (msg) {
     };
 
     toastr.success(msg);
-}
+};
 
 /**
  * 警告弹窗
@@ -71,7 +71,7 @@ $.hutao.prototype.warningContent = function (msg) {
         closeButton: true,
         debug: false,
         progressBar: true,
-        positionClass: "toast-top-center",
+        positionClass: "toast-bottom-right",
         onclick: null,
         showDuration: 400,
         hideDuration: 1000,
@@ -95,7 +95,7 @@ $.hutao.prototype.infoContent = function (msg) {
         closeButton: true,
         debug: false,
         progressBar: true,
-        positionClass: "toast-top-center",
+        positionClass: "toast-bottom-right",
         onclick: null,
         showDuration: 400,
         hideDuration: 1000,

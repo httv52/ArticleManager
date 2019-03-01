@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
     <link rel="stylesheet" href="<c:url value='/css/animate.css'/>" type="text/css"/>
-    <link rel="stylesheet" href="<c:url value='/js/mditor/css/mditor.min.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="https://unpkg.com/mditor@1.3.3/dist/css/mditor.min.css" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/plugins/webuploader/webuploader.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/demo/webuploader-demo.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/css/plugins/footable/footable.core.css'/>" type="text/css"/>

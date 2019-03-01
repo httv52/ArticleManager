@@ -393,9 +393,54 @@
     <div id="directory"></div>
 </div>
 
+<script src="<c:url value='/js/flow/raphael-min.js'/>"></script>
+<script src="<c:url value='/js/flow/flowchart-latest.js'/>"></script>
+<script src="<c:url value='/js/mermaid/mermaid.js'/>"></script>
+
+<script>
+    // 流程图绘画
+    var element = document.querySelectorAll('.flow');
+
+    if (element.length > 0) {
+        [].forEach.call(element, function (el) {
+            var code = el.textContent;
+            el.innerHTML = "";
+            var diagram = flowchart.parse(code);
+            diagram.drawSVG(el.id, {
+                // 'x': 30,
+                // 'y': 50,
+                'line-width': 3,
+                'maxWidth': 3,//确保流程图符合一定宽度
+                'line-length': 50,
+                'text-margin': 10,
+                'font-size': 14,
+                'font': 'normal',
+                'font-family': 'Helvetica',
+                'font-weight': 'normal',
+                'font-color': 'black',
+                'line-color': 'black',
+                'element-color': 'black',
+                'fill': 'white',
+                'yes-text': 'yes',
+                'no-text': 'no',
+                'arrow-end': 'block',
+                'scale': 1,
+                'symbols': {
+                    'start': {
+                    },
+                    'end':{
+                        'class': 'end-element'
+                    }
+                }
+            });
+        });
+    }
+
+    mermaid.initialize({startOnLoad:true});
+</script>
 
 <script src="http://demo.htmleaf.com/1607/201607201705/js/lightense.es6"></script>
-
+<script src="<c:url value='/js/lightense/lightense.js'/>"></script>
 <script>
     //todo  添加起始
     $('#directory').html('');
@@ -500,14 +545,16 @@
     postDirectoryBuild();
 
     window.addEventListener('load', function () {
-        var el = document.querySelectorAll('.post-content img');
+        var element = document.querySelectorAll('.post-content img');
 
-        [].forEach.call(el, function (el) {
-            // do whatever
-            el.setAttribute('data-background', 'rgba(0,0,0 ,.3)');
-        });
+        if (element.length > 0) {
+            [].forEach.call(element, function (el) {
+                // do whatever
+                el.setAttribute('data-background', 'rgba(0,0,0 ,.3)');
+            });
 
-        Lightense(el);
+            Lightense(element);
+        }
     }, false);
 </script>
 
@@ -515,8 +562,7 @@
 <%--<script src="<c:url value="/js/plugins/sticky/ResizeSensor.min.js"/> "></script>--%>
 <%--<script src="<c:url value="/js/plugins/sticky/theia-sticky-sidebar.min.js"/> "></script>--%>
 
-<%--<script src="<c:url value='/js/myjs/highlight.min.js'/>"></script>--%>
-<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script src="<c:url value='/js/highlight/highlight.min.js'/>"></script>
 <script>
     $(function () {
         <c:choose>

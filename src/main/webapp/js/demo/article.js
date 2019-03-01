@@ -10,6 +10,12 @@ $(function () {
     /*markdown*/
     mditor = Mditor.fromTextarea(document.getElementById('editor'));
 
+    mditor.on('ready', function () {
+        // console.log(mditor.value);
+        // mditor.value = '** hello **';
+    });
+
+
     var type = $('.myArticleType').val();
 
     if (type !== '0') {
@@ -112,11 +118,15 @@ $(function () {
                 xhr.onload = function () {
                     var data = JSON.parse(xhr.responseText);
                     if (data.success) {
-                        hutao.successContent("复制的图片上传成功 ：" + imgPath + data.relativePath);
+                        hutao.successContent("复制的图片上传成功 ：" + imgPath + data.relativePath,{
+                            positionClass:"toast-buttom-right"
+                        });
                         if (contentE.val().length === 0) {
-                            contentE.insertAtCursor("![alt](" + imgPath + data.relativePath + ")\r\n");
+                            //在光标后插入文本
+                            mditor.editor.insertBeforeText("![alt](" + imgPath + data.relativePath + ")\r\n");
                         } else {
-                            contentE.insertAtCursor("\r\n![alt](" + imgPath + data.relativePath + ")\n");
+                            //在光标后插入文本
+                            mditor.editor.insertBeforeText("\r\n![alt](" + imgPath + data.relativePath + ")\n");
                         }
                     }
                 }

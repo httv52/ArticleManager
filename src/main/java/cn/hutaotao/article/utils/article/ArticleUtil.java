@@ -1,18 +1,20 @@
 package cn.hutaotao.article.utils.article;
 
+import cn.hutaotao.article.utils.code.UUIDUtil;
 import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
 import org.commonmark.Extension;
 import org.commonmark.ext.autolink.AutolinkExtension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
+import org.commonmark.node.FencedCodeBlock;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
+import org.commonmark.renderer.NodeRenderer;
+import org.commonmark.renderer.html.*;
 import org.springframework.web.util.HtmlUtils;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ht on 2017/10/9.
@@ -70,7 +72,9 @@ public class ArticleUtil {
         HtmlRenderer renderer = HtmlRenderer.builder()
                 .extensions(extensions)
                 .softbreak("<br/>") //这样设置就可以实现回车一次就换行
+                .nodeRendererFactory(FlowNodeProvider::new)
                 .build();
+
         String content = renderer.render(document);
 
         // markdown to image
@@ -134,9 +138,63 @@ public class ArticleUtil {
 
     //从html中提取纯文本
     public static String Html2Text(String inputString) {
-        String txtcontent = inputString.replaceAll("</?[^>]+>", ""); //剔出<html>的标签
-        txtcontent = txtcontent.replaceAll("<a>\\s*|\t|\r|\n</a>", "");//去除字符串中的空格,回车,换行符,制表符
-        return txtcontent;
+        String txtContent = inputString.replaceAll("</?[^>]+>", ""); //剔出<html>的标签
+        txtContent = txtContent.replaceAll("<a>\\s*|\t|\r|\n</a>", "");//去除字符串中的空格,回车,换行符,制表符
+        return txtContent;
     }
 
+}
+
+class FlowNodeProvider implements NodeRenderer {
+    private final HtmlWriter html;
+    private final HtmlNodeRendererContext context;
+
+    FlowNodeProvider(HtmlNodeRendererContext context) {
+        this.context = context;
+        this.html = context.getWriter();
+    }
+
+    @Override
+    public Set<Class<? extends Node>> getNodeTypes() {
+        // Return the node types we want to use this renderer for.
+        return Collections.singleton(FencedCodeBlock.class);
+    }
+
+    @Override
+    public void render(Node node) {
+        FencedCodeBlock codeBlock = (FencedCodeBlock) node;
+        //流程图
+        if ("flow".equals((codeBlock).getInfo())) {
+            Map<String, String> attributes = new LinkedHashMap<>();
+            attributes.put("class", "flow");
+            attributes.put("id", UUIDUtil.getUUID());
+            html.line();
+            html.tag("div", attributes);
+            html.text(codeBlock.getLiteral());
+            html.tag("/div");
+            html.line();
+        } else if ("seq".equals((codeBlock).getInfo())) {
+            //序列图
+            Map<String, String> attributes = new LinkedHashMap<>();
+            attributes.put("class", "mermaid seq");
+            html.line();
+            html.tag("div", attributes);
+            html.text("sequenceDiagram \n" +
+                    " " + codeBlock.getLiteral());
+            html.tag("/div");
+            html.line();
+        } else if ("gantt".equals((codeBlock).getInfo())) {
+            //序列图
+            Map<String, String> attributes = new LinkedHashMap<>();
+            attributes.put("class", "mermaid gantt");
+            html.line();
+            html.tag("div", attributes);
+            html.text("gantt \n" +
+                    " " + codeBlock.getLiteral());
+            html.tag("/div");
+            html.line();
+        } else {
+            new CoreHtmlNodeRenderer(context).visit(codeBlock);
+        }
+    }
 }

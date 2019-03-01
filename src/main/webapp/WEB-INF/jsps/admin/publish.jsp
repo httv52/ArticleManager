@@ -225,7 +225,7 @@
 </section>
 
 <!-- /中间内容 -->
-<script src="<c:url value='/js/mditor/js/mditor.min.js'/>" cache="false"></script>
+<script src="<c:url value='/js/mditor/js/mditor.js'/>" cache="false"></script>
 
 <!-- Web Uploader -->
 <script type="text/javascript">
