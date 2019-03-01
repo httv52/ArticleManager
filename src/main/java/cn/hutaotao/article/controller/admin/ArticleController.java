@@ -29,11 +29,11 @@ import java.util.List;
 @RequestMapping("/article")
 public class ArticleController extends BaseController {
     @Autowired
-    ArticleService articleService;
+    private ArticleService articleService;
     @Autowired
-    TagService tagService;
+    private TagService tagService;
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
 
     /**

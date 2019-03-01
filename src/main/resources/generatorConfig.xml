@@ -8,7 +8,7 @@
     <properties resource="jdbcinfo.properties"></properties>
 
     <!--指定特定数据库的jdbc驱动jar包的位置-->
-    <classPathEntry location="G:\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>
+    <classPathEntry location="D:\maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>
 
     <context id="context" targetRuntime="MyBatis3">
         <commentGenerator>
@@ -70,11 +70,17 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表 -->
-        <table tableName="theme"
+        <table tableName="accessArticle"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
                enableUpdateByExample="false"/>
+
+        <!--<table tableName="theme"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false"/>-->
 
         <!--<table tableName="comment"-->
                <!--enableCountByExample="false"-->

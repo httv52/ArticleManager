@@ -4,7 +4,6 @@ import cn.hutaotao.article.dao.LogsMapper;
 import cn.hutaotao.article.model.Logs;
 import cn.hutaotao.article.model.User;
 import cn.hutaotao.article.model.custom.CountInfoBean;
-import cn.hutaotao.article.model.custom.UserCustom;
 import cn.hutaotao.article.service.LogsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

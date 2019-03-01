@@ -19,7 +19,7 @@
                     </c:when>
                     <c:otherwise>
                         <c:forEach items="${newCommentList}" var="nc">
-                            <div><a href="#">${nc.user.username} : ${nc.contentHTMLView}</a></div>
+                            <div><a href="#">${nc.user.screenName} : ${nc.contentHTMLView}</a></div>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>

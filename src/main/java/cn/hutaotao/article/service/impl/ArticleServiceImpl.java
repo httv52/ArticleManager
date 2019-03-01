@@ -117,6 +117,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public void updateComments(String aid) {
+        articleMapper.updateComments(aid);
+    }
+
+    @Override
     public void saveOrUpdateArticle(String myOldTagId, String myNewTag, String categoryId, Article article,
                                     User sessionUser, String ipAddr) {
         //修改标识，1表示做修改操作

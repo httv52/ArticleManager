@@ -41,14 +41,14 @@ public class FileServiceImpl implements FileService {
 
 
         //获取文件扩展名
-        String relaFileName = file.getOriginalFilename();
-        String suffix = relaFileName.substring(relaFileName.lastIndexOf("."));
+        String realFileName = file.getOriginalFilename();
+        String suffix = realFileName.substring(realFileName.lastIndexOf("."));
 
         String fullPath = File.PIC_HOST + "/upload/" + newFileName + suffix;
 
         String relativePath = "/upload/" + newFileName + suffix;
 
-        //创建jesy服务器，进行跨服务器上传
+        //创建 jersey 服务器，进行跨服务器上传
         Client client = Client.create();
         //把文件关联到远程服务器
         WebResource resource = client.resource(File.PIC_HOST + "/upload/" + newFileName + suffix);
@@ -60,7 +60,8 @@ public class FileServiceImpl implements FileService {
 
         myFile.setId(UUIDUtil.getUUID());
         myFile.setFileUrl(relativePath);
-        myFile.setRealName(relaFileName);
+        myFile.setRealName(realFileName);
+        myFile.setSize(file.getSize() > 0L ? file.getSize() : 0L);
         myFile.setFileType(FileSuffixUtil.getTypeOfSuffix(suffix));
         myFile.setCreated(System.currentTimeMillis());
         myFile.setUser(sessionUser);
@@ -73,6 +74,8 @@ public class FileServiceImpl implements FileService {
 
         //{"":"","":""}
         String result = "{\"success\":true,\"fullPath\":\"" + fullPath + "\",\"relativePath\":\"" + relativePath + "\"}";
+
+
 
         return result;
     }

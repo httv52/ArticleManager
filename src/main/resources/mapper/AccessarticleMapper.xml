@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hutaotao.article.dao.AccessArticleMapper">
+    <resultMap id="BaseResultMap" type="cn.hutaotao.article.model.AccessArticle">
+        <id column="accessId" property="accessid" jdbcType="VARCHAR"/>
+        <result column="aid" property="aid" jdbcType="VARCHAR"/>
+        <result column="ip" property="ip" jdbcType="VARCHAR"/>
+        <result column="creatrd" property="creatrd" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        accessId, aid, ip, creatrd
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from accessarticle
+        where accessId = #{accessid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from accessarticle
+        where accessId = #{accessid,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.hutaotao.article.model.AccessArticle">
+        insert into accessarticle (accessId, aid, ip, creatrd)
+        values (#{accessid,jdbcType=VARCHAR},
+                #{aid,jdbcType=VARCHAR},
+                #{ip,jdbcType=VARCHAR},
+                #{creatrd,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.hutaotao.article.model.AccessArticle">
+        insert into accessarticle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="accessid != null">
+                accessId,
+            </if>
+            <if test="aid != null">
+                aid,
+            </if>
+            <if test="ip != null">
+                ip,
+            </if>
+            <if test="creatrd != null">
+                creatrd,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="accessid != null">
+                #{accessid,jdbcType=VARCHAR},
+            </if>
+            <if test="aid != null">
+                #{aid,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="creatrd != null">
+                #{creatrd,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.hutaotao.article.model.AccessArticle">
+        update accessarticle
+        <set>
+            <if test="aid != null">
+                aid = #{aid,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="creatrd != null">
+                creatrd = #{creatrd,jdbcType=BIGINT},
+            </if>
+        </set>
+        where accessId = #{accessid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.hutaotao.article.model.AccessArticle">
+        update accessarticle
+        set aid     = #{aid,jdbcType=VARCHAR},
+            ip      = #{ip,jdbcType=VARCHAR},
+            creatrd = #{creatrd,jdbcType=BIGINT}
+        where accessId = #{accessid,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -284,7 +284,7 @@
                                                     <header class="panel-heading bg-white">
                                                         <a href="#">
                                                     <span style="vertical-align: inherit;">
-                                                        <span style="vertical-align: inherit;"><name>${comment.user.username}</name></span>
+                                                        <span style="vertical-align: inherit;"><name>${comment.user.screenName}</name></span>
                                                     </span>
                                                         </a>
                                                         <label class="label bg-info m-l-xs">
@@ -437,9 +437,7 @@
 
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom, 'vintage');
-    var app = {};
 
-    option = null;
     option = {
         title: {
 //            text: '50天日志统计图'
@@ -526,12 +524,10 @@
         };
         series_data.push(jsonTemp);
     }
-    console.log(series_data);
 
     var dom2 = document.getElementById("container2");
     var myChart2 = echarts.init(dom2, 'vintage');
-    var app2 = {};
-    option = null;
+
     option = {
         title: {
 //            x: 'center'

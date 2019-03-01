@@ -4,7 +4,6 @@ import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
 import org.commonmark.Extension;
 import org.commonmark.ext.autolink.AutolinkExtension;
-import org.commonmark.ext.gfm.strikethrough.Strikethrough;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
@@ -13,7 +12,6 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -74,6 +72,17 @@ public class ArticleUtil {
                 .softbreak("<br/>") //这样设置就可以实现回车一次就换行
                 .build();
         String content = renderer.render(document);
+
+        // markdown to image
+        //MutableDataSet options = new MutableDataSet();
+        //options.setFrom(ParserEmulationProfile.MARKDOWN);
+        //options.set(Parser.EXTENSIONS, Collections.singletonList(TablesExtension.create()));
+        //Parser parser = Parser.builder(options).build();
+        //HtmlRenderer renderer = HtmlRenderer.builder(options).build();
+        //
+        //Node document = parser.parse(markdown);
+        //String content = renderer.render(document);
+
         content = emoji(content);
 
         // 支持网易云音乐输出

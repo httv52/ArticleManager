@@ -7,6 +7,9 @@ import cn.hutaotao.article.model.custom.ResultBean;
 import cn.hutaotao.article.service.*;
 import cn.hutaotao.article.utils.article.ArticleUtil;
 import cn.hutaotao.article.utils.article.WordUtil;
+import cn.hutaotao.article.utils.code.UUIDUtil;
+import cn.hutaotao.article.utils.format.DataUtils;
+import cn.hutaotao.article.utils.other.IPUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,17 +26,19 @@ import java.util.*;
 @Controller
 public class FronendPage {
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    ArticleService articleService;
+    private ArticleService articleService;
     @Autowired
-    TagService tagService;
+    private TagService tagService;
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
     @Autowired
-    ThemeService themeService;
+    private ThemeService themeService;
     @Autowired
-    CommentService commentService;
+    private CommentService commentService;
+    @Autowired
+    private AccessArticleService accessArticleService;
     /**
      * 首页显示的文章数和评论数
      */
@@ -50,7 +55,7 @@ public class FronendPage {
     }
 
     @RequestMapping("/p/{aid}")
-    public String articleContext(@PathVariable("aid") String aid, Model model) {
+    public String articleContext(@PathVariable("aid") String aid, Model model, HttpServletRequest request) {
         Article article = articleService.findArticleById(aid);
         article.setViews(article.getViews() + 1);
         String uid = article.getUser().getUid();
@@ -82,6 +87,13 @@ public class FronendPage {
 
         /*访问量 +1*/
         articleService.updateViews(article.getAid());
+        //记录访问信息
+        AccessArticle accessArticle = new AccessArticle();
+        accessArticle.setAccessid(UUIDUtil.getUUID());
+        accessArticle.setAid(aid);
+        accessArticle.setIp(IPUtil.getIpAddr(request));
+        accessArticle.setCreatrd(System.currentTimeMillis());
+        accessArticleService.insertAccessArticle(accessArticle);
 
         return "front/article";
     }

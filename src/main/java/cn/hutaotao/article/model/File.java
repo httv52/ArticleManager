@@ -43,6 +43,8 @@ public class File implements Serializable {
 
     private Long created;
 
+    private Long size;
+
     private User user;
 
     /*视图值*/
@@ -50,7 +52,22 @@ public class File implements Serializable {
 
     private String createdDateTimeView;
 
+    private String sizeView;
+
     private Integer count;
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+        this.sizeView = FormatUtil.formatFileSize(size);
+    }
+
+    public String getSizeView() {
+        return sizeView;
+    }
 
     public Integer getCount() {
         return count;

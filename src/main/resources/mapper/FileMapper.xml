@@ -7,6 +7,7 @@
         <result column="real_name" property="realName" jdbcType="VARCHAR"/>
         <result column="file_type" property="fileType" jdbcType="INTEGER"/>
         <result column="created" property="created" jdbcType="BIGINT"/>
+        <result column="size" property="size" jdbcType="BIGINT"/>
     </resultMap>
 
     <resultMap id="fileRelation" type="File" extends="BaseResultMap">
@@ -19,10 +20,10 @@
 
     <insert id="saveFile" parameterType="File">
         INSERT INTO file (
-            id, file_url, real_name,
+            id, file_url, real_name, size,
             file_type, created, uid
         )
-        VALUES (#{id}, #{fileUrl}, #{realName},
+        VALUES (#{id}, #{fileUrl}, #{realName}, #{size},
                 #{fileType}, #{created}, #{user.uid}
         )
     </insert>

@@ -46,6 +46,11 @@
         SET views = views + 1
         WHERE aid = #{aid}
     </update>
+    <update id="updateComments">
+        UPDATE article
+        SET commens = commens + 1
+        WHERE aid = #{aid}
+    </update>
     <update id="updateArticle" parameterType="Article">
         update article
         <set>

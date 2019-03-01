@@ -321,6 +321,7 @@ function handlerResult(result, callback) {
  * @param options   动画参数
  */
 $.hutao.prototype.showLoading = function (options) {
+    options = options || {};
     options.ele = options.ele || 'body';    //默认锁全屏
     options.background = options.background || "rgba(46, 62, 78, 0.79)";  //背景色默认半透明暗黑色 绿色：rgba(0, 51, 101, 0.83) 蓝色：76, 175, 80, 0.73
     options.text = options.text || '操作中';      //提示文字

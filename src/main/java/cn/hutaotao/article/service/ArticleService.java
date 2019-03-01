@@ -74,6 +74,12 @@ public interface ArticleService {
     void updateViews(String aid);
 
     /**
+     * 增加评论量
+     * @param aid
+     */
+    void updateComments(String aid);
+
+    /**
      * 保存或更新文章
      * @param myOldTagId
      * @param myNewTag

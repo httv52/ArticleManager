@@ -5,7 +5,7 @@
 <%--导入头文件--%>
 <%@include file="/WEB-INF/jsps/format/front/head.jsp" %>
 <style>
-    .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6{
+    .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
         font-weight: 700;
         margin: 0 0 15px;
         color: #2f2f2f;
@@ -26,22 +26,49 @@
         color: #eb5055;
     }
 
-    .myArticle table{
-        width: 650px !important;
+    .myArticle table {
+        /*width: 650px !important;*/
         overflow: auto !important;
-        max-width: 940px !important;
     }
 
-    footer #foot_dker_wrapper{
+    footer #foot_dker_wrapper {
         position: relative;
         z-index: 1;
     }
 
-    #directory a{
+    #directory a {
         font-size: 14px;
     }
-</style>
 
+    .post-content pre code {
+        padding-left: 24px;
+    }
+
+    pre {
+        overflow: auto;
+    }
+
+    pre code {
+        white-space: pre;
+    }
+
+    .directory-content, .page-comment, .page-page, .myArticle table {
+        max-width: 956px !important;
+    }
+
+    #directory ul li ul li ul li ul li a {
+        margin-left: 45px;
+        color: #5f5f5f;
+    }
+
+    #directory ul li ul li ul li ul li ul li a {
+        margin-left: 60px;
+        color: #5f5f5f;
+    }
+
+
+</style>
+<link href="<c:url value="/css/a.css"/>" rel="stylesheet">
 
 <div class="myArticle" style="background-color: #fff;">
     <article class="main-content page-page">
@@ -54,14 +81,15 @@
                 </a>
                 <div class="info">
                 <span class="name" style="color: #333">
-                    <a href="/u/7b8915c7f203">${article.user.username}</a>
+                    <a href="<c:url value="/index/"/>${article.user.username}">${article.user.username}</a>
                 </span>
                     <!-- 关注用户按钮 -->
                     <label class="label bg-primary m-l-xs" data-toggle="tooltip" data-placement="top"
                            title="作者：${article.user.screenName}"><i class="fa fa-user"> </i> 作者</label>
                     <c:if test="${sessionScope.loginUser.uid eq article.user.uid}">
                         <a href="<c:url value='/article/preUpdateArticle/${article.aid}'/>">
-                            <label class="label bg-danger m-l-xs" style="cursor: pointer;"><i class="fa fa-pencil"> </i> 编辑</label>
+                            <label class="label bg-danger m-l-xs" style="cursor: pointer;"><i class="fa fa-pencil"> </i>
+                                编辑</label>
                         </a>
                     </c:if>
                     <!-- 文章数据信息 -->
@@ -102,40 +130,40 @@
 
         <div class="show-foot" style="margin: 40px 0px 0px;">
             <div style="font-size: 12px; color: #9b9b9b;">
-                <a data-toggle="tooltip" data-placement="top" title="点击查看关键词字符云"
-                   href="javascript:openChat('${article.aid}');">
-                    <span>关键词：</span>
-                </a>
+                <span>关键词：</span>
+
                 <c:forEach items="${keywords}" var="k" varStatus="status">
+                    <a data-toggle="tooltip" data-placement="top" title="点击查看关键词分析"
+                    href="javascript:openChat('${article.aid}');"
                     <c:if test="${status.count%10==0}">
-                        <a class="ui redli label">${k}</a>
+                        class="ui redli label">${k}</a>
                     </c:if>
                     <c:if test="${status.count%10==1}">
-                        <a class="ui greenli label">${k}</a>
+                        class="ui greenli label">${k}</a>
                     </c:if>
                     <c:if test="${status.count%10==2}">
-                        <a class="ui yellowli label">${k}</a>
+                        class="ui yellowli label">${k}</a>
                     </c:if>
                     <c:if test="${status.count%10==3}">
-                        <a class="ui blueli label">${k}</a>
+                        class="ui blueli label">${k}</a>
                     </c:if>
                     <c:if test="${status.count%10==4}">
-                        <a class="ui darkli label">${k}</a>
+                        class="ui darkli label">${k}</a>
                     </c:if>
                     <c:if test="${status.count%10==5}">
-                        <a class="ui greenli2 label">${k}</a>
+                        class="ui greenli2 label">${k}</a>
                     </c:if>
                     <c:if test="${status.count%10==6}">
-                        <a class="ui pinkli label">${k}</a>
+                        class="ui pinkli label">${k}</a>
                     </c:if>
                     <c:if test="${status.count%10==7}">
-                        <a class="ui lightbrownli label">${k}</a>
+                        class="ui lightbrownli label">${k}</a>
                     </c:if>
                     <c:if test="${status.count%10==8}">
-                        <a class="ui darkorangeli label">${k}</a>
+                        class="ui darkorangeli label">${k}</a>
                     </c:if>
                     <c:if test="${status.count%10==9}">
-                        <a class="ui darkpurpleli label">${k}</a>
+                        class="ui darkpurpleli label">${k}</a>
                     </c:if>
                 </c:forEach>
             </div>
@@ -232,10 +260,12 @@
                                 </a>
                                 <section class="paper">
                                 <textarea type="text" class="form-control scrollable" placeholder="写下你的评论..."
-                                          style="border: 1px solid #dcdcdc;padding-top: 1px;min-height: 120px;" name="content" id="comment_content"></textarea>
+                                          style="border: 1px solid #dcdcdc;padding-top: 1px;min-height: 120px;"
+                                          name="content" id="comment_content"></textarea>
                                 </section>
                                 <div class="write-function-block pull-right" style="padding-top: 5px">
-                                    <a class="cancel">取消</a> 　<a class="btn btn-success" href="javascript:;" onclick="post_comment()">发送</a></div>
+                                    <a class="cancel">取消</a> 　<a class="btn btn-success" href="javascript:;"
+                                                                 onclick="post_comment()">发送</a></div>
                             </c:otherwise>
                         </c:choose>
                     </form>
@@ -364,6 +394,8 @@
 </div>
 
 
+<script src="http://demo.htmleaf.com/1607/201607201705/js/lightense.es6"></script>
+
 <script>
     //todo  添加起始
     $('#directory').html('');
@@ -466,6 +498,17 @@
         createPostDirectory(document.getElementById('post-content'), document.getElementById('directory'), true);
     };
     postDirectoryBuild();
+
+    window.addEventListener('load', function () {
+        var el = document.querySelectorAll('.post-content img');
+
+        [].forEach.call(el, function (el) {
+            // do whatever
+            el.setAttribute('data-background', 'rgba(0,0,0 ,.3)');
+        });
+
+        Lightense(el);
+    }, false);
 </script>
 
 
@@ -576,7 +619,6 @@
             }
         });
     });
-
 
 
     function openArticleComment() {

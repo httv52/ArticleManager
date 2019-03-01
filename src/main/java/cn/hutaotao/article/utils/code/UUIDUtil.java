@@ -11,6 +11,11 @@ import java.util.UUID;
  * Created by ht on 2017/9/19.
  */
 public class UUIDUtil {
+    /**
+     * 生成32位UUID
+     *
+     * @return 32位UUID
+     */
     public static String getUUID() {
         return UUID.randomUUID().toString().replace("-", "");
     }

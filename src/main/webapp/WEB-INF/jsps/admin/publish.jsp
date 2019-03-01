@@ -132,7 +132,7 @@
                     </div>
 
                     <div id="md-container" class="form-group col-md-12">
-                        <textarea id="editor">文章正文</textarea>
+                        <textarea id="editor"></textarea>
                     </div>
 
                     <div id="html-container" class="form-group col-md-12" style="padding: 0px;">
@@ -207,12 +207,12 @@
                     <div class="text-right" style="padding-bottom: 20px">
                         <a class="btn btn-default waves-effect waves-light" href="/admin/article">返回列表</a>
                         <button type="button" class="btn btn-primary btn-shadow" style="text-align: center"
-                                onclick="submitArticle('1');">
+                                onclick="submitArticle('save');">
                             保存文章
                         </button>
                         <button type="button" class="btn btn-warning btn-shadow" style=""
-                                onclick="submitArticle('0');">
-                            存为草稿
+                                onclick="submitArticle('submit');">
+                            发布文章
                         </button>
                     </div>
                 </form>

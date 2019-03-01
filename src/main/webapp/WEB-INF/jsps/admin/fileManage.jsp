@@ -111,48 +111,53 @@
                                                     <div class="file-box col-sm-3 text-center"
                                                          style="padding: 0px 10px;">
                                                         <div class="file text-center">
+                                                            <a href="javascript:openFile('${file.realName}','<%=imgPath%>${file.fileUrl}')">
+                                                            <span class="corner"></span>
                                                             <c:choose>
                                                             <c:when test="${file.fileType == '1'}">
-                                                            <span class="corner"></span>
-                                                            <a href="<%=imgPath%>${file.fileUrl}" target="_blank">
-                                                                <div class="image" style="height: 130px;">
+                                                            <%--<a href="<%=imgPath%>${file.fileUrl}" target="_blank">--%>
+                                                                <div class="image" style="height: 130px;"
+                                                                     data-toggle="tooltip"
+                                                                     data-placement="top"
+                                                                     title="点击预览：${file.realName}">
                                                                     <img alt="image" class="img-responsive"
                                                                          src="<%=imgPath%>${file.fileUrl}">
                                                                 </div>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                <a href="javascript:openFile('${file.realName}','<%=imgPath%>${file.fileUrl}')">
-                                                                    <span class="corner"></span>
-                                                                    <div class="icon">
-                                                                        <c:choose>
-                                                                            <c:when test="${file.fileType == '0'}">
-                                                                                <i class="fa fa-file-archive-o"></i>
-                                                                            </c:when>
-                                                                            <c:when test="${file.fileType == '2'}">
-                                                                                <i class="fa fa-file-text"></i>
-                                                                            </c:when>
-                                                                            <c:when test="${file.fileType == '3'}">
-                                                                                <i class="fa fa-link"></i>
-                                                                            </c:when>
-                                                                            <c:when test="${file.fileType == '4'}">
-                                                                                <i class="img-responsive fa fa-film"></i>
-                                                                            </c:when>
-                                                                            <c:when test="${file.fileType == '5'}">
-                                                                                <i class="fa fa-music"></i>
-                                                                            </c:when>
-                                                                        </c:choose>
-                                                                    </div>
-                                                                    </c:otherwise>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <div class="icon"
+                                                                     data-toggle="tooltip"
+                                                                     data-placement="top"
+                                                                     title="点击预览：${file.realName}">
+                                                                    <c:choose>
+                                                                        <c:when test="${file.fileType == '0'}">
+                                                                            <i class="fa fa-file-archive-o"></i>
+                                                                        </c:when>
+                                                                        <c:when test="${file.fileType == '2'}">
+                                                                            <i class="fa fa-file-text"></i>
+                                                                        </c:when>
+                                                                        <c:when test="${file.fileType == '3'}">
+                                                                            <i class="fa fa-link"></i>
+                                                                        </c:when>
+                                                                        <c:when test="${file.fileType == '4'}">
+                                                                            <i class="img-responsive fa fa-film"></i>
+                                                                        </c:when>
+                                                                        <c:when test="${file.fileType == '5'}">
+                                                                            <i class="fa fa-music"></i>
+                                                                        </c:when>
                                                                     </c:choose>
+                                                                </div>
+                                                                </c:otherwise>
+                                                                </c:choose>
                                                                 </a>
 
                                                                 <div class="file-name">
-                                                                    <div class="contentControl"
+                                                                    <a href="<%=imgPath%>${file.fileUrl}" target="_blank" class="contentControl"
                                                                          data-toggle="tooltip"
                                                                          data-placement="top"
-                                                                         title="${file.realName}">
+                                                                         title="点击下载：${file.sizeView}" download="${file.realName}">
                                                                             ${file.realName}
-                                                                    </div>
+                                                                    </a>
                                                                     <small data-toggle="tooltip"
                                                                            data-placement="top"
                                                                            title="${file.createdDateTimeView}">
@@ -367,7 +372,8 @@
     function openFile($name, $url) {
         var index = hutao.openWindow({
             title: $name,
-            content: $url
+            content: $url,
+            area: ['80%', '80%']
         });
         layer.full(index);
     }

@@ -84,7 +84,54 @@ $(function () {
         }
     });
 
+    //粘贴图
+    $('#editor').on("paste", function (e) {
 
+        //判断图片类型的正则
+        var isImage = (/.jpg$|.jpeg$|.png$|.gif$/i);
+        var e = e || event;
+        var contentE = $('#content');
+        var img = null;
+        //IE支持window.clipboardData,chrome支持e.originalEvent.clipboardData
+        var clipboardData = e.originalEvent.clipboardData || window.clipboardData;
+        if (!(clipboardData && clipboardData.items)) {
+            return;
+        }
+
+        for (var i = 0, length = clipboardData.items.length; i < length; i++) {
+            var item = clipboardData.items[i];
+            if (item.kind === 'file' && isImage.test(item.type)) {
+                alert(1);
+                /*img=item.getAsFile();
+                var url='/common/upload';
+                var formData=new FormData();
+                formData.append('file',img);
+
+                //上传图片
+                var xhr=new XMLHttpRequest();
+                //上传结束
+                xhr.onload=function () {
+                    var data=JSON.parse(xhr.responseText);
+                    //console.log(data)
+                    if (data.code === 200) {
+                        if (contentE.val().length === 0) {
+                            contentE.insertAtCousor("![image](" + data.detail + ")\r\n");
+                        } else {
+                            contentE.insertAtCousor("\r\n![image](" + data.detail + ")");
+                        }
+                        var currentPosition = contentE.getSelectionEnd();
+                        contentE.setSelection(currentPosition);
+                    }
+                }
+
+                xhr.open('POST',url,true);
+                xhr.send(formData);
+                //当剪贴板里是图片时，禁止默认的粘贴
+                return false;*/
+            }
+        }
+
+    });
 });
 
 
@@ -122,7 +169,7 @@ function submitArticle(state) {
     }
 
     $('#content-editor').val(content);
-    $("#myArticleState").val(state);
+    // $("#myArticleState").val(state);
     var url = $("#articleForm #ajax_url").val();
     var params = $("#articleForm").serialize();
 
@@ -143,22 +190,25 @@ function submitArticle(state) {
                 closeOnCancel: true                //点击返回上一步操作
 
             }, function () {
-                saveArticle(url, params);
+                saveArticle(url, params, state);
             }
         );
         return;
     }
 
-    saveArticle(url, params);
+    saveArticle(url, params, state);
 }
 
 /**
  * 保存文章或草稿
  * @param url
  * @param params
+ * @param state
  */
-function saveArticle(url, params) {
-    hutao.showLoading({text: "发表中~~~"});
+function saveArticle(url, params, state) {
+    if (state === 'submit') {
+        hutao.showLoading({text: "发表中~~~"});
+    }
 
     $.ajax({
         type: "POST",
@@ -167,7 +217,11 @@ function saveArticle(url, params) {
         dataType: "json",
         success: function (result) {
             handlerResult(result, function () {
-                publish_success();
+                if (state === 'submit') {
+                    publish_success();
+                } else {
+                    hutao.successContent("保存成功");
+                }
             });
         },
         error: function (result) {

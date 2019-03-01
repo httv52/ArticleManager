@@ -86,6 +86,9 @@
     <!-- ========================= spring 配置结束 ========================= -->
     <!-- ========================= spring 配置结束 ========================= -->
 
+    <session-config>
+        <session-timeout>1200</session-timeout>
+    </session-config>
 
     <!--配置springmvc 前端控制器 Dispatcher调度-->
     <servlet>

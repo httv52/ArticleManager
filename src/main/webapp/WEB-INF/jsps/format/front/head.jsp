@@ -291,7 +291,7 @@
             top: 0;
             left: 0;
             width: 25px;
-            padding: 6px 3px 6px 0;
+            padding: 8px 3px 6px 0;
             border-right: 1px solid #C3CCD0;
             border-radius: 3px 0 0 3px;
             background-color: #2b313c;
@@ -316,7 +316,7 @@
 
         table {
             display: table;
-            table-layout:auto;//固定布局的算法，默认是auto，是基于表格内容的自动布局算法
+            table-layout:auto;
         }
 
         .tag-list li a {
