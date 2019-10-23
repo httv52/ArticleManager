@@ -21,7 +21,8 @@ blockquote{
     margin: 1rem 0;
 }
 
-.post-content ul:not(.pre-numbering) li:before {
+/*,li i .fa*/
+.post-content ul:not(.pre-numbering) li.point:before {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -48,4 +49,17 @@ s, strike, del {
 
 .flow {
     text-align: center;
+}
+
+blockquote{
+    padding-left: 1.0rem;
+}
+
+/**/
+h2 {
+    padding-top: .3rem;
+}
+
+.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+    margin: 15px 0 15px;
 }

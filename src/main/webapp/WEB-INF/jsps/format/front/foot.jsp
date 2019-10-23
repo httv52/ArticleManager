@@ -83,7 +83,6 @@
 <%@include file="/WEB-INF/jsps/format/admin/headImg.jsp" %>
 
 <script src="<c:url value='/js/myjs/headroom.min.js'/>"></script>
-<script src="<c:url value='/js/myjs/highlight.min.js'/>"></script>
 <%--<script src="<c:url value='/js/myjs/instantclick.min.js'/>"></script>--%>
 <%--<script src="//cdn.bootcss.com/headroom/0.9.1/headroom.min.js"></script>--%>
 <%--<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>--%>

@@ -71,9 +71,7 @@ public class ArticleUtil {
         HtmlRenderer renderer = HtmlRenderer.builder()
                 .extensions(extensions)
                 .softbreak("<br/>") //这样设置就可以实现回车一次就换行
-                .nodeRendererFactory(IndentedCodeBlockNodeRenderer::new)
                 .nodeRendererFactory(FlowNodeProvider::new)
-                .attributeProviderFactory(context -> new ImageAttributeProvider())
                 .build();
 
         String content = renderer.render(document);
@@ -89,6 +87,23 @@ public class ArticleUtil {
         //String content = renderer.render(document);
 
         content = emoji(content);
+
+        String openIcon = "fa-square-o";
+        String chooseIcon = "fa-check-square";
+
+        String openStr = "<i class=\"fa " + openIcon + "\" style=\"margin: 0 6px 0 -20px; vertical-align: middle;\"></i>";
+        String chooseStr = "<i class=\"fa " + chooseIcon + "\" style=\"margin: 0 6px 0 -20px; vertical-align: middle;\"></i>";
+        if (content.contains("[ ]")) {
+            content = content.replaceAll("\\[ \\].*\\n", openStr + "$0");
+            content = content.replaceAll("\\[ \\].*$", openStr + "$0");
+        }
+        if (content.contains("[x]")) {
+            content = content.replaceAll("\\[x\\].*\\n", chooseStr + "$0");
+            content = content.replaceAll("\\[x\\].*$", chooseStr + "$0");
+        }
+
+        content = content.replace("[ ]", "");
+        content = content.replace("[x]", "");
 
         // 支持网易云音乐输出
         if (content.contains("[mp3:")) {
@@ -196,41 +211,6 @@ class FlowNodeProvider implements NodeRenderer {
             html.line();
         } else {
             new CoreHtmlNodeRenderer(context).visit(codeBlock);
-        }
-    }
-}
-
-class IndentedCodeBlockNodeRenderer implements NodeRenderer {
-
-    private final HtmlWriter html;
-
-    IndentedCodeBlockNodeRenderer(HtmlNodeRendererContext context) {
-        this.html = context.getWriter();
-    }
-
-    @Override
-    public Set<Class<? extends Node>> getNodeTypes() {
-        // Return the node types we want to use this renderer for.
-        return Collections.singleton(Block.class);
-    }
-
-    @Override
-    public void render(Node node) {
-        // We only handle one type as per getNodeTypes, so we can just cast it here.
-        ListBlock codeBlock = (ListBlock) node;
-        html.line();
-        html.tag("pre");
-        //html.text(codeBlock.);
-        html.tag("/pre");
-        html.line();
-    }
-}
-
-class ImageAttributeProvider implements AttributeProvider {
-    @Override
-    public void setAttributes(Node node, String tagName, Map<String, String> attributes) {
-        if (node instanceof Image) {
-            attributes.put("class", "border");
         }
     }
 }

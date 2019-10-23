@@ -361,6 +361,16 @@
     %>
     <script>
         $(function () {
+            var element = $('.post-content ul li');
+            element.each(function () {
+                $(this).addClass("point");;
+            });
+
+            element = $('.post-content ul li i.fa');
+            element.each(function () {
+                $(this).parent('li').removeClass("point");
+            });
+
             var value = '<%=basePath%><c:url value="/p/${article.aid}"/>';
             var filter = 'color';
             var imagePath = '<c:url value="/images/QR.jpg"/> ';
@@ -426,9 +436,8 @@
                 'arrow-end': 'block',
                 'scale': 1,
                 'symbols': {
-                    'start': {
-                    },
-                    'end':{
+                    'start': {},
+                    'end': {
                         'class': 'end-element'
                     }
                 }
@@ -436,10 +445,10 @@
         });
     }
 
-    mermaid.initialize({startOnLoad:true});
+    mermaid.initialize({startOnLoad: true});
 </script>
 
-<script src="http://demo.htmleaf.com/1607/201607201705/js/lightense.es6"></script>
+<%--<script src="http://demo.htmleaf.com/1607/201607201705/js/lightense.es6"></script>--%>
 <script src="<c:url value='/js/lightense/lightense.js'/>"></script>
 <script>
     //todo  添加起始
@@ -562,7 +571,10 @@
 <%--<script src="<c:url value="/js/plugins/sticky/ResizeSensor.min.js"/> "></script>--%>
 <%--<script src="<c:url value="/js/plugins/sticky/theia-sticky-sidebar.min.js"/> "></script>--%>
 
-<script src="<c:url value='/js/highlight/highlight.min.js'/>"></script>
+<%--代码格式化--%>
+<%--<script src="<c:url value='/js/highlight/highlight.min.js'/>"></script>--%>
+
+<script src="<c:url value='/js/myjs/highlight.pack.js'/>"></script>
 <script>
     $(function () {
         <c:choose>
