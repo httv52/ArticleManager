@@ -290,7 +290,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>4.3.0.Final</version>
+            <version>5.3.5.Final</version>
         </dependency>
 
         <!-- 用来把Spring源代码中大量使用到的commons-logging替换成slf4j，
